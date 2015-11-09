@@ -62,7 +62,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-
+  <lo-mqtt connected="{{connected}}"></lo-mqtt>
+  <lo-localstorageapi></lo-localstorageapi>
+  <p>MQTT connected? <span>{{connected}}</span></p>
     <lo-grid></lo-grid>
 
   </template>
