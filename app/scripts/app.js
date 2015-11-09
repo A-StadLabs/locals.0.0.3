@@ -8,9 +8,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 (function(document) {
-  'use strict';
-
-
+  //'use strict';
 
   // Grab a reference to our auto-binding template
   // and give it some initial binding values
@@ -44,22 +42,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
   };
 
-  app.displayInstalledToast = function() {
-    // Check to make sure caching is actually enabled—it won't be in the dev environment.
-    if (!document.querySelector('platinum-sw-cache').disabled) {
-      document.querySelector('#caching-complete').show();
-    }
-  };
-
+  //console.log(err, "error");
   // Listen for template bound event to know when bindings
   // have resolved and content has been stamped to the page
   app.addEventListener('dom-change', function() {
-    console.log('Our app is ready to rock!');
+    console.log('Welcome to Locals.');
   });
 
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
+    //app.$.mqtt.connect();
   });
+
+
 
 })(document);

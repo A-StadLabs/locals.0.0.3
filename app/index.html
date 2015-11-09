@@ -15,38 +15,38 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta charset="utf-8">
   <meta name="description" content="">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="generator" content="Polymer Starter Kit" />
-  <title>KF Starter Kit</title>
+  <meta name="generator" content="Locals" />
+  <title>Locals</title>
   <!-- Place favicon.ico in the `app/` directory -->
 
   <!-- Chrome for Android theme color -->
-  <meta name="theme-color" content="#2E3AA1">
+  <meta name="theme-color" content="#000000">
 
   <!-- Web Application Manifest -->
   <link rel="manifest" href="manifest.json">
 
   <!-- Tile color for Win8 -->
-  <meta name="msapplication-TileColor" content="#3372DF">
+  <meta name="msapplication-TileColor" content="#000000">
 
   <!-- Add to homescreen for Chrome on Android -->
   <meta name="mobile-web-app-capable" content="yes">
-  <meta name="application-name" content="PSK">
-  <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+  <meta name="application-name" content="LOC">
+  <link rel="icon" sizes="192x192" href="images/touch/locals_icon-192x192.png">
 
   <!-- Add to homescreen for Safari on iOS -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black">
-  <meta name="apple-mobile-web-app-title" content="Polymer Starter Kit">
-  <link rel="apple-touch-icon" href="images/touch/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-title" content="Locals">
+  <link rel="apple-touch-icon" href="images/touch/locals_icon-192x192.png">
 
   <!-- Tile icon for Win8 (144x144) -->
-  <meta name="msapplication-TileImage" content="images/touch/ms-touch-icon-144x144-precomposed.png">
+  <meta name="msapplication-TileImage" content="images/touch/locals_icon-144x144.png">
 
   <!-- build:css styles/main.css -->
   <link rel="stylesheet" href="styles/main.css">
   <!-- endbuild-->
 
-  <!-- build:js scripts/webcomponents-lite.min.js -->
+  <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js -->
   <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
   <!-- endbuild -->
 
@@ -59,25 +59,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </head>
 
-<body unresolved class="fullbleed layout vertical" id="body">
+<body unresolved class="fullbleed" id="body">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
-<<<<<<< HEAD
-  <iron-localstorage 
+<!-- <div id="body"><h1>Harro</h1></div> -->
+
+    <lo-mqtt id="mqtt" connected="{{connected}}" on-message-received=""></lo-mqtt>
+
+    <iron-localstorage 
       name="lo-public" 
       value="{{louser}}"
       on-iron-localstorage-load="_localuserFound"
       on-iron-localstorage-load-empty="_nolocaluserFound">
      </iron-localstorage>
-=======
-
-    <lo-stage></lo-stage>
-
->>>>>>> origin/master
-  <lo-mqtt connected="{{connected}}"></lo-mqtt>
-  <lo-localstorageapi></lo-localstorageapi>
-  <p>MQTT connected? <span>{{connected}}</span></p>
-
 
   </template>
 
