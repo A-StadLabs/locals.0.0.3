@@ -32,4 +32,5 @@
     <plugin name="cordova-plugin-network-information" spec="~1.0.1" />
     <plugin name="cordova-plugin-splashscreen" spec="~2.1.0" />
     <plugin name="cordova-plugin-statusbar" spec="~1.0.1" />
+
 </widget>
