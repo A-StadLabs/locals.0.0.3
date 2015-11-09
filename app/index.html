@@ -59,9 +59,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 </head>
 
-<body unresolved class="fullbleed layout vertical">
+<body unresolved class="fullbleed layout vertical" id="body">
   <span id="browser-sync-binding"></span>
   <template is="dom-bind" id="app">
+  <iron-localstorage 
+      name="lo-public" 
+      value="{{louser}}"
+      on-iron-localstorage-load="_localuserFound"
+      on-iron-localstorage-load-empty="_nolocaluserFound">
+     </iron-localstorage>
   <lo-mqtt connected="{{connected}}"></lo-mqtt>
   <lo-localstorageapi></lo-localstorageapi>
   <p>MQTT connected? <span>{{connected}}</span></p>
