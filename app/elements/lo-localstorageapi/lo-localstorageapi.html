@@ -1,0 +1,146 @@
+<!--
+  This little teenieweenie awesome polymer component lets you read and write data from and to localstorage, encrypted (salted) with a privatekey or password.
+
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
+<script src="../../scripts/crypto-aes.js"></script>
+<link rel="import" href="../lo-mqtt/lo-mqtt.html">
+
+<dom-module id="lo-localstorageapi">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+
+    <iron-localstorage 
+      id="localstorage" 
+      name="lo-data" value="{{encdata}}" 
+      on-iron-localstorage-load-empty="initEmpty">
+    </iron-localstorage>
+
+  </template>
+</dom-module>
+<script>
+(function() {
+
+  // Declaring some variables to be filled with a value later on.
+  var lomqtt;
+
+  window.addEventListener('WebComponentsReady', function() {
+      // imports are loaded and elements have been registered
+      // Setting up stage so we can reference to it.
+  });
+
+  Polymer({
+    is: 'lo-localstorageapi',
+
+    properties: {
+
+      data: {
+        type: Object,
+        notify: true,
+        observer: "_dataChanged"
+      },
+
+      publickey: {
+        type: String,
+        observer: "_publickey"
+      },
+
+      privatekey: {
+        type: String,
+        observer: "_privatekey"
+      },
+
+      encdata: {
+        type: String,
+        notify: true,
+        observer: "_encdataChanged"
+      },
+
+      deviceid: {
+        type: String,
+        notify: true
+      }
+
+    },
+
+    _privatekey: function(){
+      //console.log(this.privatekey);
+    },
+
+    _publickey: function(){
+      //console.log(this.publickey);
+    },
+
+    initEmpty: function(){
+      lomqtt = document.querySelector("lo-mqtt");
+      console.log("Init activated");
+      //lomqtt.subscribe(topic, 2, function(e){
+      //  console.log("Init data: ",e);
+      //});
+      //var data = { collection: {}, peers: [], godfather: [], lastupdate: Date.now() };
+      //this.data = data;
+      //this.fire('init-data');
+      //this.writeData();
+      //data written
+    },
+
+    writeData: function(){
+        lomqtt = document.querySelector("lo-mqtt");
+
+        //console.log("Pincode:", this.privatekey);
+        var privatekey = this.privatekey;
+        //console.log('Localstorage API write: ', this.data);
+        var object = this.data;
+        var stringifiedobject = JSON.stringify(object);
+        //console.log(stringifiedobject);
+        var encrypted = CryptoJS.AES.encrypt(stringifiedobject, privatekey);
+        //console.log('Localstorage API encrypted: ',encrypted.toString());
+        this.encdata = encrypted.toString();
+        //lomqtt.send(this.publickey, this.encdata);
+        lomqtt.send('userobject/'+this.publickey, "USERUPDATE|"+this.encdata, 0);
+        //var peers = this.data.peers;
+        //this.$.loxmpp.sendgroupMessage(this.publickey, "SYNCUPDATE", null, null, this.encdata);
+        // for (var i = peers.length - 1; i >= 0; i--) {
+        //   if(peers[i]!=this.deviceid+"@opantwerpen.be"){
+        //     console.log('Save ook bij: ',peers[i]);
+        //     this.$.loxmpp.sendMessage(peers[i], "SYNCUPDATE", null, null, this.encdata);
+        //   };
+        // };
+        this.readData();
+    },
+
+    readData: function(){
+      if(!this.encdata){
+        this.initEmpty();
+      } else {
+        var privatekey = this.privatekey;
+        var decrypted = CryptoJS.AES.decrypt(this.encdata, privatekey);
+        var decrtostring = decrypted.toString(CryptoJS.enc.Utf8);
+        var data = JSON.parse(decrtostring, function(k, v) {
+          return v;       // return the unchanged property value.
+        });
+        this.data = data;
+        //console.log(JSON.stringify(data));
+      };
+    },
+
+    _encdataChanged: function(){
+      this.readData();
+    },
+
+    _dataChanged: function(){
+      this.fire("data-changed");
+    },
+
+    attached: function(){
+
+    }
+  });
+})();
+</script>
