@@ -7,7 +7,14 @@
     "paper-elements": "PolymerElements/paper-elements#^1.0.1",
     "platinum-elements": "PolymerElements/platinum-elements#^1.1.0",
     "neon-elements": "PolymerElements/neon-elements#^1.0.0",
-    "page": "visionmedia/page.js#~1.6.3"
+    "page": "visionmedia/page.js#~1.6.3",
+    "node-uuid": "~1.4.3",
+    "object-hash": "puleos/object-hash#~0.9.1",
+    "firebase-element": "GoogleWebcomponents/firebase-element#~1.0.6",
+    "mqtt-elements": "mqttjs/mqtt-elements#~0.0.2-beta"
   },
-  "devDependencies": {}
+  "devDependencies": {},
+  "resolutions": {
+    "polymer": "~1.1.4"
+  }
 }

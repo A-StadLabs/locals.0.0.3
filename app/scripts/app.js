@@ -17,6 +17,33 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
 
+  
+  function importPage(url){
+    return new Promise(function(resolve, reject){
+      Polymer.Base.importHref(url, function(e){
+        resolve(e.target.import);
+      }, reject);
+    });
+  }
+
+  app._nolocaluserFound = function(){
+      importPage("elements/lo-newuser/lo-newuser.html").then(function(){
+        var element = document.createElement("lo-newuser");
+        body.appendChild(element);
+      }, function(err){
+        console.log(err, "error");
+      });
+  };
+
+  app._localuserFound = function(){
+    importPage("elements/lo-stage/lo-stage.html").then(function(){
+        var element = document.createElement("lo-stage");
+        body.appendChild(element);
+    }, function(err){
+        console.log(err, "error");
+    });
+  };
+
   app.displayInstalledToast = function() {
     // Check to make sure caching is actually enabled—it won't be in the dev environment.
     if (!document.querySelector('platinum-sw-cache').disabled) {
@@ -34,43 +61,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
   });
-
-  // Main area's paper-scroll-header-panel custom condensing transformation of
-  // the appName in the middle-container and the bottom title in the bottom-container.
-  // The appName is moved to top and shrunk on condensing. The bottom sub title
-  // is shrunk to nothing on condensing.
-  addEventListener('paper-header-transform', function(e) {
-    var appName = document.querySelector('#mainToolbar .app-name');
-    var middleContainer = document.querySelector('#mainToolbar .middle-container');
-    var bottomContainer = document.querySelector('#mainToolbar .bottom-container');
-    var detail = e.detail;
-    var heightDiff = detail.height - detail.condensedHeight;
-    var yRatio = Math.min(1, detail.y / heightDiff);
-    var maxMiddleScale = 0.50;  // appName max size when condensed. The smaller the number the smaller the condensed size.
-    var scaleMiddle = Math.max(maxMiddleScale, (heightDiff - detail.y) / (heightDiff / (1-maxMiddleScale))  + maxMiddleScale);
-    var scaleBottom = 1 - yRatio;
-
-    // Move/translate middleContainer
-    Polymer.Base.transform('translate3d(0,' + yRatio * 100 + '%,0)', middleContainer);
-
-    // Scale bottomContainer and bottom sub title to nothing and back
-    Polymer.Base.transform('scale(' + scaleBottom + ') translateZ(0)', bottomContainer);
-
-    // Scale middleContainer appName
-    Polymer.Base.transform('scale(' + scaleMiddle + ') translateZ(0)', appName);
-  });
-
-  // Close drawer after menu item is selected if drawerPanel is narrow
-  app.onDataRouteClick = function() {
-    var drawerPanel = document.querySelector('#paperDrawerPanel');
-    if (drawerPanel.narrow) {
-      drawerPanel.closeDrawer();
-    }
-  };
-
-  // Scroll page to top and expand header
-  app.scrollPageToTop = function() {
-    document.getElementById('mainContainer').scrollTop = 0;
-  };
 
 })(document);
