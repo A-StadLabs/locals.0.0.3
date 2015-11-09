@@ -22,34 +22,72 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
         height: 100%;
       }
-      
+
       .canvas {
         background: var(--primary-red);
         color: white;
+        height: 100%;
+
+        @apply(--layout-vertical);
+        @apply(--layout-center);
+
         font-family: Opensans;
         -webkit-font-smoothing: antialiased;
-        height: 100%;   
       }
 
-      neon-animated-pages {
-        height: 100%;
+      .addbar {
+        width: 100vw;
+        height: 10%;
+        min-height: 50px;
+        background: transparent;
+        padding: 10px;
+        box-sizing:border-box;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+        @apply(--layout-end-justified);
+      }
+
+      .addbtn {
+        height: 50px;
+        min-height: 50px;
+        width: 50px;
+        min-height: 50px;
+        border-radius: 50%;
+        background-color: rgba(255,255,255,0.25);
+        border: none;
+        outline: 0;
+        margin: 5px;
+        padding: 0px;
+
+      }
+      .addbtn img {
+        margin: 0px;
+        padding: 0px;
+      }
+
+
+      .grid {
+        background: rgba(0,0,0,0.1);
+        width: 100vw;
+        max-width: 900px;
+      }
+
+      h1,h2,p,a {
+        margin: 0px;
+        padding: 0px 
       }
 
 
     </style>
     <div class="canvas">
 
-    <neon-animated-pages id="gridpages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+      <div class="addbar">
+        <button class="addbtn" on-tap="toObjectstore"><img src="../../images/add.svg"></button>
+      </div>
 
-    <neon-animatable>
-      Hello from <span>{{foo}}</span>
-    </neon-animatable>
-
-    <neon-animatable>
-      <p>2e page (this.selected = 0)</p>      
-    </neon-animatable>
-
-    </neon-animated-pages>
+      <div class="grid">
+        <h1>Hier komen alle objects</h1>
+      </div>
 
     </div>
   </template>
@@ -60,6 +98,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'lo-grid',
 
+      behaviors: [
+          Polymer.NeonAnimatableBehavior
+      ],
+
       properties: {
         foo: {
           type: String,
@@ -68,11 +110,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      ready: function(){
-        this.$.gridpages.selected = 0;
-        this.$.gridpages.entryAnimation = 'slide-from-left';
-        this.$.gridpages.exitAnimation = 'slide-right';        
+      toObjectstore:function(){
+        console.log('to Store!');
       }
+
     });
   })();
   </script>
