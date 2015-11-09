@@ -15,6 +15,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
 
 
+<script src="../../scripts/sha256.js"></script>
+<script src="/../../scripts/enc-base64-min.js"></script>
+
+<link rel="import" href="../lo-renderer/lo-renderer.html">
+
+
 <dom-module id="lo-grid">
   <template>
     <style>
@@ -82,39 +88,167 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="canvas">
 
       <div class="addbar">
-        <button class="addbtn" on-tap="toObjectstore"><img src="../../images/add.svg"></button>
+        <button class="addbtn" on-tap="FireAddData"><img src="../../images/add.svg"></button>
       </div>
 
       <div class="grid">
         <h1>Hier komen alle objects</h1>
+
+      <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
+
+        <lo-object 
+          objectcomponent="{{item.array.objectcomponent}}" 
+          objectname="{{item.array.objectname}}" 
+          objectconfig="{{item.array.objectconfig}}"
+          objectdata="{{item.array.objectdata}}"
+          objectpeers="{{item.array.objectpeers}}"
+          publickey="{{publickey}}"
+          hash="{{item.array.objecthash}}"
+          width="{{item.array.width}}"
+          height="{{item.array.height}}"
+          locked="{{item.array.locked}}"
+          >
+        </lo-object>
+
+      </template>
+
+
+
       </div>
 
     </div>
   </template>
-  <script>
-  (function() {
-    'use strict';
+ <script>
+(function() {
 
-    Polymer({
-      is: 'lo-grid',
+  function hasher(hashobject){
+    var hash = JSON.stringify(hashobject);
+    var hash = CryptoJS.SHA256(hash);
+    //console.log("te hashen: ", hashobject);
+    //console.log("gehashed: ", hash.toString(CryptoJS.enc.Hex));
+    return hash.toString(CryptoJS.enc.Hex); 
+  };
 
-      behaviors: [
-          Polymer.NeonAnimatableBehavior
-      ],
+  var lomqtt;
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'lo-grid',
-          notify: true
-        }
+ 
+
+  Polymer({
+    is: 'lo-grid',
+
+    behaviors: [
+        Polymer.NeonAnimatableBehavior
+    ],
+
+    properties: {
+      publickey: {
+        type: String,
+        notify: true
       },
 
-      toObjectstore:function(){
-        console.log('to Store!');
+      loggedin: {
+        type: Boolean,
+        observer: "_log"
+      },
+
+      objectsdata: {
+        type: Object,
+        notify: true,
+        observer: "_objectChanged"
+      },
+
+      objectsdata_new: {
+        type: Array,
+        notify: true
+      },
+
+      position: {
+        type: Number,
+        notify: true
       }
 
-    });
-  })();
-  </script>
+
+    },
+
+    ready: function(){
+
+      var that = this;
+
+    },
+
+    _selposchanged: function(){
+      this.customStyle['--objectscollection-left'] = 280*this.position.toString()+"px";
+      this.updateStyles();
+    },
+
+    attached: function(){
+      lomqtt = document.querySelector("lo-mqtt");
+      console.log("Objectscollection kent lomqtt: ", lomqtt);
+    },
+
+    toGod: function(){
+      var stage = document.querySelector("lo-stage");
+      stage.selected = 6;
+    },
+
+    _log: function(){
+      //console.log("Loggedin? ",this.loggedin);
+    },
+
+    _objectChanged: function(){
+      //console.log('updated: ',this.objectsdata.collection);
+      this.objectsdata_new = [];
+      var objectsdata_new = this.objectsdata_new;
+      var p = this.objectsdata.collection;
+      for (var key in p) {
+        if (p.hasOwnProperty(key)) {
+          //console.log(key + " -> " + p[key]);
+          //console.log(p[key].name);
+          this.push('objectsdata_new', { 
+            array: {objectname: p[key].name, 
+            objectconfig: p[key].config,
+            objectdata: p[key].data,
+            objectpeers: p[key].peers,
+            objectcomponent: p[key].component,
+            objecthash: hasher(p[key].data),
+            objectlocked: p[key].locked }
+          });
+          
+          //console.log('New objectsdata: ', objectsdata_new);
+        }
+      };
+      this.customStyle['--objectscollection-width'] = 280*this.objectsdata_new.length.toString()+"px";
+      this.updateStyles();
+      this.objectsdata_new = objectsdata_new;
+    },
+
+    validate: function(e){
+      var i = e.target.id;
+      var data = this.objectsdata_new.collection[i].data;
+      var config = this.objectsdata_new.collection[i].config;
+      var name = this.objectsdata_new.collection[i].name;
+      this.fire('qr-reader', {  
+        command: "VERIFY", 
+        objectname: name, 
+        objectconfig: config, 
+        objectdata: JSON.stringify(data) 
+      });
+    },
+
+    _toQR: function(){
+      this.fire('qr-identity');
+    },
+
+    _toQReader: function(){
+      this.fire('qr-reader');
+    },
+
+    FireAddData: function(){
+      this.fire('object-store');
+    }
+
+  });
+})();
+</script>
+
 </dom-module>

@@ -9,10 +9,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-
+<!-- 
 <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animatable.html"> -->
+
+<link rel="import" href="../lo-grid/lo-grid.html">
+
+<script src="../../bower_components/node-uuid/uuid.js"></script>
+
+<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-from-right-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-left-animation.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-up-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-down-animation.html">
+
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-in-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
+
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
+
+<link rel="import" href="../lo-localstorageapi/lo-localstorageapi.html">
+<link rel="import" href="../lo-qrrender/lo-qrrender.html">
+<link rel="import" href="../lo-renderer/lo-renderer.html">
+
+
 
 
 <dom-module id="lo-stage">
@@ -32,41 +54,507 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </style>
 
+
+    <iron-localstorage 
+      id="localstorage" 
+      name="lo-public"
+      value="{{publickey}}">
+    </iron-localstorage>
+
+    <iron-localstorage 
+      id="localstorage" 
+      name="lo-private" 
+      value="{{privatekey}}">
+    </iron-localstorage>
+
+    <iron-localstorage 
+      id="localstorage" 
+      name="lo-device" 
+      value="{{deviceid}}">
+    </iron-localstorage>
+
+    <lo-localstorageapi 
+      id="localapielem" 
+      publickey="{{publickey}}" 
+      privatekey="{{privatekey}}" 
+      data="{{localapi}}" 
+      encdata="{{localenc}}"
+      deviceid="{{deviceid}}">
+    </lo-localstorageapi>
+
+    <lo-mqtt connected="{{mqttconnected}}"
+    on-message-received="msgreceived"
+    on-mqtt-connected="mqttconnectedfire"
+    deviceid="{{deviceid}}"
+    publickey="{{publickey}}"
+    subs
+    topic="{{publickey}}" id="lomqtt">
+    </lo-mqtt>
+
+
     <neon-animated-pages id="gridpages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
-    <lo-grid></lo-grid>
+
+
+      <lo-grid 
+    id="objectcoll" 
+    publickey="{{publickey}}" 
+    objectsdata="{{localapi}}" 
+    class="color"
+    position="1">
+  </lo-grid>
+
 
     <neon-animatable>
-      <p>2e page (this.selected = 0)</p>      
+      <p>SECTION 1</p>      
+    </neon-animatable>
+
+    <neon-animatable>
+      <p>SECTION 2</p>      
+    </neon-animatable>
+
+
+
+    <neon-animatable>
+      <p>SECTION 3</p>      
+    </neon-animatable>
+
+    <neon-animatable>
+      <p>SECTION 4</p>      
+    </neon-animatable>
+
+
+    <neon-animatable>
+      <div class="canvas">
+        <lo-objectstore userobjects="{{localapi}}"></lo-objectstore>
+      </div>
     </neon-animatable>
 
     </neon-animated-pages>
 
   </template>
-  <script>
+
+<script>
   (function() {
-    'use strict';
+
+    function importPage(url){
+    return new Promise(function(resolve, reject){
+      Polymer.Base.importHref(url, function(e){
+        resolve(e.target.import);
+      }, reject);
+    });
+  };
+
+
+  function hasher(hashobject){
+    var hash = JSON.stringify(hashobject);
+    var hash = CryptoJS.SHA256(hash);
+    //console.log("te hashen: ", hashobject);
+    //console.log("gehashed: ", hash.toString(CryptoJS.enc.Hex));
+    return hash.toString(CryptoJS.enc.Hex); 
+  };
+
+  var lomqtt;
+
+
+    var partner;
+
+    var stage;
+
+
+    var app = document.getElementById("app");
+
+    //console.log(app);
+
+    var saveEncuserobject = function(e){
+      //console.log(e);
+      app.localenc = e;
+    };
+
+    var changeStage = function(e){
+      stage.selected = e;
+    };
 
     Polymer({
       is: 'lo-stage',
 
       properties: {
-        foo: {
+
+        selected: {
+          type: Number
+        },
+        domein: {
           type: String,
-          value: 'lo-stage',
-          notify: true
+          value: "opantwerpen.be"
+        },
+        deviceid: {
+          type: String,
+          observer: "_deviceid"
+        },
+        publickey: {
+          type: String,
+          observer: "_publickey"
+        },
+        mqttconnected: {
+          type: Boolean,
+          value: false,
+          observer: "_mqttconnected"
         }
+
 
       },
 
+      /**
+     * Ready function to declare some variables and setup event listeners.
+     */show1: function(){
+      this.show = 1;
+     },
+
+     _publickey: function(){
+
+     },
 
       ready: function(){
+
+        //Dit staat hier voor de gemakkelijkheid
+
+        this.loggedin = false;
+
         this.$.gridpages.selected = 0;
         this.$.gridpages.entryAnimation = 'slide-from-left';
-        this.$.gridpages.exitAnimation = 'slide-right';        
+        this.$.gridpages.exitAnimation = 'slide-right';   
+
+        var that = this;
+        
+        this.addEventListener('change-stage', function(e){
+          that.entryAnimation = e.detail.entry;
+          that.exitAnimation = e.detail.exit;
+          that.selected = e.detail.stage;
+
+        }); 
+
+
+        this.addEventListener("object-selected", function(e){
+          console.log("Object selected: ", e.detail.object);
+          var object = e.detail.object;
+          that.activename = object;
+          that.activedata = that.localapi.collection[object].data;
+          that.activeconfig = that.localapi.collection[object].config;
+          that.activecomponent = that.localapi.collection[object].component;
+          console.log(that.activecomponent);
+          that.activepeers = that.localapi.collection[object].peers;
+          that.activehash = that.localapi.collection[object].hash;
+          that.activelocked = that.localapi.collection[object].locked;
+          that.$.activeobject._dataset();
+
+          that.entryAnimation = e.detail.entry;
+          that.exitAnimation = e.detail.exit;
+
+          that.selected = 1;
+        });
+
+        this.addEventListener('save-it', function(e){
+          lomqtt = that.$.lomqtt;
+          that.localapi.collection[e.detail.datasetkey].data = e.detail.dataset;
+          that.localapi.collection[e.detail.datasetkey].config = e.detail.config;
+          var hash = hasher(that.localapi.collection[e.detail.datasetkey].data);
+          lomqtt.send('userhash/'+that.publickey, "HASHUPDATE|"+e.detail.datasetkey+"|"+hash+"|"+that.publickey, 0);
+          that.$.localapielem.writeData();
+        });
+
+        this.addEventListener('message-received', function(e){
+          that.msgreceived(e.detail.msg);
+        });
+        
+        this.addEventListener('save', function(){
+          that.$.localapielem.writeData();
+        });
+
+        this.addEventListener('object-store', function(){
+          importPage("elements/lo-objectstore/lo-objectstore.html").then(function(){
+            that.entryAnimation = 'slide-from-right-animation';
+            that.exitAnimation = 'slide-left-animation';
+            that.selected = 5;
+            }, function(err){
+              console.log(err, "error");
+            });
+        });
+
+        this.addEventListener('qr-identity', function(e){
+          that._toQR();
+        });
+
+        this.addEventListener('qr-reader', function(e){
+          that._qrreader(e);
+        });
+
+        this.addEventListener('add-getuige', function(e){
+          console.log("Peer listener activated in lo-objectscollection");
+          this.fire('qr-reader', { 
+            command: "VERIFY", 
+            objectname: e.detail.objectname, 
+            objectconfig: e.detail.objectconfig, 
+            objectdata: e.detail.objectdata,
+            publickey: e.detail.publickey,
+            hash: e.detail.hash
+          });
+        
+        });
+      },
+
+      attached: function(){
+        stage = document.querySelector("lo-stage");
+      },
+
+      _deviceid: function(){
+        console.log("got device id");
+      },
+
+     
+
+      /** * Dees functie opent de qr reader en wacht tot em iets terug krijgt. */
+
+      _qrreader: function(e){
+
+        var lomqtt = this.$.lomqtt;
+
+        this.importHref("../elements/lo-qrreader/lo-qrreader.html", function(g) {
+          this.addEventListener("got-code", function(f){
+            var partner = f.detail.partner;
+            var command = e.detail.command;
+            var objectname = e.detail.objectname;
+            var objectdata = e.detail.objectdata;
+            var objectconfig = e.detail.objectconfig;
+            var userid = e.detail.userid;
+            var hash = e.detail.hash;
+            console.log("sending verification req");
+            lomqtt.subscribe("validate/"+this.publickey, 2);
+            lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);
+          });
+        // e.target.import is the import document.
+        changeStage(2);
+        //console.log('import',e);
+      }, function(g) {
+        //console.log('import',e);
+        // loading error
+      });
+        
+      },
+
+    
+      // Navigational stuff
+      /** * This one shows the qr code associated with this device */
+      _toQR:function(){
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
+        this.selected = 3;
+        console.log("To qr");
+        this.qrcode = this.deviceid;
+      },
+
+    _toWhere:function(){
+      this.selected = 0;
+    },
+
+    _toScanner: function(){
+      this.selected = 2;
+    },
+
+    _mqttconnected: function(){
+      if(this.publickey){
+      };
+      
+    },
+
+    mqttconnectedfire: function(){
+    },
+
+     
+
+      msgreceived: function(e){
+        console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
+
+        var commandarray = e.detail.msg.split("|");
+
+        var partner = commandarray[1];
+        var command = commandarray[0];
+
+        var lomqtt = this.$.lomqtt;
+
+        var dialog = this.$.lodialog;
+        var peerd = this.$.peerval;
+
+        if(command){
+          switch(command){
+            case "SYNC1":
+              // Een ander toestel wil met dit toestel syncen.
+              //console.log("sync request");
+              dialog.title = "SYNC?";
+              dialog.body = "Een toestel wil synchroniseren met dit toestel.";
+              dialog.command = command;
+              dialog.partner = partner;
+              this.selected = 4;
+            break;
+
+            case "SYNC3":
+              console.log("Showing my private key");
+              lomqtt.send("sync/"+partner, "SYNC4|"+this.deviceid, 2);
+              this.qrcode = this.privatekey;
+              
+            break;
+
+            case "SYNCOK":
+              //console.log("Sync OK!");
+              this.selected = 0;
+            break;
+
+            case "HASHUPDATE":
+              //console.log("Sync OK!");
+              //this.selected = 1;
+              //console.log("Oops, I should be checking this hash.", commandarray[2], " for user ", commandarray[3]);
+                this.$.godf.checkSum(commandarray[3], commandarray[1], commandarray[2], function(){
+                  console.log("HashCheck done");
+                })
+            break;
+
+            case "USERUPDATE":
+              // I am a sync/peer for this user so I keep myself up to date.
+              // Overwrite the local userobject with the one received.
+              //if(e.detail.detail.partner!=this.openfire1+"@"+this.domein){
+              
+              //console.log("normaal ga ik dus nu deze shit overschijven: ", e.detail.msg);
+
+              this.$.localapielem.encdata = partner;
+              this.localapi.lastupdate = Date.now();
+               // window.location = "/";
+              //};
+            break;
+
+            case "SYNCUPDATE":
+              this.$.localapielem.encdata = e.detail.detail[4].objectdata;
+
+            break;
+
+            case "VALIDATE":
+              var objectname = commandarray[2];
+              var userid = commandarray[5];
+              this.localapi.collection[objectname].peers.push({ peer: userid });
+              this.localapi.collection[objectname].locked = true;
+              this.localapi.lastupdate = Date.now();
+              this.$.localapielem.writeData();
+              this.selected = 0;
+            break;
+
+            case "VERIFY":
+
+              // Another user wants a dataset verified by this user
+              console.log("sync request", commandarray);
+              peerd.title = "VERIFY";
+              peerd.body = "Wil je getuige zijn van deze dataset?";
+              peerd.command = command;
+              peerd.partner = partner;
+              peerd.objectname = commandarray[2];
+              peerd.objectdata = commandarray[4];
+              peerd.userid = commandarray[5];
+              peerd.objectconfig = commandarray[3];
+              peerd.hash = commandarray[6];
+              this.selected = 7;
+              //app.openDialog("Wil je deze dataset van Kristien valideren?");
+            break;
+
+            case "DATAUPDATE":
+              // The incoming dataset has been updated. This device should update the objectconfig and check whether the objectdata has been changed. When changed, the the verification should be cancelled.
+              //console.log("sync request");
+              dialog.title = "SYNC?";
+              dialog.body = "Een toestel wil synchroniseren met dit toestel.";
+            break;
+
+          };
+
+        };
+      },
+
+
+      cancel: function(){
+        this.selected = 4;
+      },
+
+      processCommand: function(e){
+        // Dit verwerkt het commando dat door de dialog wordt gestuurd.
+        var command = e.detail.command;
+        var partner = e.detail.partner;
+        var objectname = e.detail.objectname;
+        var objectdata = e.detail.objectdata;
+        var objectconfig = e.detail.objectconfig;
+        var userid2 = e.detail.userid;
+        var hash = e.detail.hash;
+        var lomqtt = this.$.lomqtt;
+
+        //console.log("Process command: ",command);
+
+        switch(command){
+          case "SYNC1":
+            //console.log("confirmation to ", command, " for ", partner);
+            this.localapi.peers.push(this.deviceid);
+            this.localapi.peers.push(partner);
+            this.$.localapielem.writeData();
+            var data = this.$.localapielem.encdata;
+            var encruserid = this.encruserid;            
+            this.$.localapielem.readData();
+            this.qrcode = this.publickey;
+            this.selected = 3;
+            lomqtt.send("sync/"+partner, "SYNC2|"+this.deviceid, 2);
+          break;
+
+          case "VERIFY":
+            //console.log("Ik word getuige van ", userid2);
+            //(user1, user2, objectname, objecthash)
+            lomqtt.send("validate/"+partner, "VALIDATE"+"|"+this.publickey+"|"+objectname+"|"+null+"|"+null+"|"+this.publickey+"|"+hash, 2);
+            //loxmpp.sendgroupMessage(this.userid, userid2, objectname, hash);
+            console.log("dus ik push naar godfather array: ", partner, objectname, hash);
+            this.localapi.godfather.push({ "child": partner, "object": objectname, "hash": hash, "valid": true });
+            this.$.localapielem.writeData();
+            this.selected = 0;
+          break;
+          
+        };
+        
+      },
+
+    _addDataset: function(){
+        //console.log("add dataset");
+        var config = {};
+        config["colors"] = ["blue", "red"];
+
+        var objectdata = {};
+        objectdata["username"] = "kingflurkel";
+
+        var object = {};
+        object["name"] = "SkeletonObject";
+        object["data"] = objectdata;
+        object["config"] = config;
+        object["peers"] = [];
+        object["component"] = "labs002-skeletonobject";
+
+        this.localapi.collection[object.name] = object;
+        this.$.localapielem.writeData();
+      },
+
+
+      confirmGodfather: function(partner, objectname, hash){
+        var lomqtt = this.$.lomqtt;
+        lomqtt.send("validate/"+partner, "VALIDATE"+"|"+this.publickey+"|"+objectname+"|"+null+"|"+null+"|"+this.publickey+"|"+hash, 2);
+            //loxmpp.sendgroupMessage(this.userid, userid2, objectname, hash);
+            console.log("dus ik push naar godfather array: ", partner, objectname, hash);
+            this.localapi.godfather.push({ "child": partner, "object": objectname, "hash": hash, "valid": true });
+            this.$.localapielem.writeData();
+            this.selected = 0;
       }
 
 
     });
-  })();
-  </script>
+})();
+</script>
+
+
+
 </dom-module>

@@ -13,12 +13,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <dom-module id="lo-objectdetail">
   <template>
     <style>
-      :host {
-        display: block;
-      }
+    :host {
+      display: block;
+      --enabled-disabled: 0.25;
+    }
+
+    .item {
+      width: 100%;
+      height: 100%;
+      border-radius: 5px;
+      margin: 1px;
+      background-color: black;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+    }
+
+    .insideitem {
+      opacity: var(--enabled-disabled);
+    }
+
+    .insideitem img {
+      width: 100%;
+      height: 100%;
+    }
+
+    .white {
+      color: white;
+    }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
-  </template>
+    <div class="item">
+      <div class="insideitem">
+<!--         <span class="white">{{objectnaam}}</span> -->
+        <img src="{{icon}}" />
+      </div>
+    </div>  </template>
   <script>
   (function() {
     'use strict';
@@ -26,13 +54,37 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     Polymer({
       is: 'lo-objectdetail',
 
-      properties: {
-        foo: {
-          type: String,
-          value: 'lo-objectdetail',
-          notify: true
-        }
+     properties: {
+      enabled: {
+        type: Boolean,
+        value: false,
+        notify: true,
+        observer: "_enabledChanged"
+      },
+
+      object: {
+        type: Object
       }
+    },
+
+    listeners: {
+      'tap': 'regularTap'
+    },
+
+
+
+    regularTap: function(e) {
+      this.fire("item-tapped", { msg: e.detail });
+    },
+
+    _enabledChanged: function(){
+      if(this.enabled){
+        console.log(this.enabled);
+        this.customStyle['--enabled-disabled'] = "1";
+        this.updateStyles();
+      }
+    }
+    
     });
   })();
   </script>
