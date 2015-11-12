@@ -17,10 +17,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: block;
           background-color: white;
           width: 100vw;
-          max-width: 600px;
-          height: 100vh;
-          max-height: 600px;
-    }
+/*          max-width: 600px;
+*/          height: 100vh;
+/*          max-height: 600px;
+*/    }
 
 /*    .peers {
       background-color: white;
@@ -34,7 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       height: 90px;
       background-color: transparent;
       @apply(--layout-horizontal);
-      @apply(--layout-center);
+      @apply(--layout-end-justified);
       box-sizing:border-box;
 
 /*      border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -75,7 +75,69 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       padding: 0px 15px 0px 15px;
 
     }
+    .backbtn {
+      height: 50px;
+      width: 50px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: white;
+      font-size: 20px;
+      font-weight: 100;
+      padding: 10px;
+    }
 
+    .backbtn img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .peersnr {
+      width: 100%;
+      height: 100%;
+/*      border-radius: 50%;*/
+      color: black;
+/*      background-color: rgba(0,0,0,0.05);*/
+      text-align: center;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+
+    }
+
+    .nr {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      height: 60vh;
+      width: 100%;
+          }
+
+
+    h1 {
+        font-family: OpensansLight;
+        color: #333333;
+        font-size: 22px;
+    }
+
+
+    .mainbtn {
+      height: 50px;
+      min-height: 50px;
+      width: 50px;
+      min-height: 50px;
+      border-radius: 50%;
+      background-color: rgba(0,0,0,0.1);
+      border: none;
+      outline: 0;
+      margin: 5px;
+      padding: 0px;
+
+    }
+    .mainbtn img {
+      margin: 0px;
+      padding: 0px;
+      width: 80%;
+      height: 80%;
+    }
 
   </style>
   <template>
@@ -83,17 +145,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <div class="peers">
 
       <div class="addpeerbar">
-        <button class="backbtn" on-tap="back">back</button>
-        <span class="flex"></span>
-        <button class="backbtn" on-tap="newpeer">
-          <!-- <img src="../../images/plus.svg">
-          <img src="../../images/accept.svg"> -->
-          +++
+        <button class="backbtn" on-tap="back">
+          <img src="../../images/decline.svg">
         </button>
-      </div>
-<!--         <p>{{peers.length}}</p> -->
 
-      <div class="peerlist">
+      </div>
+
+      <div class="peersnr">
+        <div class="nr">
+          <img src="../../images/accept.svg">
+          <h1><span>{{peers.length}}</span></h1>
+        </div>
+
+        <button class="mainbtn" on-tap="newpeer">
+          <img src="../../images/plusval.svg">
+        </button> 
+
+      </div>
+
+
+
+<!--       <div class="peerlist">
         <tempate is="dom-repeat" items="{{peers}}" as="t" observer="{{peers.*}}">
           <div class="peerlistitem">
             <h3 class="flex">??<span>{{t.peer}}</span></h3>
@@ -102,7 +174,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         </tempate>
       </div>
-    
+     -->
     </div>
 
   </template>
