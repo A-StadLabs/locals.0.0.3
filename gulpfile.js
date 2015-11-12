@@ -137,8 +137,15 @@ gulp.task('copy', function () {
     dot: true
   }).pipe(gulp.dest(gulp.paths.dist));
 
+  var appscripts = gulp.src([
+    'app/scripts/**/*.js',
+  ], {
+    dot: true
+  }).pipe(gulp.dest(gulp.paths.dist + '/scripts'));
+
   var bower = gulp.src([
-    'bower_components/**/*'
+    'bower_components/**/*',
+    '!bower_components/web-animations-js/web-animations.min.js.gz'
   ]).pipe(gulp.dest(gulp.paths.dist + '/bower_components'));
 
   var elements = gulp.src(['app/elements/**/*.html',
@@ -156,7 +163,7 @@ gulp.task('copy', function () {
     .pipe($.rename('elements.vulcanized.html'))
     .pipe(gulp.dest(gulp.paths.dist + '/elements'));
 
-  return merge(app, bower, elements, vulcanized, swBootstrap, swToolbox)
+  return merge(app,appscripts, bower, elements, vulcanized, swBootstrap, swToolbox)
     .pipe($.size({title: 'copy'}));
 });
 
@@ -288,7 +295,8 @@ gulp.task('optimize', function (cb) {
     cb);
 });
 
-gulp.task('build', ['clean'], function (cb) {
+//gulp.task('build', ['clean'], function (cb) {
+gulp.task('build', [], function (cb) {
   // Uncomment 'cache-config' if you are going to use service workers.
   runSequence(
     ['copy', 'styles'],

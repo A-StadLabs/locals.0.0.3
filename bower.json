@@ -11,7 +11,8 @@
     "node-uuid": "~1.4.3",
     "object-hash": "puleos/object-hash#~0.9.1",
     "firebase-element": "GoogleWebcomponents/firebase-element#~1.0.6",
-    "mqtt-elements": "mqttjs/mqtt-elements#~0.0.2-beta"
+    "mqtt-elements": "mqttjs/mqtt-elements#~0.0.2-beta",
+    "uuid": "~2.0.1"
   },
   "devDependencies": {},
   "resolutions": {
