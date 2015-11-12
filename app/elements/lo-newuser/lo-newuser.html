@@ -262,7 +262,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       console.log('--- Created UUID ---');
       console.log('--- publickey: ', this.publickey, ' - privatekey: ', this.privatekey, ' - deviceid: ', this.deviceid, ' ---');
 
-      var data = { collection: {}, peers: [], godfather: [], lastupdate: Date.now() };
+      var data = {
+  "collection":
+  {
+    "Avatar":
+      {
+      "component":"labs002-avatar",
+      "conditions":[{"objectname":""}],
+      "config":
+        {
+        "beard":[0,"red"],
+        "bottom":[2,"red"],
+        "face":[0,"red"],
+        "glasses":[0,"red"],
+        "head":[0,"red"],
+        "lijf":[0,"var(--primary-lightblue)"],
+        "shoes":[2,"black"],"snit":[3,"red"],
+        "top":[0,"black"]
+        },
+      "data":
+        {
+        "birthdate":"01/01/1970",
+        "birthplace":"Geboorteplaats",
+        "firstname":"Voornaam",
+        "lastname":"Achternaam"},
+        "description":"Lorem ipsum",
+        "enabled":true,
+        "hash":"none",
+        "height":100,
+        "icon":"../../../images/ADDER_icons-01.svg",
+        "locked":false,"name":"Avatar",
+        "version":"0.0.1",
+        "width":100,
+        "peers":[]
+        }
+      },
+      "peers":[],
+      "godfather":[],
+      "lastupdate":Date.now()
+};
+
+      //var data = { collection: {}, peers: [], godfather: [], lastupdate: Date.now() };
       localapi.data = data;
       this.fire('init-data');
       localapi.writeData();
