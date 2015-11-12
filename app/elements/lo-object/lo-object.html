@@ -9,23 +9,95 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../lo-validations/lo-validations.html">
+<link rel="import" href="../lo-renderer/lo-renderer.html">
+<link rel="import" href="../lo-prevalue/lo-prevalue.html">
+
+
 
 <dom-module id="lo-object">
   <template>
     <style>
       :host {
         display: block;
-      }
-    </style>
-    <div>Hello from <span>{{foo}}</span></div>
-    <div id="rendercanvas"></div>
 
+      }
+
+      .object {
+        width: 100%;
+        height: 100%;
+        border-radius: 5px;
+        box-sizing:border-box;
+        padding: 5px;
+        background: white;
+      }
+
+      .validationsbar {
+        width: 100%;
+        height: 20%;
+        padding: 20px;
+        box-sizing:border-box;
+/*        background: rgba(255,255,255,0.85);*/
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        @apply(--layout-center);
+      }
+
+
+
+      .valuesbar {
+        width: 100%;
+        height: 30%;
+        background: rgba(0,0,0,0.1);
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+      }
+
+      .renderbar {
+        width: 100%;
+        height: 50%;
+/*        background: rgba(255,255,255,0.85);*/
+        @apply(--layout-horizontal);
+        @apply(--layout-center-center);
+      }
+
+
+      #rendercanvas {
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.05);
+        overflow: hidden;
+        color: black;
+      }
+
+    </style>
+  
+  <div class="object">
+    <div class="validationsbar">
+      <lo-validations nrval="6"></lo-validations>
+    </div>
+
+
+    <div class="renderbar">
+      <div id="rendercanvas">
+        <!-- <span>{{objectname}}</span> -->
+      </div>
+    </div>
+
+
+    <div class="valuesbar">
+      <lo-prevalue mainval="naam"></lo-prevalue>
+    </div>
+
+    </div>
 
   </template>
   <script>
   (function() {
-    'use strict';
 
+
+    var elem;
+    
     Polymer({
       is: 'lo-object',
 
@@ -48,14 +120,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       attached: function(){
         var rendercanvas = this.$.rendercanvas;
-        this.importHref("../elements/labs002-components/"+this.objectcomponent+".html", function(e) {
+        console.log(this.objectcomponent);
+
+        this.importHref("ourcomponents/"+this.objectcomponent+".html", function(e) {
         
         rendercanvas.innerHTML = '';
         elem = document.createElement(this.objectcomponent);
+
         elem.objectconfig = this.objectconfig;
         elem.objectname = this.objectname;
         elem.objectdata = this.objectdata;
         elem.hash = this.hash;
+        elem.className = 'bennie';
         rendercanvas.appendChild(elem);
       }, function(e) {
          //console.log('import',e);

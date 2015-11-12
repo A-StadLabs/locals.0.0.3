@@ -1,0 +1,167 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="labs002-avatar-bottompages">
+  <style>
+    :host {
+      display: block;
+      --this-bottomcolor: var(--primary-purple);
+
+
+    }
+
+    neon-animated-pages {
+      height: 100%;
+
+    }
+
+    .bottomcolor {
+      fill: var(--this-bottomcolor);
+    }
+
+
+  </style>
+  <template>
+
+
+      <neon-animated-pages id="bottompages" selected="{{selected}}"  entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+
+
+          <neon-animatable>
+            <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 190 340" enable-background="new 0 0 190 340" xml:space="preserve">
+            <g id="bottom_-_1">
+              <path class="bottomcolor" d="M94.667,262.441c-5.205,0-15.91-0.442-15.91-0.442s1.701,14.44,2.591,21.888
+                c0.374,3.117,2.596,19.336,3.436,22.95c1.188,0.489,4.917,1.115,7.684-0.073c0.528-5.257,1.437-20.834,1.437-22.877
+                c0-2.138-0.067-2.722,0.767-2.722c0.539,0,0.494,0.583,0.494,2.722c0,2.043,0.832,17.621,1.359,22.877
+                c2.769,1.188,6.849,0.562,8.035,0.072c0.84-3.613,3.062-19.833,3.438-22.949c0.891-7.449,2.591-21.889,2.591-21.889
+                S99.871,262.441,94.667,262.441z"/>
+            </g>
+            </svg>
+          </neon-animatable>
+
+
+
+
+
+
+          <neon-animatable>
+              <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                viewBox="0 0 190 340" enable-background="new 0 0 190 340" xml:space="preserve">
+              <g id="bottom_-_2">
+                <path class="bottomcolor" d="M94.667,263.441c-5.205,0-15.727-1.088-15.727-1.088s3.519,14.084,4.41,21.532
+                  c0.374,3.117,1.423,12.958,1.801,22.369c1.188,0.489,4.508,1.458,7.274,0.269c0.528-5.256-0.038-20.594-0.038-22.638
+                  c0-2.138,0.88-6.724,2.286-6.724c1.224,0,1.937,4.585,1.937,6.724c0,2.044-0.156,17.382,0.371,22.638
+                  c2.769,1.189,6.054,0.256,7.24-0.233c0.422-9.211,1.401-19.287,1.775-22.404c0.891-7.448,4.408-21.532,4.408-21.532
+                  S99.871,263.441,94.667,263.441z"/>
+              </g>
+              </svg>
+
+          </neon-animatable>
+
+
+
+
+
+
+          <neon-animatable>
+            <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+              viewBox="0 0 190 340" enable-background="new 0 0 190 340" xml:space="preserve">
+            <g id="bottom_-_3">
+              <path class="bottomcolor" d="M94.667,262.441c-5.205,0-15.91-0.442-15.91-0.442s1.814,18.714,1.98,29.8
+                c3.8,2.109,11.04,1.407,13.173,1.083c0.004-2.454-0.005-8.35-0.005-8.995c0-2.138-0.067-2.722,0.767-2.722
+                c0.539,0,0.494,0.583,0.494,2.722c0,0.641-0.017,6.52-0.023,8.952c1.817,0.294,10.494,1.169,14.468-1.047
+                c-0.6-9.735,0.978-29.793,0.978-29.793S99.871,262.441,94.667,262.441z"/>
+            </g>
+            </svg>
+
+          </neon-animatable>
+
+
+
+
+
+
+
+
+
+
+    </neon-animated-pages>
+
+
+
+
+
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-avatar-bottompages',
+
+      behaviors: [
+      Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+        selected: {
+          type: Number
+        },
+        
+        color: {
+          type: String,
+          value: '',
+          observer: '_Watchit'
+        }
+      },
+
+      ready: function(){
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
+      },
+
+
+      _Watchit: function(){
+
+      this.customStyle['--this-bottomcolor'] = this.color;
+      this.updateStyles(); 
+
+
+      }
+
+
+
+
+    });
+  })();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

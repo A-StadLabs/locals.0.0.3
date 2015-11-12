@@ -16,8 +16,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+      .preval {
+        font-size: 0.85em;
+        color: black;
+        margin: 0px;
+        padding: 0px;
+      }
+
+
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="preval"><span>{{mainval}}</span></div>
   </template>
   <script>
   (function() {
@@ -27,9 +35,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'lo-prevalue',
 
       properties: {
-        foo: {
+        mainval: {
           type: String,
-          value: 'lo-prevalue',
+          value: 'naam',
           notify: true
         }
       }

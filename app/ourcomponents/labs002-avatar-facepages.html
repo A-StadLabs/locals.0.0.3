@@ -1,0 +1,124 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="labs002-avatar-facepages">
+  <style>
+    :host {
+      display: block;
+      --this-facecolor: var(--primary-purple);
+
+
+    }
+
+    neon-animated-pages {
+      height: 100%;
+
+    }
+
+    .facecolor {
+      fill: var(--this-facecolor);
+    }
+
+
+  </style>
+  <template>
+
+
+      <neon-animated-pages id="facepages" selected="{{selected}}"  entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+
+
+          <neon-animatable>
+        <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+          viewBox="0 0 190 340" enable-background="new 0 0 190 340" xml:space="preserve">
+        <circle fill="#000100" cx="78.487" cy="135.092" r="4.252"/>
+        <circle fill="#000100" cx="111.927" cy="135.092" r="4.252"/>
+        <g>
+          <path fill="#000100" opacity="0.3" d="M94.899,178.102h-0.884c-7.701,0-11.393-3.289-11.546-3.429c-0.612-0.558-0.655-1.507-0.097-2.118
+            c0.558-0.613,1.507-0.656,2.119-0.098c0.021,0.018,3.073,2.645,9.524,2.645h0.884c6.445,0,9.496-2.619,9.524-2.645
+            c0.61-0.559,1.562-0.516,2.119,0.098c0.558,0.611,0.515,1.562-0.099,2.118C106.292,174.812,102.6,178.102,94.899,178.102z"/>
+        </g>
+        </svg>
+          </neon-animatable>
+
+
+
+
+
+
+    </neon-animated-pages>
+
+
+
+
+
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-avatar-facepages',
+
+      behaviors: [
+      Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+        selected: {
+          type: Number
+        },
+
+        color: {
+          type: String,
+          value: '',
+          observer: '_Watchit'
+        }
+      },
+
+      ready: function(){
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
+      },
+
+      _Watchit: function(){
+
+
+      this.customStyle['--this-facecolor'] = this.color;
+      this.updateStyles(); 
+
+      }
+
+
+
+    });
+  })();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

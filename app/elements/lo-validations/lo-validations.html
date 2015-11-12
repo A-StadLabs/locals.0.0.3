@@ -16,8 +16,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+
+      .vals {
+        color: black;
+        @apply(--layout-horizontal);
+        @apply(--layout-center);
+      }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+
+    <div class="vals">
+      <img src="../../images/accept.svg"><span>{{nrval}}</span>
+    </div>
+  
   </template>
   <script>
   (function() {
@@ -27,9 +37,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'lo-validations',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'lo-validations',
+        nrval: {
+          type: Number,
+          value: 8,
           notify: true
         }
       }

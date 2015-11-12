@@ -1,0 +1,829 @@
+<!-- Copyright (c) 2015 The Locals Project Authors. All rights reserved.
+See authors.md for a list of all members.
+ -->
+<!-- 
+ {
+  "component": "labs002-avatar",
+  "conditions": [
+    {
+      "objectname": ""
+    }
+  ],
+  "config": {
+    "beard": [
+      0,
+      "red"
+    ],
+    "lijf": [
+      0,
+      "var(--primary-lightblue)"
+    ],
+    "bottom": [
+      2,
+      "red"
+    ],
+    "face": [
+      0,
+      "red"
+    ],
+    "glasses": [
+      0,
+      "red"
+    ],
+    "head": [
+      0,
+      "red"
+    ],
+    "shoes": [
+      2,
+      "black"
+    ],
+    "snit": [
+      3,
+      "red"
+    ],
+    "top": [
+      0,
+      "black"
+    ]
+  },
+  "data": {
+    "birthdate": "01/01/1970",
+    "birthplace": "Geboorteplaats",
+    "firstname": "Voornaam",
+    "lastname": "Achternaam"
+  },
+  "description": "Lorem ipsum",
+  "enabled": true,
+  "hash": "hahaha",
+  "height": 100,
+  "locked": false,
+  "name": "Avatar",
+  "version": "0.0.1",
+  "width": 100
+} -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+
+
+<link rel="import" href="labs002-avatar-snitpages.html">
+<link rel="import" href="labs002-avatar-glassespages.html">
+<link rel="import" href="labs002-avatar-beardpages.html">
+<link rel="import" href="labs002-avatar-facepages.html">
+
+<link rel="import" href="labs002-avatar-headpages.html">
+<link rel="import" href="labs002-avatar-toppages.html">
+<link rel="import" href="labs002-avatar-bottompages.html">
+<link rel="import" href="labs002-avatar-shoespages.html">
+<link rel="import" href="labs002-avatar-bodypages.html">
+
+<link rel="import" href="labs002-colorpicker.html">
+
+<link rel="import" href="../lo-configbtns/lo-configbtns.html">
+
+<dom-module id="labs002-avatar">
+  <style>
+    :host {
+      display: block;
+
+      padding: 0px;
+      margin: 0px;
+
+      --this-beardcolor: var(--primary-purple);
+      --this-glassescolor: rgba(0,0,0,0.2);
+      --this-topcolor: var(--primary-yellow);      
+      --this-bottomcolor: var(--primary-red);
+      --this-shoescolor: var(--primary-purple);
+      --this-bodycolor: var(--primary-lightblue);
+
+      --object-width: 100%;
+      --object-height: 100%;
+
+      width: 100%;
+      height: 100%;
+    }
+
+    neon-animated-pages {
+      height: 100%;
+    }
+
+    .fixit {
+      position: absolute;
+    }
+
+    .avatarparts {
+      width: var(--object-width);
+      height: var(--object-height);
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .avatarparts svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);  
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .valuescontainer {
+      width: 100%;
+      height: 100%;
+      background-color: white;
+    }
+
+    /* ALL MATTERS avatarvisual */
+
+    .visualcontainer {
+      width: 100%;
+      height: 100%;
+      @apply(--layout-vertical);
+    }
+
+    .visualwithbtns {
+      height: 100%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);   
+
+    }
+
+    .visualbtns {
+      width: 20%;
+      height: var(--object-height);
+      @apply(--layout-vertical);
+    }
+
+    .leftbtns {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      @apply(--layout-end-justified);
+    }
+
+    .rightbtns {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      @apply(--layout-start-justified);
+    }
+
+    .iron {
+      height: 100%;
+    }
+
+
+    .selectsnit {
+      height: 35%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);      
+    }
+
+    .selectglasses {
+      height: 10%;
+    }
+
+    .selectbeard {
+      height: 15%;
+    }
+
+    .selecttop {
+      height: 15%;
+    }
+
+    .selectbottom {
+      height: 10%;
+    }
+
+    .selectshoes {
+      height: 15%;
+    }
+
+    labs002-avatar-snitpages {
+      width: 100%;
+    }
+    labs002-avatar-glassespages {
+      width: 100%;
+    }
+    labs002-avatar-beardpages {
+      width: 100%;
+    }
+    labs002-avatar-facepages {
+      width: 100%;
+    }
+    labs002-avatar-headpages {
+      width: 100%;
+    }
+    labs002-avatar-toppages {
+      width: 100%;
+    }
+
+    labs002-avatar-bottompages {
+      width: 100%;
+    }
+    labs002-avatar-shoespages {
+      width: 100%;
+    }
+    labs002-avatar-bodypages {
+      width: 100%;
+    }
+
+    /* Colors */
+    .beardcolor {
+      fill: var(--this-beardcolor);
+    }
+    .glassescolor {
+      fill: var(--this-glassescolor);
+    }
+    .topcolor {
+      fill: var(--this-topcolor);
+    }
+    .bottomcolor {
+      fill: var(--this-bottomcolor);
+    }
+    .shoescolor {
+      fill: var(--this-shoescolor);
+    }
+    .bodycolor {
+      fill: var(--this-bodycolor);
+    }
+    .fillgreen {
+      fill: var(--primary-green);
+    }
+    .fillblue {
+      fill: var(--primary-blue);
+    }
+    .filllightblue {
+      fill: var(--primary-lightblue);
+    }
+    .filldarkblue {
+      fill: var(--primary-darkblue);
+    }
+    .fillred {
+      fill: var(--primary-red);
+    }
+    .fillyellow {
+      fill: var(--primary-yellow);
+    }
+    .fillpurple {
+      fill: var(--primary-purple);
+    }
+
+
+    .snit {
+      z-index: 9999999;
+    }
+
+    .glasses {
+      z-index: 9999999;
+    }
+    .face {
+      z-index: 9999990;
+    }
+    .beard {
+      z-index: 9999980;
+    }
+    .head {
+      z-index: 9999970;
+    }
+    .top {
+      z-index: 9999960;   
+    }
+    .bottom {
+      z-index: 9999950;
+    }
+    .shoes {
+      z-index: 9999940;
+    }
+    .body {
+      z-index: 9999910;
+    }
+
+
+    .colorpicker {
+      width: 100%;
+      height: 10%;
+
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+    }
+
+    labs002-colorpicker {
+      width: 100%;
+      max-width: 600px;
+    }
+
+
+  </style>
+  <template>
+
+
+<!-- Hier begint ALLES -->
+<!-- <h1>AVATAR</h1> -->
+<neon-animated-pages id="pages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+
+
+<!-- sectie 0 //   HIER BEGINT DE VISUAL EDIT -->
+
+
+  <neon-animatable>
+      <div class="visualcontainer">
+
+      <template is="dom-if" if="{{edit}}">
+
+        <div class="colorpicker">
+
+          <labs002-colorpicker
+            colorselected="{{selectedcolor}}">
+          </labs002-colorpicker>
+
+        </div>
+
+        </template>
+
+        <!-- VOLLEDIGE PEUP -->
+        <div class="visualwithbtns">
+          <!-- PEUP // 1e rij knopjes -->
+          <template is="dom-if" if="{{edit}}">
+          <div class="visualbtns leftbtns">
+            <div class="iron">
+
+              <div class="selectsnit">
+                <lo-configbtns context="snit" on-btn-tapped="previous"></lo-configbtns>
+              </div>
+
+              <div class="selectglasses">
+                <lo-configbtns context="glasses" on-btn-tapped="previous"></lo-configbtns>
+              </div>
+
+              <div class="selectbeard">
+                <lo-configbtns context="beard" on-btn-tapped="previous"></lo-configbtns>
+              </div>
+
+              <div class="selecttop">
+                <lo-configbtns context="top" on-btn-tapped="previous"></lo-configbtns>
+              </div>
+
+              <div class="selectbottom">
+                <lo-configbtns context="bottom" on-btn-tapped="previous"></lo-configbtns>
+              </div>
+
+              <div class="selectshoes">
+                <lo-configbtns context="shoes" on-btn-tapped="previous"></lo-configbtns>
+              </div>
+          </div>
+
+        </div>
+        </template>
+
+
+          <!-- PEUP // parts -->
+          <div class="avatarparts">
+
+          <div class="snit fixit avatarparts">
+            <labs002-avatar-snitpages 
+              id="snit">
+            </labs002-avatar-snitpages>
+          </div>
+     
+          <div class="glasses fixit avatarparts">
+            <labs002-avatar-glassespages 
+              id="glasses">
+            </labs002-avatar-glassespages>
+          </div>
+
+          <div class="face fixit avatarparts">
+            <labs002-avatar-facepages 
+              id="face">
+            </labs002-avatar-facepages>
+          </div>
+
+          <div class="beard fixit avatarparts">
+            <labs002-avatar-beardpages 
+              id="beard">
+            </labs002-avatar-beardpages>
+          </div>
+
+          <div class="head fixit avatarparts">
+            <labs002-avatar-headpages 
+              id="head">
+            </labs002-avatar-headpages>
+          </div>
+
+          <div class="top fixit avatarparts">
+            <labs002-avatar-toppages 
+              id="top"
+              entryAnimation="{{entrySnit}}" 
+              exitSnit="{{exitAnimationSnit}}">
+            </labs002-avatar-toppages>
+          </div>
+
+          <div class="bottom fixit avatarparts">
+            <labs002-avatar-bottompages 
+              id="bottom"
+              entryAnimation="{{entrySnit}}" 
+              exitSnit="{{exitAnimationSnit}}">
+            </labs002-avatar-bottompages>
+          </div>
+
+          <div class="shoes fixit avatarparts">
+            <labs002-avatar-shoespages 
+              id="shoes"
+              entryAnimation="{{entrySnit}}" 
+              exitSnit="{{exitAnimationSnit}}">
+            </labs002-avatar-shoespages>
+          </div>
+
+          <div class="body fixit avatarparts">
+            <labs002-avatar-bodypages 
+              id="lijf"
+              entryAnimation="{{entrySnit}}" 
+              exitSnit="{{exitAnimationSnit}}">
+            </labs002-avatar-bodypages>
+          </div>
+
+          </div>
+
+
+      <template is="dom-if" if="{{edit}}">
+          <!-- PEUP // 2e rij knopjes -->
+          <div class="visualbtns rightbtns">
+            <div class="iron">
+
+              <div class="selectsnit">
+                <lo-configbtns context="snit" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectglasses">
+                <lo-configbtns context="glasses" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectbeard">
+                <lo-configbtns context="beard" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selecttop">
+                <lo-configbtns context="top" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectbottom">
+                <lo-configbtns context="bottom" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectshoes">
+                <lo-configbtns context="shoes" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+          </div>
+
+          </div>
+        </template>
+
+      </div>
+     </div>
+
+  </neon-animatable>
+
+
+
+
+
+  <!-- sectie 1 //   HIER BEGINT DE WAARDEN-SECTIE -->
+  <neon-animatable>
+    <div class="canvas">
+      <div class="layout vertical center-center valuescontainer">
+
+<!--         DO YOUT THING -->
+
+        <template is="dom-if" if="{{!locked}}">
+        
+        <paper-input-container>
+          <label>Voornaam</label>
+          <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstname}}">
+        </paper-input-container>
+
+        <paper-input-container>
+          <label>Naam</label>
+          <input type="text" is="iron-input" bind-value="{{objectdata.lastname}}">
+        </paper-input-container>
+
+        <paper-input-container>
+          <label>Geboortedatum</label>
+          <input type="text" is="iron-input" bind-value="{{objectdata.birthdate}}" >
+        </paper-input-container>
+
+        <paper-input-container>
+          <label>Geboorteplaats</label>
+          <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
+        </paper-input-container>
+
+        </template>
+
+
+        <template is="dom-if" if="{{locked}}">
+          <p>Voornaam: <span>{{firstname}}</span></p>
+          <p>{{lastname}}</p>
+          <p>{{birthdate}}</p>
+          <p>{{birthplace}}</p>
+
+        <!-- HIEF DAN DIE BFFN FIE FAFIFEEFT --> 
+          <button on-tap="unlock">unlock</button>
+        </template>
+
+      </div>
+    </div>
+  </neon-animatable>
+
+
+</neon-animated-pages>
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-avatar',
+
+      behaviors: [
+      Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+      objectconfig: {
+          type: Object,
+          observer: "_configChanged",
+          notify: true
+      },
+
+      objectdata: {
+          type: Object,
+          observer: "_dataChanged",
+          notify: true
+      },
+
+      // editvalues: {
+      //   type: Boolean,
+      //   value: false
+      // },
+
+      edit: {
+        type: Boolean,
+        value: false
+      },
+
+      avatarbtnsvisible: {
+        type: Boolean,
+        value: false
+      },
+
+      itemtocolor: {
+        type: String,
+        value: '',
+        observer: "_itemChanged"        
+      },
+
+      opened: {
+        type: Boolean,
+        value: false,
+        observer: "editListener"
+      },
+
+      active: {
+        type: Boolean,
+        value: false
+      },
+
+      selecteditem: {
+        type: String,
+        observer: "_selecteditem",
+        value: "lijf"
+      },
+
+      selectedcolor: {
+        type: String,
+        observer: "_selectedcolor"
+      }
+
+
+      },
+
+      ready: function(){
+        this.selected = 0;
+
+        console.log('avatar is ready');
+        this.editmode = false;
+        this.itemtocolor = "lijf";
+        //console.log('avatar conf: ', this.config.beard[0]);
+      },
+
+    created: function() {
+    console.log(this.localName + '#' + this.id + ' was created');
+  },
+
+  attached: function() {
+    this.async(function() {
+      console.log(this.localName + '#' + this.id + ' was attached');
+      //this.selected = 1;
+      this._configChanged();
+      this._dataChanged();
+   });
+
+        this.entryAnimation = 'fade-in-animation';
+        this.exitAnimation = 'fade-out-animation';
+
+
+  },
+
+  detached: function() {
+    this.async(function() {
+      console.log(this.localName + '#' + this.id + ' was detached');
+   });
+  },
+
+  attributeChanged: function(name, type) {
+    console.log(this.localName + '#' + this.id + ' attribute ' + name +
+      ' was changed to ' + this.getAttribute(name));
+  },
+
+      _showData: function(){
+        this.editvalues =! this.editvalues;
+        console.log('SHOW DATA TOGGLED', this.editvalues);
+      },
+
+      unlock: function(){
+        this.locked = false;
+      },
+
+
+      _test: function(e){
+        console.log('hallo ',e);
+        this.config = e;
+      },
+
+      previous: function(e){
+        this.selecteditem = e.target.context;
+        console.log("PREVIOUS ", this.selecteditem);
+        var item = document.getElementById(this.selecteditem);
+        console.log("current select is ", item.selected);
+        console.log("Item is ", item);
+        //item.selected--;
+        console.log("CONFIG item is ", this.objectconfig[this.selecteditem][0]);
+        this.objectconfig[this.selecteditem][0]--;
+        console.log("new select is", item.selected);
+        this._configChanged();
+
+        // IK WOU DE ANIMATIE VAN RECHTS NAAR LINKS LATEN GAAN, BIJ VORIGE
+        item.entryAnimation = "slide-to-left-animation";
+        item.exitAnimation = "slide-right-animation";
+        console.log("current entry animation is ", item.entryAnimation);
+        console.log("current exit animation is ", item.exitAnimation);
+
+
+      },
+
+      next: function(e){
+        this.selecteditem = e.target.context;
+        console.log("NEXT ", this.selecteditem);
+        var item = document.getElementById(this.selecteditem);
+        console.log("current select is ", item.selected);
+        console.log("Item is ", item);
+        console.log("CONFIG item is ", this.objectconfig[this.selecteditem][0]);
+        //item.selected++;
+        this.objectconfig[this.selecteditem][0]++;
+        console.log("new select is", item.selected);
+        console.log("NEW CONFIG item is ", this.objectconfig[this.selecteditem][0]);
+        this._configChanged();
+
+        // IK WOU DE ANIMATIE VAN LINKS NAAR RECHTS LATEN GAAN, BIJ VOLGENDE
+        item.entryAnimation = "slide-to-right-animation";
+        item.exitAnimation = "slide-left-animation";
+        console.log("current entry animation is ", item.entryAnimation);
+        console.log("current exit animation is ", item.exitAnimation);
+      },
+
+      _configChanged: function(){
+        console.log('avatar conf changed: ', JSON.stringify(this.objectconfig));
+
+        this.$.snit.selected = this.objectconfig.snit[0];
+        this.$.snit.color = this.objectconfig.snit[1];
+
+        this.$.glasses.selected = this.objectconfig.glasses[0];
+        this.$.glasses.color = this.objectconfig.glasses[1];
+
+        this.$.beard.selected = this.objectconfig.beard[0];
+        this.$.beard.color = this.objectconfig.beard[1];
+
+        this.$.face.selected = this.objectconfig.face[0];
+        this.$.face.color = this.objectconfig.face[1];
+
+         this.$.head.selected = this.objectconfig.head[0];
+        // this.$.head.color = this.objectconfig.head[1];
+
+        this.$.top.selected = this.objectconfig.top[0];
+        this.$.top.color = this.objectconfig.top[1];
+
+        this.$.bottom.selected = this.objectconfig.bottom[0];
+        this.$.bottom.color = this.objectconfig.bottom[1];
+
+        this.$.shoes.selected = this.objectconfig.shoes[0];
+        this.$.shoes.color = this.objectconfig.shoes[1];
+
+        this.$.lijf.selected = this.objectconfig.lijf[0];
+        this.$.lijf.color = this.objectconfig.lijf[1];
+
+        this.$.head.color = this.objectconfig.lijf[1];
+
+      },
+
+      _dataChanged: function(){
+        console.log('Avatar data changed: ', this.objectdata);
+        this.firstname = this.objectdata.firstname;
+        this.lastname = this.objectdata.lastname;
+        this.birthdate = this.objectdata.birthdate;
+        this.birthplace = this.objectdata.birthplace;
+        //this.locked = this..locked;
+      },
+
+
+      toEdit: function(){
+      },
+
+      _selectedcolor: function(){
+        console.log("DIT IS DE GESELECTEERDE KLEUR" , this.selectedcolor);
+        if(this.objectconfig){
+          var item = this.selecteditem;
+          var color = this.selectedcolor;
+          this.objectconfig[item][1] = color;
+          var avataritem = document.getElementById(item);
+          avataritem.color = color;
+          console.log("Ik ken het avatar onderdeel ", avataritem);
+          console.log("KAN DIT?",this.objectconfig[item][1]);
+        };
+      },
+
+      _selecteditem: function(){
+        console.log("DIT IS HET GESELECTEEERDE ITEM: ", this.selecteditem);
+      },
+
+
+      // colorisSelected: function(){
+      //   console.log("OK, nu toe dan??");
+      // },
+
+
+      back: function(){
+      this.fire('change-stage', { stage: 0, entry: 'slide-down-animation', exit: 'slide-up-animation'});
+      this.selected = 0;
+      this.opened = false;
+      },
+
+      editListener: function(){
+          console.log("Opened !!!!");
+          if(this.opened){
+          this.selected = 1;
+          } else {
+            this.selected = 0;
+
+          }; 
+      },
+
+
+
+
+      _showVisual: function(){
+          this.fire('background-activ');
+          this.ToggleVisual();
+      },
+
+
+      // _editselectedChanged: function(){
+      //   this.itemtoColor = this.itemselected;
+      //   console.log(this.itemtoColor);
+      // },
+      
+
+
+
+
+
+    });
+  })();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+

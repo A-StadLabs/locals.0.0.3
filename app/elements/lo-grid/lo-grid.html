@@ -27,11 +27,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
         height: 100%;
+
+        --object-width: calc(100vw/2);
       }
 
       .canvas {
-        background: var(--primary-red);
-        color: white;
+/*        background: var(--primary-red);
+*/        color: white;
         height: 100%;
 
         @apply(--layout-vertical);
@@ -73,15 +75,25 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
       .grid {
-        background: rgba(0,0,0,0.1);
+/*        background: rgba(0,0,0,0.1);*/
         width: 100vw;
         max-width: 900px;
+        @apply(--layout-horizontal);
+        @apply(--layout-wrap);
+
       }
 
       h1,h2,p,a {
         margin: 0px;
         padding: 0px 
       }
+
+      lo-object {
+        width: var(--object-width);
+/*        max-width: 350px;
+*/        height: var(--object-width);
+/*        max-height: 350px;
+*/      }
 
 
     </style>
@@ -92,8 +104,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       </div>
 
       <div class="grid">
-        <h1>Hier komen alle objects</h1>
-
+<!--         <small>Hier komen alle objects</small>
+ -->
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
         <lo-object 
@@ -176,10 +188,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     },
 
-    _selposchanged: function(){
-      this.customStyle['--objectscollection-left'] = 280*this.position.toString()+"px";
-      this.updateStyles();
-    },
+    // _selposchanged: function(){
+    //   this.customStyle['--objectscollection-left'] = 280*this.position.toString()+"px";
+    //   this.updateStyles();
+    // },
 
     attached: function(){
       lomqtt = document.querySelector("lo-mqtt");
