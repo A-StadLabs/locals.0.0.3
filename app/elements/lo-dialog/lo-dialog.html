@@ -1,0 +1,122 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha256.js"></script>
+<script src="//crypto-js.googlecode.com/svn/tags/3.1.2/build/components/enc-base64-min.js"></script>
+
+
+<dom-module id="lo-dialog">
+  <template>
+    <style>
+      :host {
+        display: block;
+      }
+
+    .canvas {
+      width: 100%;
+      height: 100%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+    }
+
+    .container {
+      width: 100%;
+      height: 100%;
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+    }
+  
+    .valuescontainer {
+      height: 100%;
+      width: 100%;
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+    }
+
+    </style>
+    <div class="canvas">
+      <h1>{{title}}</h1>
+      <p>{{objectname}}</p>
+      <p>{{objectdata}}</p>
+      <p>{{objectconfig}}</p>
+      <p>{{body}}</p>
+      <p>1 <span>{{hash}}</span></p>
+      <p>2 <span>{{hash2}}</span></p>
+      <button on-tap="cancel">cancel</button>
+      <button on-tap="confirm">ok</button>
+    </div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    function hasher(hashobject){
+    var hash = hashobject;
+    var hash = CryptoJS.SHA256(hash);
+    console.log("te hashen: ", hashobject);
+    console.log("gehashed: ", hash.toString(CryptoJS.enc.Hex));
+    return hash.toString(CryptoJS.enc.Hex); 
+  };
+
+    Polymer({
+      is: 'lo-dialog',
+
+      behaviors: [
+        Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+        title: {
+          type: String,
+          value: 'lo-dialog',
+          notify: true
+        },
+        body: {
+          type: String,
+          value: 'lo-dialog',
+          notify: true
+        },
+        objectname: {
+          type: String
+        },
+        userid: {
+          type: String
+        },
+        hash: {
+          type: String
+        },
+        objectdata: {
+          type: String,
+          observer: "_hash"
+        },
+        objectconfig: {
+          type: String
+        },
+        hash2: {
+          type: String
+        }
+      },
+
+      cancel: function(){
+        this.fire('dialog-cancel');
+      },
+
+      confirm: function(){
+        this.fire('dialog-confirm', { command: this.command, partner: this.partner, objectname: this.objectname, userid: this.userid, hash: this.hash, objectdata: this.objectdata, objectconfig: this.objectconfig });
+      },
+
+      _hash: function(){
+          this.hash2 = hasher(this.objectdata);
+      }
+    });
+  })();
+  </script>
+</dom-module>

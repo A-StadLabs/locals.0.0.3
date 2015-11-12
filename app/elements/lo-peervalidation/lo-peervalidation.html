@@ -1,0 +1,187 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<!-- 
+
+peerd.title = "VERIFY";
+              peerd.body = "Wil je getuige zijn van deze dataset?";
+              peerd.command = command;
+              peerd.partner = partner;
+              peerd.objectname = commandarray[2];
+              peerd.objectdata = commandarray[4];
+              peerd.userid = commandarray[5];
+              peerd.objectconfig = commandarray[3];
+              peerd.hash = commandarray[6]; -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="lo-peervalidation">
+  <template>
+    <style>
+      :host {
+        display: block;
+        color: black;
+      }
+
+      .container {
+        padding: 25px;
+        background-color: white;
+      }
+
+      .confirmbtns {
+      background-color: transparent;
+      width: 100vw;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+    }
+
+    .confirmbtns button {
+
+      width: 12vw;
+      min-width: 60px;
+      max-width: 80px;
+
+      height: 12vw;
+      min-height: 60px;
+      max-height: 80px;
+
+      border-radius: 50%;
+
+      margin: 0px 1px 0px 1px;
+      background-color: transparent;
+      background-color: rgba(0,0,0,0.05);
+      border: none;
+      outline: 0;
+      padding: 0px 15px 0px 15px;
+    }
+
+    .confirmbtns img {
+      width: 100%;
+    }
+    </style>
+    <div class="container">
+      <h1>Klopt dit?</h1>
+      <p>{{partner}}</p>
+
+      <h2>{{objectname}}</h2>
+
+      <template is="dom-repeat" items="{{objectdata_new}}">
+        <div>{{item.key}}</div>
+      </template>
+
+      <div class="confirmbtns">
+            
+        <button on-tap="cancel">
+          <img src="../../images/decline-white.svg">
+        </button>
+
+        <button on-tap="confirm">
+          <img src="../../images/accept-white.svg">
+        </button>
+
+      </div>
+    </div>
+  </template>
+  <script>
+   (function() {
+    'use strict';
+
+    function hasher(hashobject){
+    var hash = hashobject;
+    var hash = CryptoJS.SHA256(hash);
+    console.log("te hashen: ", hashobject);
+    console.log("gehashed: ", hash.toString(CryptoJS.enc.Hex));
+    return hash.toString(CryptoJS.enc.Hex); 
+  };
+
+    Polymer({
+      is: 'lo-peervalidation',
+
+      behaviors: [
+        Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+        title: {
+          type: String,
+          value: 'lo-dialog',
+          notify: true
+        },
+        body: {
+          type: String,
+          value: 'lo-dialog',
+          notify: true
+        },
+        objectname: {
+          type: String
+        },
+        userid: {
+          type: String
+        },
+        hash: {
+          type: String
+        },
+        objectdata: {
+          type: String,
+          observer: "_hash"
+        },
+        objectconfig: {
+          type: String
+        },
+        hash2: {
+          type: String
+        }
+      },
+
+      _hash: function(){
+          this.hash2 = hasher(this.objectdata);
+          this._datachanged();
+      },
+
+      _datachanged: function(){
+        console.log("PEERVALIDATION: ", this.objectdata, " LENGTH: ", this.objectdata.length);
+        console.log("PARSED: ", JSON.parse(this.objectdata));
+        this.objectdatajson = JSON.parse(this.objectdata);
+
+        this.objectdata_new = [];
+        var objectdata_new = this.objectdata_new;
+        var p = this.objectdatajson;
+
+        for (var key in p) {
+        if (p.hasOwnProperty(key)) {
+          console.log(key + " -> " + p[key]);
+          //console.log(p[key].name);
+          this.push('objectdata_new', { key: p[key], content: p[key].name });
+          console.log('New objectsdata: ', objectdata_new);
+        }
+      };
+
+
+      
+      //this.customStyle['--objectscollection-width'] = 280*this.objectsdata_new.length.toString()+"px";
+      //this.updateStyles();
+      this.objectdata_new = objectdata_new;
+      },
+
+      confirm: function(){
+        var stage = document.querySelector("lo-stage");
+        stage.confirmGodfather(this.partner, this.objectname, hasher(this.objectdata));
+      },
+
+      cancel: function(){
+
+      }
+
+
+
+
+    });
+  })();
+  </script>
+</dom-module>

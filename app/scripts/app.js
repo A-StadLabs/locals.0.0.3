@@ -8,12 +8,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 */
 
 (function(document) {
-  'use strict';
+  //'use strict';
+
   // Grab a reference to our auto-binding template
   // and give it some initial binding values
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
 
+  
   function importPage(url){
     return new Promise(function(resolve, reject){
       Polymer.Base.importHref(url, function(e){
@@ -50,18 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // See https://github.com/Polymer/polymer/issues/1381
   window.addEventListener('WebComponentsReady', function() {
     // imports are loaded and elements have been registered
-    //app.$.mqtt.connect();
-   //  cordova.plugins.barcodeScanner.scan(
-   //    function (result) {
-   //        alert("We got a barcode\n" +
-   //              "Result: " + result.text + "\n" +
-   //              "Format: " + result.format + "\n" +
-   //              "Cancelled: " + result.cancelled);
-   //    }, 
-   //    function (error) {
-   //        alert("Scanning failed: " + error);
-   //    }
-   // );
+    app.$.mqtt.connect();
   });
 
 

@@ -1,0 +1,262 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-from-right-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/slide-left-animation.html">
+
+<link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
+<link rel="import" href="../lo-pickitem/lo-pickitem.html">
+<link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
+
+<dom-module id="lo-objectpicker">
+  <style>
+    :host {
+      display: block;
+      width: 100vw;
+      height: 100vh;
+      background-color: var(--primary-darkgray);
+            @apply(--layout-vertical);
+
+    }
+
+/*    .objectpicker {
+      width: 100vw;
+      height: 100vh;
+    }
+*/
+    .backbtn {
+      height: 50px;
+      width: 50px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: white;
+      font-size: 20px;
+      font-weight: 100;
+      padding: 10px;
+    }
+
+    .backbtn img {
+      height: 100%;
+      width: 100%;
+    }
+
+
+    .objectstotal {
+      width: 100vw;
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+
+    }
+
+
+    #toolbar {
+      height: 10vh;
+      width: 100vw;
+      padding: 0px;
+      background-color: transparent;
+      color: black;
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+    }
+
+
+  </style>
+  <template>
+
+
+      <div id="toolbar"> 
+        <button class="backbtn" on-tap="back">
+          <img src="../../images/decline-white.svg">
+        </button>
+      </div>
+
+      <neon-animated-pages selected="0" id="pages">
+     
+      <!-- Dit is de grid met objecten -->
+        <div class="objectstotal">
+          <template is="dom-repeat" items="{{objecten}}">
+            <lo-pickitem enabled="{{item.enabled}}" object="{{item}}" id="{{item.name}}" index="{{index}}" objectnaam="{{item.name}}" icon="{{item.icon}}"></lo-pickitem>
+          </template>
+        </div>
+
+      <!-- Hier een preview met condities weergeven? -->
+        <div>
+          <h1>Preview van het object <span>{{previewname}}</span></h1>
+          <p>Een tekstje over wat het is?</p>
+          <p>{{state}}</p>
+          <p>Condities (wa ge moet hebben veur dat dees kan):</p>
+          <template is="dom-repeat" items="{{conditions}}">
+            <p>{{item.objectname}}</p>
+          </template>
+          <div on-tap="backtogrid">BACK!</div>
+          <button on-tap="addtocollection">VOEG TOE!</button>
+        </div>
+
+      </neon-animated-pages>
+
+  </template>
+</dom-module>
+<script>
+(function() {
+  Polymer({
+    is: 'lo-objectpicker',
+
+    properties: {
+
+      userobjects: {
+        type: Object
+      },
+
+      objects: {
+        type: Object,
+         value: { collection: [
+                    // { name: "SkeletonObject",
+                    //   data: { "username": "kingflurkel" },
+                    //   config: { "colors": ["blue", "red"]},
+                    //   peers: [null],
+                    //   component: "labs002-skeletonobject",
+                    //   conditions: [ {objectname: ""} ],
+                    //   enabled: false,
+                    //   description: "Lorem ipsum",
+                    //   version: "0.0.1"
+                    // },
+                    // { name: "Basisprofiel",
+                    //   data: {},
+                    //   config: {},
+                    //   peers: [{}],
+                    //   component: "labs002-basisprofiel",
+                    //   conditions: [ {objectname: "SkeletonObject"} ],
+                    //   enabled: false,
+                    //   description: "Lorem ipsum",
+                    //   version: "0.0.1"
+                    // },
+                    // { name: "Huwelijk",
+                    //   data: {},
+                    //   config: {},
+                    //   peers: [{}],
+                    //   component: "labs002-huwelijk",
+                    //   conditions: [ {objectname: "Basisprofiel"} ],
+                    //   enabled: false,
+                    //   description: "Lorem ipsum",
+                    //   version: "0.0.1"
+                    // }
+          ] },
+        notify: true,
+        observer: "logObjects"
+      }
+    },
+
+    logObjects: function(){
+    },
+
+    back: function(){
+      this.fire('change-stage', { stage: 0, entry: 'slide-from-left-animation', exit: 'slide-right-animation'});
+    },
+
+    initFirebase: function(){
+      var firebase = new Firebase("https://blazing-fire-6426.firebaseio.com/locals/");
+      //firebase.set(this.objects);
+      var fbobjects;
+
+      var that = this;
+
+      firebase.on('value', function(snapshot){
+        console.log("firebase: ", snapshot.val());
+        fbobjects = snapshot.val();
+        that.objects = fbobjects;
+        that.checkEnabled();
+      });      
+    },
+
+    ready: function(){
+      this.objectsloaded = false;
+    },
+
+    attached: function(){
+      var that = this;
+      this.initFirebase();
+      this.async(function() {
+        this.addEventListener('item-tapped', function(e){
+          that.selectobject(e);
+        });
+      });
+    },
+
+    checkEnabled: function(){
+      console.log("check enabled");
+      this.objecten = [];
+      // collection: ons winkeltje met ons collectie
+      var collection = this.objects.collection;
+
+      console.log("collection: ",collection);
+
+      // usercollection: wat de gebruiker al heeft toegevoegd.
+      var usercollection = this.userobjects.collection;
+
+      console.log("usercollection: ",usercollection);
+
+      // Hier gaan we door de collection gaan
+      for (var i = collection.length - 1; i >= 0; i--) {
+      
+        var conditions = collection[i].conditions;
+
+        console.log("conditions: ", conditions);
+
+        for (var j = conditions.length - 1; j >= 0; j--) {
+          var condition = conditions[j].objectname;
+
+          console.log("condition: ", condition);
+
+          if(usercollection[condition]){
+            collection[i].enabled = true;
+            this.objects.collection[i].enabled = true;
+          };
+
+        };
+
+      };
+
+      this.objecten = collection;
+
+      this.objectsloaded = true;
+
+      console.log("objecten: ", this.objecten);
+
+    },
+
+    selectobject: function(e){
+      this.previewname = e.target.id;
+      this.previewindex = e.target.index;
+      this.conditions = this.objects.collection[e.target.index].conditions;
+      this.$.pages.selected = 1;
+      var ben = e.target.id;
+      this.state = this.objects.collection[e.target.index].enabled;
+    },
+
+    addtocollection: function(e){
+      console.log("Add to collection ", this.previewname);
+      this.userobjects.collection[this.previewname] = this.objects.collection[this.previewindex];
+      this.userobjects.collection[this.previewname].peers = [];
+      console.log(this.userobjects.collection[this.previewname]);
+      this.fire("save");
+      this.back();
+      this.backtogrid();
+    },
+
+    backtogrid: function(){
+      this.$.pages.selected = 0;
+    }    
+
+  });
+})();
+</script>

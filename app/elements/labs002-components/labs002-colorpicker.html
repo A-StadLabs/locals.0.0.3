@@ -1,0 +1,191 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+
+
+<dom-module id="labs002-colorpicker">
+  <style>
+    :host {
+      display: block;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.1);
+    }
+
+
+    .colorpicker {
+      background-color: transparent;
+      width: 100%;
+      height: 100%;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+      @apply(--layout-end-justified);
+
+    }
+/*    iron-selector {
+      width: 100%;
+      height: 100%;
+    }*/
+    
+
+
+    .iron-selected {
+      border-bottom: 1px solid black;
+    }
+
+    .coloritem {
+      width: 20px;
+      height: 20px;
+    }
+
+    .fillgreen {
+      fill: var(--primary-green);
+    }
+    .fillblue {
+      fill: var(--primary-blue);
+    }
+    .filllightblue {
+      fill: var(--primary-lightblue);
+    }
+    .filldarkblue {
+      fill: var(--primary-darkblue);
+    }
+    .fillred {
+      fill: var(--primary-red);
+    }
+    .fillyellow {
+      fill: var(--primary-yellow);
+    }
+    .fillpurple {
+      fill: var(--primary-purple);
+    }
+
+    .fillwhite {
+      fill: var(--primary-white);
+    }
+
+
+  </style>
+  <template>
+<div class="colorpicker">
+
+       <iron-selector id="colorpicker" selected="{{colorselected}}" attr-for-selected="color">
+
+
+          <svg color="var(--primary-green)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="fillgreen coloritem" cx="10" cy="10" r="10" /></circle>
+          </svg>
+
+
+          <svg color="var(--primary-red)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="fillred coloritem" cx="10" cy="10" r="10" /></circle>
+          </svg>
+
+
+          <svg color="var(--primary-blue)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="fillblue coloritem" cx="10" cy="10" r="10"/></circle>
+          </svg>
+
+          <svg color="var(--primary-lightblue)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="filllightblue coloritem" cx="10" cy="10" r="10"/>
+          </svg>
+
+          <svg color="var(--primary-darkblue)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="filldarkblue coloritem" cx="10" cy="10" r="10"/>
+          </svg>
+
+          <svg color="var(--primary-yellow)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="fillyellow coloritem" cx="10" cy="10" r="10"/>
+          </svg>
+
+          <svg color="var(--primary-purple)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="fillpurple coloritem" cx="10" cy="10" r="10"/>
+          </svg>
+
+          <svg color="var(--primary-white)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+             width="20px" height="20px" viewBox="0 0 20 20" enable-background="new 0 0 20 20" xml:space="preserve">
+          <circle class="fillwhite coloritem" cx="10" cy="10" r="10"/>
+          </svg>
+
+
+
+
+       </iron-selector>
+      </div>
+
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-colorpicker',
+
+      behaviors: [
+      Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+          colorselected: {
+          type: String,
+          value: 'primary-blue',
+          notify: true,
+          observer: "_Colorwatcher"
+        },
+
+      },
+
+      ready: function(){
+      },
+
+
+
+      _Colorwatcher: function(){
+            //console.log('Colorwatcher zegt:' , this.colorselected);
+            // this.fire('color-selected');
+      },
+
+      Logmaar: function(){
+        //console.log('Hmmkey UIT PICKER!!!', this.colorselected, this.$.colorpicker.selected);
+      }
+
+
+
+    });
+  })();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,21 +1,8 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
+<!-- Copyright (c) 2015 The Locals Project Authors. All rights reserved.
+See authors.md for a list of all members.
+ -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<!-- 
-<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
-<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
-<link rel="import" href="../../bower_components/neon-animation/neon-animatable.html"> -->
-
-<link rel="import" href="../lo-grid/lo-grid.html">
-
 <script src="../../bower_components/node-uuid/uuid.js"></script>
 
 <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
@@ -31,103 +18,223 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
 
 <link rel="import" href="../lo-localstorageapi/lo-localstorageapi.html">
+<link rel="import" href="../lo-objectscollection/lo-objectscollection.html">
 <link rel="import" href="../lo-qrrender/lo-qrrender.html">
+<link rel="import" href="../lo-dialog/lo-dialog.html">
+<link rel="import" href="../lo-godfather/lo-godfather.html">
 <link rel="import" href="../lo-renderer/lo-renderer.html">
-
-
-
+<link rel="import" href="../lo-peervalidation/lo-peervalidation.html">
 
 <dom-module id="lo-stage">
-  <template>
-    <style>
-      :host {
-        display: block;
-        height: 100%;
-      }
-      
+<style>
+  :host {
+    display: block;
+    --page-color:  var(--primary-blue);
+    width: 100vw;
+    height: 100vh;
+  }
 
-      neon-animated-pages {
-        height: 100%;
-      }
+  .canvas {
+    color: white; 
+    height: 100vh;
+    @apply(--layout-vertical);
+    @apply(--layout-center-center);
+    text-align: center;
+  }
 
+  .godfcanvas {
+    background-color: transparent; 
+    width: 100vw;
+    @apply(--layout-vertical);
+    @apply(--layout-center-center);
+    text-align: center;
+  }
 
-
-    </style>
-
-
-    <iron-localstorage 
-      id="localstorage" 
-      name="lo-public"
-      value="{{publickey}}">
-    </iron-localstorage>
-
-    <iron-localstorage 
-      id="localstorage" 
-      name="lo-private" 
-      value="{{privatekey}}">
-    </iron-localstorage>
-
-    <iron-localstorage 
-      id="localstorage" 
-      name="lo-device" 
-      value="{{deviceid}}">
-    </iron-localstorage>
-
-    <lo-localstorageapi 
-      id="localapielem" 
-      publickey="{{publickey}}" 
-      privatekey="{{privatekey}}" 
-      data="{{localapi}}" 
-      encdata="{{localenc}}"
-      deviceid="{{deviceid}}">
-    </lo-localstorageapi>
-
-    <lo-mqtt connected="{{mqttconnected}}"
-    on-message-received="msgreceived"
-    on-mqtt-connected="mqttconnectedfire"
-    deviceid="{{deviceid}}"
-    publickey="{{publickey}}"
-    subs
-    topic="{{publickey}}" id="lomqtt">
-    </lo-mqtt>
+  lo-qrrender {
+    width: 100vw;
+  }
 
 
-    <neon-animated-pages id="gridpages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+  neon-animated-pages {
+    height: 100vh;
+  }
+
+  lo-objectscollection {
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .backbtn {
+      height: 50px;
+      width: 50px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: white;
+      font-size: 20px;
+      font-weight: 100;
+      padding: 10px;
+    }
+
+    .backbtn img {
+      height: 100%;
+      width: 100%;
+    }
+
+    #toolbar {
+      height: 10vh;
+      width: 100vw;
+      padding: 0px;
+      background-color: transparent;
+      color: black;
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+    }
+
+    .workmode {
+/*      background-color: rgba(236,173,95,0.95);
+*/      background-color: rgba(0,0,0,0.1);
+
+/*      background-image: url("https://s-media-cache-ak0.pinimg.com/originals/28/e9/2c/28e92c4ca494f3e611fd94f95cec4b29.jpg");*/
+    }
+
+/*    lo-renderer {
+      border: 1px solid green;
+
+    }*/
 
 
-    <lo-grid 
-      objectsdata="{{localapi}}">
-    </lo-grid>
-
-    <neon-animatable>
-      <p>SECTION 1</p>      
-    </neon-animatable>
-
-    <neon-animatable>
-      <p>SECTION 2</p>      
-    </neon-animatable>
 
 
+</style>
+<template>
 
-    <neon-animatable>
-      <p>SECTION 3</p>      
-    </neon-animatable>
+  <iron-localstorage 
+    id="localstorage" 
+    name="lo-public"
+    value="{{publickey}}">
+  </iron-localstorage>
 
-    <neon-animatable>
-      <p>SECTION 4</p>      
-    </neon-animatable>
+  <iron-localstorage 
+    id="localstorage" 
+    name="lo-private" 
+    value="{{privatekey}}">
+  </iron-localstorage>
+
+  <iron-localstorage 
+    id="localstorage" 
+    name="lo-device" 
+    value="{{deviceid}}">
+  </iron-localstorage>
+
+  <lo-localstorageapi 
+    id="localapielem" 
+    publickey="{{publickey}}" 
+    privatekey="{{privatekey}}" 
+    data="{{localapi}}" 
+    encdata="{{localenc}}"
+    deviceid="{{deviceid}}">
+  </lo-localstorageapi>
+
+  <lo-mqtt connected="{{mqttconnected}}"
+  on-message-received="msgreceived"
+  on-mqtt-connected="mqttconnectedfire"
+  deviceid="{{deviceid}}"
+  publickey="{{publickey}}"
+  subs
+  topic="{{publickey}}" id="lomqtt"></lo-mqtt>
+
+  <neon-animated-pages id="pages" selected="{{selected}}" class="color" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+
+  <!-- Stage 0: Alle datasets renderen -->
+<!--   <button on-tap="_addDataset">+</button>
+ -->  
+  <lo-objectscollection 
+    id="objectcoll" 
+    publickey="{{publickey}}" 
+    objectsdata="{{localapi}}" 
+    class="color"
+    position="1">
+  </lo-objectscollection>
+
+  <!-- Stage 1: De geopende state van het object -->
+  <div class="canvas workmode">
+<!--     <button on-tap="_toWhere"><</button> -->
+    <lo-renderer 
+      objectname="{{activename}}" 
+      objectdata="{{activedata}}" 
+      objectconfig="{{activeconfig}}" 
+      objectcomponent="{{activecomponent}}" 
+      objectpeers="{{activepeers}}"
+      publickey="{{publickey}}"
+      hash="{{activehash}}"
+      id="activeobject"
+      activ
+      preview="false"
+      locked="{{activelocked}}">
+    </lo-renderer> 
+
+     
+  </div>
+
+  <!-- Stage 2: QR code lezer -->
+  <neon-animatable>
+    <div class="canvas">
+      <lo-qrreader></lo-qrreader>
+    </div>
+  </neon-animatable>
+
+  <!-- Stage 3: QR code / Identificatie weergeven -->
+  <neon-animatable style="background-color: white">
+    <div class="godfcanvas">
 
 
-    <neon-animatable>
-      <div class="canvas">
-        <lo-objectstore userobjects="{{localapi}}"></lo-objectstore>
+      <div id="toolbar"> 
+        <button class="backbtn" on-tap="_toWhere">
+          <img src="../../images/decline.svg">
+        </button>
       </div>
-    </neon-animatable>
 
-    </neon-animated-pages>
+      <lo-qrrender qrcode="{{qrcode}}"></lo-qrrender>
+      <lo-godfather id="godf" children="{{localapi.godfather}}"></lo-godfather>
+    </div>
+  </neon-animatable>
 
-  </template>
+  <!-- Stage 4: Dialog: actie goedkeuren of weigeren. -->
+  <lo-dialog 
+    id="lodialog" 
+    title="Bevestigen?" 
+    body="Iemand wil iets." 
+    command="SYNC"
+    on-dialog-confirm="processCommand" 
+    on-dialog-cancel="cancel">
+  </lo-dialog>
+   
+  <!-- Stage 5: Plusmenu om objecten toe te voegen. -->
+  <neon-animatable>
+    <div class="canvas">
+      <lo-objectpicker userobjects="{{localapi}}"></lo-objectpicker>
+    </div>
+  </neon-animatable>
 
+    <!-- Stage 6: Godfather: ik ben godfather van volgende datasets/users: -->
+  <neon-animatable>
+    <div class="canvas">
+      <lo-godfather id="godf" children="{{localapi.godfather}}"></lo-godfather>
+    </div>
+  </neon-animatable>
+
+  <!-- Stage 7: Bevestigen / declinen van een validatie request van de peer -->
+  <neon-animatable>
+    <div class="canvas">
+      <lo-peervalidation id="peerval"></lo-peervalidation>
+    </div>
+  </neon-animatable>
+
+</neon-animated-pages>
+
+</template>
+</dom-module>
 <script>
   (function() {
 
@@ -214,9 +321,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this.loggedin = false;
 
-        this.$.gridpages.selected = 0;
-        this.$.gridpages.entryAnimation = 'slide-from-left';
-        this.$.gridpages.exitAnimation = 'slide-right';   
+        this.selected = 0;
+
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
 
         var that = this;
         
@@ -229,13 +337,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         this.addEventListener("object-selected", function(e){
-          console.log("Object selected: ", e.detail.object);
+          //console.log("Object selected: ", e.detail.object);
           var object = e.detail.object;
           that.activename = object;
           that.activedata = that.localapi.collection[object].data;
           that.activeconfig = that.localapi.collection[object].config;
           that.activecomponent = that.localapi.collection[object].component;
-          console.log(that.activecomponent);
+          //console.log(that.activecomponent);
           that.activepeers = that.localapi.collection[object].peers;
           that.activehash = that.localapi.collection[object].hash;
           that.activelocked = that.localapi.collection[object].locked;
@@ -249,29 +357,49 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         this.addEventListener('save-it', function(e){
           lomqtt = that.$.lomqtt;
-          that.localapi.collection[e.detail.datasetkey].data = e.detail.dataset;
-          that.localapi.collection[e.detail.datasetkey].config = e.detail.config;
-          var hash = hasher(that.localapi.collection[e.detail.datasetkey].data);
-          lomqtt.send('userhash/'+that.publickey, "HASHUPDATE|"+e.detail.datasetkey+"|"+hash+"|"+that.publickey, 0);
-          that.$.localapielem.writeData();
-        });
+        //console.log("Save it from objectscollection: ",e.detail.datasetkey);
+        that.localapi.collection[e.detail.datasetkey].data = e.detail.dataset;
+
+        that.localapi.collection[e.detail.datasetkey].config = e.detail.config;
+
+        var hash = hasher(that.localapi.collection[e.detail.datasetkey].data);
+
+        //that.objectsdata[e.detail.datasetname].data
+        //console.log("Is it added? ", that.objectsdata);
+
+        //loxmpp.sendmygroupMessage(that.publickey, e.detail.datasetkey, hash);
+        lomqtt.send('userhash/'+that.publickey, "HASHUPDATE|"+e.detail.datasetkey+"|"+hash+"|"+that.publickey, 0);
+
+        that.$.localapielem.writeData();
+        //this.fire('save');
+        //that.msgreceived(e.detail.msg);
+        //that._objectChanged();
+      });
+
+
+
 
         this.addEventListener('message-received', function(e){
+          //console.log("Stage kent message received, ", e.detail.msg.detail.topic);
           that.msgreceived(e.detail.msg);
         });
         
         this.addEventListener('save', function(){
+          //console.log('Saving whole dataset: ', this.localapi);
+          //that.localapi = e.detail.dataset;
           that.$.localapielem.writeData();
         });
 
-        this.addEventListener('object-store', function(){
-          importPage("elements/lo-objectstore/lo-objectstore.html").then(function(){
-            that.entryAnimation = 'slide-from-right-animation';
-            that.exitAnimation = 'slide-left-animation';
-            that.selected = 5;
+        this.addEventListener('object-picker', function(){
+          importPage("elements/lo-objectpicker/lo-objectpicker.html").then(function(){
+              //that._addDataset();
+              that.entryAnimation = 'slide-from-right-animation';
+              that.exitAnimation = 'slide-left-animation';
+              that.selected = 5;
             }, function(err){
               console.log(err, "error");
             });
+          
         });
 
         this.addEventListener('qr-identity', function(e){
@@ -283,7 +411,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
 
         this.addEventListener('add-getuige', function(e){
-          console.log("Peer listener activated in lo-objectscollection");
+          //console.log("Peer listener activated in lo-objectscollection");
           this.fire('qr-reader', { 
             command: "VERIFY", 
             objectname: e.detail.objectname, 
@@ -292,8 +420,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             publickey: e.detail.publickey,
             hash: e.detail.hash
           });
-        
-        });
+    });
+
       },
 
       attached: function(){
@@ -301,7 +429,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       _deviceid: function(){
-        console.log("got device id");
+        //console.log("got device id");
       },
 
      
@@ -312,8 +440,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
         var lomqtt = this.$.lomqtt;
 
+        //console.log(e);
+
         this.importHref("../elements/lo-qrreader/lo-qrreader.html", function(g) {
           this.addEventListener("got-code", function(f){
+            //Hier doet em shit als em een code terug krijgt. 
+            //this.$.objectcoll.callback(e.detail);
+            // console.log('Got Code.', f.detail.partner);
+            // console.log('partner: ', f.detail.partner);
+            // console.log('Action to perform: ', e.detail.command);
+            // console.log('Dataset: ', e.detail.objectname);
+            // console.log('Config: ', e.detail.objectconfig);
+            // console.log('Data: ', e.detail.objectdata);
+            // console.log('Userid: ', e.detail.userid);
+            // console.log('HASH: ', e.detail.hash);
             var partner = f.detail.partner;
             var command = e.detail.command;
             var objectname = e.detail.objectname;
@@ -321,9 +461,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             var objectconfig = e.detail.objectconfig;
             var userid = e.detail.userid;
             var hash = e.detail.hash;
-            console.log("sending verification req");
+            //console.log("Nieuwe getuige: ", partner, command, objectname, objectconfig, objectdata, userid, hash);
+            //console.log("sending verification req");
             lomqtt.subscribe("validate/"+this.publickey, 2);
             lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);
+            //this.$.lomqtt.send("sync/"+e.detail.partner, "SYNC1|"+mytopic, 2);
           });
         // e.target.import is the import document.
         changeStage(2);
@@ -342,11 +484,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.entryAnimation = 'slide-from-right-animation';
         this.exitAnimation = 'slide-left-animation';
         this.selected = 3;
-        console.log("To qr");
+        //console.log("To qr");
         this.qrcode = this.deviceid;
+        //this.$.lomqtt.subscribe("sync/"+this.deviceid, 0);
+        //this.$.lomqtt.subscribe("verify/"+this.deviceid, 2);
+        //this.$.lomqtt.send("sync/"+this.deviceid, "SYNC1", 0);
       },
 
     _toWhere:function(){
+      // this.entryAnimation = 'slide-from-left-animation';
+      // this.exitAnimation = 'slide-right-animation';
       this.selected = 0;
     },
 
@@ -356,6 +503,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     _mqttconnected: function(){
       if(this.publickey){
+        //var topic = "userobject/"+this.publickey;
+        //.$.lomqtt.push("subscriptions", {topic: topic, qos: 0});
       };
       
     },
@@ -366,7 +515,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
      
 
       msgreceived: function(e){
-        console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
+        //console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
 
         var commandarray = e.detail.msg.split("|");
 
@@ -374,6 +523,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var command = commandarray[0];
 
         var lomqtt = this.$.lomqtt;
+        // var objectname = e.detail.detail[2].objectname;
+        // var objectconfig = e.detail.detail[3].objectconfig;
+        // var objectdata = e.detail.detail[4].objectdata;
+        // var userid = e.detail.detail[5].userid;
+        // var hash = e.detail.detail[6].hash;
 
         var dialog = this.$.lodialog;
         var peerd = this.$.peerval;
@@ -391,7 +545,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             break;
 
             case "SYNC3":
-              console.log("Showing my private key");
+              //console.log("Showing my private key");
               lomqtt.send("sync/"+partner, "SYNC4|"+this.deviceid, 2);
               this.qrcode = this.privatekey;
               
@@ -425,11 +579,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             break;
 
             case "SYNCUPDATE":
+              //console.log("Something changed on another device");
+              //console.log("Ken ik stage? ", stage);
+              //this.selected = 1;
               this.$.localapielem.encdata = e.detail.detail[4].objectdata;
 
             break;
 
             case "VALIDATE":
+              // Validate the dataset on this device by adding the sender as a peer
+              //console.log("validate request from ", partner);
+              //console.log('localapi: ', this.localapi.collection);
+              //console.log('objectname: ', objectname);
+              //console.log('localapi item: ', this.localapi.collection[objectname]);
+              //console.log('peers id: ', e.detail.detail[5].userid);
               var objectname = commandarray[2];
               var userid = commandarray[5];
               this.localapi.collection[objectname].peers.push({ peer: userid });
@@ -442,7 +605,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             case "VERIFY":
 
               // Another user wants a dataset verified by this user
-              console.log("sync request", commandarray);
+              //console.log("sync request", commandarray);
               peerd.title = "VERIFY";
               peerd.body = "Wil je getuige zijn van deze dataset?";
               peerd.command = command;
@@ -461,6 +624,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
               //console.log("sync request");
               dialog.title = "SYNC?";
               dialog.body = "Een toestel wil synchroniseren met dit toestel.";
+              //app.localapi.collection[objectname].peers[partner] = objectconfig;
+              //console.log("Een van jouw mignons heeft een dataset veranderd.");
+              //if(app.localapi.collection[objectname].data === objectdata);
+              //app.localapi.lastupdate = Date.now();
             break;
 
           };
@@ -505,7 +672,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             //(user1, user2, objectname, objecthash)
             lomqtt.send("validate/"+partner, "VALIDATE"+"|"+this.publickey+"|"+objectname+"|"+null+"|"+null+"|"+this.publickey+"|"+hash, 2);
             //loxmpp.sendgroupMessage(this.userid, userid2, objectname, hash);
-            console.log("dus ik push naar godfather array: ", partner, objectname, hash);
+            //console.log("dus ik push naar godfather array: ", partner, objectname, hash);
             this.localapi.godfather.push({ "child": partner, "object": objectname, "hash": hash, "valid": true });
             this.$.localapielem.writeData();
             this.selected = 0;
@@ -539,7 +706,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var lomqtt = this.$.lomqtt;
         lomqtt.send("validate/"+partner, "VALIDATE"+"|"+this.publickey+"|"+objectname+"|"+null+"|"+null+"|"+this.publickey+"|"+hash, 2);
             //loxmpp.sendgroupMessage(this.userid, userid2, objectname, hash);
-            console.log("dus ik push naar godfather array: ", partner, objectname, hash);
+            //console.log("dus ik push naar godfather array: ", partner, objectname, hash);
             this.localapi.godfather.push({ "child": partner, "object": objectname, "hash": hash, "valid": true });
             this.$.localapielem.writeData();
             this.selected = 0;
@@ -549,7 +716,3 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     });
 })();
 </script>
-
-
-
-</dom-module>
