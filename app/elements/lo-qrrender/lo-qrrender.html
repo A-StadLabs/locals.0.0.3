@@ -11,29 +11,47 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 
 <dom-module id="lo-qrrender">
+  <style>
+    :host {
+      display: block;
+      background-color: white;
+    }
+
+    small {
+      font-size: 10px;
+    }
+  </style>
   <template>
-    <style>
-      :host {
-        display: block;
-      }
-    </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div id="qrplaceholder"></div>
+    <small>{{qrcode}}</small>
   </template>
-  <script>
-  (function() {
-    'use strict';
-
-    Polymer({
-      is: 'lo-qrrender',
-
-      properties: {
-        foo: {
-          type: String,
-          value: 'lo-qrrender',
-          notify: true
-        }
-      }
-    });
-  })();
-  </script>
 </dom-module>
+<script>
+(function() {
+  Polymer({
+    is: 'lo-qrrender',
+
+    properties: {
+      qrcode: {
+        type: String,
+        notify: true,
+        observer: 'gotCode'
+      }
+    },
+
+    ready: function(){
+      
+    },
+
+    gotCode: function(){
+      var src = this.$.qrplaceholder;
+      src.innerHTML = '';
+      var img = document.createElement("img");
+      var sourceke = "https://chart.googleapis.com/chart?cht=qr&chs=300x300&chl="+this.qrcode;
+      img.src = sourceke.toString();
+      src.appendChild(img);
+    }
+
+  });
+})();
+</script>

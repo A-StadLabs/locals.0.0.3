@@ -1,0 +1,115 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="labs002-huwelijk">
+  <style>
+    :host {
+      display: block;
+    }
+  </style>
+  <template>
+
+
+<div>Hello from <span>{{objectname}}</span></div>
+<h1>{{objectdata.username}}</h1>
+	<input type="text" id="userinput" value="{{objectdata.username}}"/>
+	<button on-tap="save">Save</button>
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-huwelijk',
+
+      
+      properties: {
+      	objectname: {
+	    	type: String
+	     },
+	      objectconfig: {
+	        type: Object,
+	        notify: true
+	        //observer: "_config"
+	      },
+	      objectdata: {
+	        type: Object,
+	        notify: true,
+	        observer: "_data"
+	      },
+	      objectcomponent: {
+	        type: String
+	      },
+	      opened: {
+	        type: Boolean,
+	        value: false
+	      }
+
+      },
+
+
+      ready: function(){
+        console.log('skeleton is ready'); 
+      },
+ 
+      _data: function(){
+      	console.log("Observer?", this.objectdata);
+      	//this.username = this.objectdata.username;
+      },
+
+      save: function(){
+        this.username = this.$.userinput.value;
+      	console.log('text unput value: ', this.username);
+        console.log('has value: ', this.objectdata["username"]);
+      	this.objectdata["username"] = this.username; 
+        console.log('new value: ', this.objectdata["username"]);
+      	this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata });
+      },
+
+      created: function() {
+    	 console.log(this.localName + '#' + this.id + ' was created');
+  	 },
+
+    attached: function() {
+      this.async(function() {
+        console.log(this.localName + '#' + this.id + ' was attached');
+        //this.selected = 1;
+        //this._configChanged();
+        //this._dataChanged();
+      });
+    },
+
+    detached: function() {
+      this.async(function() {
+        console.log(this.localName + '#' + this.id + ' was detached');
+     });
+    },
+
+    attributeChanged: function(name, type) {
+      console.log(this.localName + '#' + this.id + ' attribute ' + name +
+        ' was changed to ' + this.getAttribute(name));
+    }
+
+  });
+
+})();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+

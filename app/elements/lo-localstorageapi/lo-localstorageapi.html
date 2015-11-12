@@ -43,23 +43,23 @@
       data: {
         type: Object,
         notify: true,
-        observer: '_dataChanged'
+        observer: "_dataChanged"
       },
 
       publickey: {
         type: String,
-        observer: '_publickey'
+        observer: "_publickey"
       },
 
       privatekey: {
         type: String,
-        observer: '_privatekey'
+        observer: "_privatekey"
       },
 
       encdata: {
         type: String,
         notify: true,
-        observer: '_encdataChanged'
+        observer: "_encdataChanged"
       },
 
       deviceid: {
@@ -78,10 +78,10 @@
     },
 
     initEmpty: function(){
-      lomqtt = document.querySelector('lo-mqtt');
-      console.log('Init activated');
+      lomqtt = document.querySelector("lo-mqtt");
+      console.log("Init activated");
       //lomqtt.subscribe(topic, 2, function(e){
-      //  console.log('Init data: ',e);
+      //  console.log("Init data: ",e);
       //});
       //var data = { collection: {}, peers: [], godfather: [], lastupdate: Date.now() };
       //this.data = data;
@@ -91,9 +91,9 @@
     },
 
     writeData: function(){
-        lomqtt = document.querySelector('lo-mqtt');
+        lomqtt = document.querySelector("lo-mqtt");
 
-        //console.log('Pincode:', this.privatekey);
+        //console.log("Pincode:", this.privatekey);
         var privatekey = this.privatekey;
         //console.log('Localstorage API write: ', this.data);
         var object = this.data;
@@ -103,13 +103,13 @@
         //console.log('Localstorage API encrypted: ',encrypted.toString());
         this.encdata = encrypted.toString();
         //lomqtt.send(this.publickey, this.encdata);
-        lomqtt.send('userobject/'+this.publickey, 'USERUPDATE|'+this.encdata, 0);
+        lomqtt.send('userobject/'+this.publickey, "USERUPDATE|"+this.encdata, 0);
         //var peers = this.data.peers;
-        //this.$.loxmpp.sendgroupMessage(this.publickey, 'SYNCUPDATE', null, null, this.encdata);
+        //this.$.loxmpp.sendgroupMessage(this.publickey, "SYNCUPDATE", null, null, this.encdata);
         // for (var i = peers.length - 1; i >= 0; i--) {
-        //   if(peers[i]!=this.deviceid+'@opantwerpen.be'){
+        //   if(peers[i]!=this.deviceid+"@opantwerpen.be"){
         //     console.log('Save ook bij: ',peers[i]);
-        //     this.$.loxmpp.sendMessage(peers[i], 'SYNCUPDATE', null, null, this.encdata);
+        //     this.$.loxmpp.sendMessage(peers[i], "SYNCUPDATE", null, null, this.encdata);
         //   };
         // };
         this.readData();
@@ -127,7 +127,7 @@
         });
         this.data = data;
         //console.log(JSON.stringify(data));
-      }
+      };
     },
 
     _encdataChanged: function(){
@@ -135,7 +135,7 @@
     },
 
     _dataChanged: function(){
-      this.fire('data-changed');
+      this.fire("data-changed");
     },
 
     attached: function(){

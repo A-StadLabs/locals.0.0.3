@@ -1,0 +1,285 @@
+<!-- Copyright (c) 2015 The Locals Project Authors. All rights reserved.
+See authors.md for a list of all members.
+ -->
+ 
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+
+<link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
+
+<link rel="import" href="../../bower_components/swipe-pages/swipe-pages.html">
+
+
+<script src="../../scripts/sha256.js"></script>
+<script src="/../../scripts/enc-base64-min.js"></script>
+
+<link rel="import" href="../lo-renderer/lo-renderer.html">
+
+<dom-module id="lo-objectscollection">
+  <style>
+    :host {
+      display: block;
+      height: 100vh;
+/*      width: 100vw;*/
+      --objectscollection-width: 240px;
+      --objectscollection-left: 0px;
+      overflow: none;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .scrollstage {
+      overflow-x: scroll;
+      overflow-y: none;
+      width: 100vw;
+      margin: 0px;
+      padding: 0px;
+      height: 80vh;
+    }
+
+    .objectscanvas {
+      height: 100vh;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .objectscollection {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      width: var(--objectscollection-width);
+      margin-right: var(--objectscollection-left);
+      margin: 0px;
+      height: 60vh;
+      padding: 0px 15vw 0px 15vw;
+    }
+
+    #toolbar {
+      height: 20vh;
+      /*min-height: 120px;*/
+      width: 100vw;
+      padding: 0px;
+      background-color: transparent;
+      color: black;
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+    }
+
+    .mainbtns {
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+      padding: 10px;
+    }
+
+    .mainbtn {
+      height: 50px;
+      min-height: 50px;
+      width: 50px;
+      min-height: 50px;
+      border-radius: 50%;
+      background-color: rgba(0,0,0,0.1);
+      border: none;
+      outline: 0;
+      margin: 5px;
+      padding: 0px;
+
+    }
+    .mainbtn img {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .QR {
+      background-color: white;
+      height: 40px;
+      min-height: 40px;
+      width: 40px;
+      min-height: 40px;
+    }
+
+    .QR img {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    lo-renderer {
+    }
+
+
+
+
+</style>
+<template>
+
+<div class="objectscanvas">
+    <div id="toolbar"> 
+      <div class="mainbtns">
+        <button class="mainbtn" on-tap="FireAddData"><img src="../../images/add.svg"></button>
+        <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/godfather2.svg"></button>
+
+<!--         <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/QR.svg"></button>-->
+      </div>
+    </div>
+
+    <div class="scrollstage">
+    <div class="objectscollection">
+      <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
+
+        <lo-preview 
+          objectcomponent="{{item.array.objectcomponent}}" 
+          objectname="{{item.array.objectname}}" 
+          objectconfig="{{item.array.objectconfig}}"
+          objectdata="{{item.array.objectdata}}"
+          objectpeers="{{item.array.objectpeers}}"
+          publickey="{{publickey}}"
+          hash="{{item.array.objecthash}}"
+          width="{{item.array.width}}"
+          height="{{item.array.height}}"
+          locked="{{item.array.locked}}"
+          >
+        </lo-preview>
+
+      </template>
+    </div>
+    
+    </div>
+</div>
+
+</template>
+
+</dom-module>
+<script>
+(function() {
+
+  function hasher(hashobject){
+    var hash = JSON.stringify(hashobject);
+    var hash = CryptoJS.SHA256(hash);
+    //console.log("te hashen: ", hashobject);
+    //console.log("gehashed: ", hash.toString(CryptoJS.enc.Hex));
+    return hash.toString(CryptoJS.enc.Hex); 
+  };
+
+  var lomqtt;
+
+ 
+
+  Polymer({
+    is: 'lo-objectscollection',
+
+    behaviors: [
+        Polymer.NeonAnimatableBehavior
+    ],
+
+    properties: {
+      publickey: {
+        type: String,
+        notify: true
+      },
+
+      loggedin: {
+        type: Boolean,
+        observer: "_log"
+      },
+
+      objectsdata: {
+        type: Object,
+        notify: true,
+        observer: "_objectChanged"
+      },
+
+      objectsdata_new: {
+        type: Array,
+        notify: true
+      },
+
+      position: {
+        type: Number,
+        notify: true
+      }
+
+
+    },
+
+    ready: function(){
+
+      var that = this;
+
+    },
+
+    _selposchanged: function(){
+      this.customStyle['--objectscollection-left'] = 280*this.position.toString()+"px";
+      this.updateStyles();
+    },
+
+    attached: function(){
+      lomqtt = document.querySelector("lo-mqtt");
+      //console.log("Objectscollection kent lomqtt: ", lomqtt);
+    },
+
+    toGod: function(){
+      var stage = document.querySelector("lo-stage");
+      stage.selected = 6;
+    },
+
+    _log: function(){
+      //console.log("Loggedin? ",this.loggedin);
+    },
+
+    _objectChanged: function(){
+      //console.log('updated: ',this.objectsdata.collection);
+      this.objectsdata_new = [];
+      var objectsdata_new = this.objectsdata_new;
+      var p = this.objectsdata.collection;
+      for (var key in p) {
+        if (p.hasOwnProperty(key)) {
+          //console.log(key + " -> " + p[key]);
+          //console.log(p[key].name);
+          this.push('objectsdata_new', { 
+            array: {objectname: p[key].name, 
+            objectconfig: p[key].config,
+            objectdata: p[key].data,
+            objectpeers: p[key].peers,
+            objectcomponent: p[key].component,
+            objecthash: hasher(p[key].data),
+            objectlocked: p[key].locked }
+          });
+          
+          //console.log('New objectsdata: ', objectsdata_new);
+        }
+      };
+      this.customStyle['--objectscollection-width'] = 280*this.objectsdata_new.length.toString()+"px";
+      this.updateStyles();
+      this.objectsdata_new = objectsdata_new;
+    },
+
+    validate: function(e){
+      var i = e.target.id;
+      var data = this.objectsdata_new.collection[i].data;
+      var config = this.objectsdata_new.collection[i].config;
+      var name = this.objectsdata_new.collection[i].name;
+      this.fire('qr-reader', {  
+        command: "VERIFY", 
+        objectname: name, 
+        objectconfig: config, 
+        objectdata: JSON.stringify(data) 
+      });
+    },
+
+    _toQR: function(){
+      this.fire('qr-identity');
+    },
+
+    _toQReader: function(){
+      this.fire('qr-reader');
+    },
+
+    FireAddData: function(){
+      this.fire('object-picker');
+    }
+
+  });
+})();
+</script>

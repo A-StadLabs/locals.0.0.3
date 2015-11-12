@@ -1,0 +1,100 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="lo-godfather">
+  <template>
+    <style>
+      :host {
+        display: block;
+        color: black;
+      }
+    </style>
+    <button on-tap="back">Back</button>
+    <h1>Godfather of: </h1>
+    <template is="dom-repeat" items="{{children}}">
+      <div>USERID Child: <span>{{item.child}}</span>
+      Object: <span>{{item.object}}</span>
+      Hash: <span>{{item.hash}}</span></div>
+      <div>{{item.valid}}</div>
+    </template>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    var clog = function(){
+      //console.log("IETS KOMT BINNEN");
+    };
+
+
+    var lomqtt;
+     var stage;
+
+    Polymer({
+      is: 'lo-godfather',
+
+      properties: {
+        children: {
+          type: Array,
+          notify: true,
+          observer: "_children"
+        }
+      },
+
+      attached: function(){
+        
+        stage = document.querySelector("lo-stage");
+      },
+      
+      back: function(){
+        this.fire('change-stage', {stage: 0});
+      },
+
+      _children: function(){
+        lomqtt = document.querySelector("lo-mqtt");
+        //console.log("HEY! NIE OP MIJN GEZICHT!!!", this.children);
+        //this.checkSum();
+        var children = this.children;
+
+        for (var i = children.length - 1; i >= 0; i--) {
+          //console.log("LOMQTT SUBSCRIBE TO: ", "userhash/"+this.children[i].child);
+          var topic = "userhash/"+this.children[i].child;
+          //console.log("GODFATHER: ", topic);
+          lomqtt.push("children", {topic: topic, qos: 0});
+        };
+
+    
+      },
+
+      checkSum: function(user, object, hash, fn){
+        //console.log("My child ",user," has edited info for: ", object, " new hash: ", hash);
+        for (var i = this.children.length - 1; i >= 0; i--) {
+          if(this.children[i].child==user&&this.children[i].object==object){
+            //console.log("found one of my children");
+            if(this.children[i].hash != hash){
+              //console.log("hash changed: child's hash: ", hash, " my hash: ", this.children[i].hash);
+              this.children[i].valid = false;
+              this.fire('save');
+            } else {
+              //console.log("hashcheck OKAY! child's hash: ", hash, " my hash: ", this.children[i].hash);
+              this.children[i].valid = true;
+              this.fire('save');
+            }
+          };
+        };
+        fn();
+      }
+
+    });
+  })();
+  </script>
+</dom-module>
