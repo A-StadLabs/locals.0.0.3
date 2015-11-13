@@ -697,6 +697,9 @@ See authors.md for a list of all members.
          if(this.objectconfig[this.selecteditem][0]>=1){
           console.log(this.objectconfig[this.selecteditem][0]);
           this.objectconfig[this.selecteditem][0]--;
+          e.target.active = true;
+        } else {
+          e.target.active = false;
         };
         //console.log("new select is", item.selected);
         this._configChanged();
@@ -722,6 +725,9 @@ See authors.md for a list of all members.
         if(this.objectconfig[this.selecteditem][0]<=item.nrofitems-1){
           console.log(this.objectconfig[this.selecteditem][0]);
           this.objectconfig[this.selecteditem][0]++;
+          e.target.active = true;
+        } else {
+          e.target.active = false;
         };
         //console.log("new select is", item.selected);
         //console.log("NEW CONFIG item is ", this.objectconfig[this.selecteditem][0]);

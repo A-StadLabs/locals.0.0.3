@@ -15,6 +15,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <style>
       :host {
         display: block;
+        --var-lopacity: 1;
       }
 
 
@@ -30,11 +31,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       border-radius: 50%;
       padding: 0px;
       margin: 0px;
+      opacity: var(--var-lopacity);
     }
 
     .selector img {
       width: 100%;
     }
+
+    
 
 
     </style>
@@ -66,6 +70,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         context: {
           type: String
+        },
+        active: {
+          type: Boolean,
+          observer: '_active'
         }
       },
 
@@ -75,6 +83,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       tapped: function(){
         this.fire('btn-tapped', {context: this.context});
+      },
+
+      _active: function(){
+        console.log("I'm ", this.active);
+        if(this.active){
+          this.customStyle['--var-lopacity'] = '1';
+        } else {
+          this.customStyle['--var-lopacity'] = '0.5';
+        }
+        this.updateStyles();
       }
     });
   })();
