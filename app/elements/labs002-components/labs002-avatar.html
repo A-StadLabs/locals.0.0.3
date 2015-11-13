@@ -393,13 +393,15 @@ See authors.md for a list of all members.
 
           <div class="snit fixit avatarparts">
             <labs002-avatar-snitpages 
-              id="snit">
+              id="snit"
+              nrofitems="{{nrofsnits}}">
             </labs002-avatar-snitpages>
           </div>
      
           <div class="glasses fixit avatarparts">
             <labs002-avatar-glassespages 
-              id="glasses">
+              id="glasses"
+              nrofitems="{{nrofglasses}}">
             </labs002-avatar-glassespages>
           </div>
 
@@ -411,13 +413,15 @@ See authors.md for a list of all members.
 
           <div class="beard fixit avatarparts">
             <labs002-avatar-beardpages 
-              id="beard">
+              id="beard"
+              nrofitems="{{nrofbeard}}">
             </labs002-avatar-beardpages>
           </div>
 
           <div class="head fixit avatarparts">
             <labs002-avatar-headpages 
-              id="head">
+              id="head"
+              nrofitems="{{nrofhead}}">
             </labs002-avatar-headpages>
           </div>
 
@@ -425,7 +429,8 @@ See authors.md for a list of all members.
             <labs002-avatar-toppages 
               id="top"
               entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              exitSnit="{{exitAnimationSnit}}"
+              nrofitems="{{nroftop}}">
             </labs002-avatar-toppages>
           </div>
 
@@ -433,7 +438,8 @@ See authors.md for a list of all members.
             <labs002-avatar-bottompages 
               id="bottom"
               entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              exitSnit="{{exitAnimationSnit}}"
+              nrofitems="{{nrofbottom}}">
             </labs002-avatar-bottompages>
           </div>
 
@@ -441,7 +447,8 @@ See authors.md for a list of all members.
             <labs002-avatar-shoespages 
               id="shoes"
               entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              exitSnit="{{exitAnimationSnit}}"
+              nrofitems="{{nrofshoes}}">
             </labs002-avatar-shoespages>
           </div>
 
@@ -613,17 +620,18 @@ See authors.md for a list of all members.
         observer: "_selectedcolor"
       }
 
-
       },
 
       // listeners: {
       //   'tap': '_checkwhattap'
       // },
 
+      _checkwhattap : function(e){
+        console.log("Klikken op ", e.target);
+      },
 
       ready: function(){
         this.selected = 0;
-
         //console.log('avatar is ready');
         this.editmode = false;
         this.itemtocolor = "lijf";
@@ -634,22 +642,22 @@ See authors.md for a list of all members.
 
 
       created: function() {
-    //console.log(this.localName + '#' + this.id + ' was created');
-  },
+        //console.log(this.localName + '#' + this.id + ' was created');
+      },
 
-  attached: function() {
-    this.async(function() {
-      //console.log(this.localName + '#' + this.id + ' was attached');
-      //this.selected = 1;
-      this._configChanged();
-      this._dataChanged();
-   });
+      attached: function() {
+        this.async(function() {
+          //console.log(this.localName + '#' + this.id + ' was attached');
+          //this.selected = 1;
+          this._configChanged();
+          this._dataChanged();
+       });
 
-        this.entryAnimation = 'fade-in-animation';
-        this.exitAnimation = 'fade-out-animation';
+      this.entryAnimation = 'fade-in-animation';
+      this.exitAnimation = 'fade-out-animation';
 
 
-  },
+      },
 
   detached: function() {
     this.async(function() {
@@ -684,8 +692,12 @@ See authors.md for a list of all members.
         //console.log("current select is ", item.selected);
         //console.log("Item is ", item);
         //item.selected--;
+        console.log("PREV: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
         //console.log("CONFIG item is ", this.objectconfig[this.selecteditem][0]);
-        this.objectconfig[this.selecteditem][0]--;
+         if(this.objectconfig[this.selecteditem][0]>=1){
+          console.log(this.objectconfig[this.selecteditem][0]);
+          this.objectconfig[this.selecteditem][0]--;
+        };
         //console.log("new select is", item.selected);
         this._configChanged();
 
@@ -700,13 +712,17 @@ See authors.md for a list of all members.
 
       next: function(e){
         this.selecteditem = e.target.context;
-        //console.log("NEXT ", this.selecteditem);
         var item = document.getElementById(this.selecteditem);
+        //console.log("NEXT ", e.target.context, item.nrofitems);
+        console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
         //console.log("current select is ", item.selected);
         //console.log("Item is ", item);
         //console.log("CONFIG item is ", this.objectconfig[this.selecteditem][0]);
         //item.selected++;
-        this.objectconfig[this.selecteditem][0]++;
+        if(this.objectconfig[this.selecteditem][0]<=item.nrofitems-1){
+          console.log(this.objectconfig[this.selecteditem][0]);
+          this.objectconfig[this.selecteditem][0]++;
+        };
         //console.log("new select is", item.selected);
         //console.log("NEW CONFIG item is ", this.objectconfig[this.selecteditem][0]);
         this._configChanged();
@@ -773,6 +789,7 @@ See authors.md for a list of all members.
           this.objectconfig[item][1] = color;
           var avataritem = document.getElementById(item);
           avataritem.color = color;
+          this._configChanged();
           //console.log("Ik ken het avatar onderdeel ", avataritem);
           //console.log("KAN DIT?",this.objectconfig[item][1]);
         };
