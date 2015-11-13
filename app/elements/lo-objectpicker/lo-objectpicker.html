@@ -147,20 +147,35 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <template>
 
 
+
+
+      <neon-animated-pages selected="0" id="pages"  entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+     
+      <!-- Dit is de grid met objecten -->
+      <neon-animatable>
+        <div class="objectstotal">
+
       <div id="toolbar"> 
         <button class="backbtn" on-tap="back">
           <img src="../../images/back-white.svg">
         </button>
       </div>
 
-      <neon-animated-pages selected="0" id="pages">
-     
-      <!-- Dit is de grid met objecten -->
-        <div class="objectstotal">
+
+
           <template is="dom-repeat" items="{{objecten}}">
             <lo-pickitem enabled="{{item.enabled}}" object="{{item}}" id="{{item.name}}" index="{{index}}" objectnaam="{{item.name}}" icon="{{item.icon}}"></lo-pickitem>
           </template>
         </div>
+      </neon-animatable>
+
+      <neon-animatable>
+
+      <div id="toolbar"> 
+        <button class="backbtn" on-tap="backtogrid">
+          <img src="../../images/back-white.svg">
+        </button>
+      </div>
 
       <!-- Hier een preview met condities weergeven? -->
         <div class="objectdetail">
@@ -168,27 +183,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <h1><span>{{previewname}}</span></h1>
           <p>{{previewdescription}}</p>
 
-<!--           <small>{{state}}</small> -->
-
-
-<!--           <p>Condities (wa ge moet hebben veur dat dees kan):</p>
-          <template is="dom-repeat" items="{{conditions}}">
-            <p>{{item.objectname}}</p>
-          </template> -->
-<!--           <div on-tap="backtogrid">BACK!</div>
- -->
-<!--           <button on-tap="addtocollection">VOEG TOE!</button>
- -->
-
-
-
-
-<!--       <button class="addbtn" on-tap="addtocollection">
-            <img src="../../images/add-white.svg">
-          </button> -->
-
           <div class="confirmbtns">
-          
 
             <button on-tap="addtocollection" class="confirmbtn">
               <img src="../../images/add-white.svg">
@@ -198,6 +193,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
         </div>
+      </neon-animatable>
 
       </neon-animated-pages>
 
@@ -260,6 +256,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.fire('change-stage', { stage: 0, entry: 'slide-from-left-animation', exit: 'slide-right-animation'});
     },
 
+
+    backtogrid: function(){
+      this.$.pages.entryAnimation = 'slide-from-left-animation';
+      this.$.pages.exitAnimation = 'slide-right-animation';
+      this.$.pages.selected = 0;
+
+    },    
+
+
+
+
     initFirebase: function(){
       var firebase = new Firebase("https://blazing-fire-6426.firebaseio.com/locals/");
       //firebase.set(this.objects);
@@ -277,6 +284,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     ready: function(){
       this.objectsloaded = false;
+      this.entryAnimation = 'slide-from-right-animation';
+      this.exitAnimation = 'slide-left-animation';
     },
 
     attached: function(){
@@ -332,6 +341,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     selectobject: function(e){
+      this.$.pages.entryAnimation = 'slide-from-right-animation';
+      this.$.pages.exitAnimation = 'slide-left-animation';
+
       this.previewname = e.target.id;
       this.previewicon = this.objects.collection[e.target.index].icon;
       this.previewdescription = this.objects.collection[e.target.index].description;
@@ -350,11 +362,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       this.fire("save");
       this.back();
       this.backtogrid();
-    },
+    }
 
-    backtogrid: function(){
-      this.$.pages.selected = 0;
-    }    
 
   });
 })();

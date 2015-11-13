@@ -88,7 +88,7 @@ See authors.md for a list of all members.
       background-color: transparent;
       color: black;
       @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
+      @apply(--layout-start-justified);
     }
 
     .workmode {
@@ -191,7 +191,7 @@ See authors.md for a list of all members.
 
       <div id="toolbar"> 
         <button class="backbtn" on-tap="_toWhere">
-          <img src="../../images/decline.svg">
+          <img src="../../images/back.svg">
         </button>
       </div>
 
@@ -492,8 +492,8 @@ See authors.md for a list of all members.
       },
 
     _toWhere:function(){
-      // this.entryAnimation = 'slide-from-left-animation';
-      // this.exitAnimation = 'slide-right-animation';
+      this.entryAnimation = 'slide-from-left-animation';
+      this.exitAnimation = 'slide-right-animation';
       this.selected = 0;
     },
 

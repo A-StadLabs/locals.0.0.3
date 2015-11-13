@@ -15,37 +15,18 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <style>
     :host {
       display: block;
-          background-color: white;
-          width: 100vw;
-/*          max-width: 600px;
-*/          height: 100vh;
-/*          max-height: 600px;
-*/    }
-
-/*    .peers {
       background-color: white;
-      height: 100%;
-      width: 100%;
-    }*/
+      width: 100vw;
+      height: 100vh;
+    }
 
-    .addpeerbar {
-      width: 100%;
-      padding: 15px;
-      height: 90px;
-      background-color: transparent;
-      @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
-      box-sizing:border-box;
 
-/*      border-bottom: 1px solid rgba(0,0,0,0.05);
-*/    }
 
     .peerlist {
       overflow-y: scroll;
       height: 350px;
       width: 100%;
       @apply(--layout-vertical);
-/*      background-color: rgba(120,180,122,0.05);*/
     }
 
     .peerlistitem {
@@ -64,17 +45,67 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
 
-    .mainbtn {
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-      height: 50px;
-      border-radius: 5px;
+
+
+    #toolbar {
+      height: 10vh;
+      width: 100vw;
+      padding: 10px;
+      box-sizing:border-box;
       background-color: transparent;
-      border: 1px solid rgba(0,0,0,0.1);
+      color: black;
+      @apply(--layout-horizontal);
+    }
+
+
+/*    .mainbtn {
+      height: 50px;
+      min-height: 50px;
+      width: 50px;
+      min-height: 50px;
+      border-radius: 50%;
+      background-color: rgba(0,0,0,0.1);
+      border: none;
       outline: 0;
-      padding: 0px 15px 0px 15px;
+      margin: 5px;
+      padding: 0px;
 
     }
+    .mainbtn img {
+      margin: 0px;
+      padding: 0px;
+      width: 80%;
+      height: 80%;
+    }
+*/
+    .confirmbtns {
+      margin-top: 50px;
+      background-color: transparent;
+      width: 100vw;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+    }
+
+    .confirmbtn {
+
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+
+      margin: 0px 4px 0px 4px;
+      background-color: rgba(0,0,0,0.05);
+      border: none;
+      outline: 0;
+      padding: 0px;
+    }
+
+    .confirmbtn img {
+      width: 100%;
+      height: 100%;
+    }
+
+
+
     .backbtn {
       height: 50px;
       width: 50px;
@@ -94,22 +125,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     .peersnr {
       width: 100%;
-      height: 100%;
-/*      border-radius: 50%;*/
+      height: 70vh;
       color: black;
-/*      background-color: rgba(0,0,0,0.05);*/
       text-align: center;
       @apply(--layout-vertical);
-      @apply(--layout-center);
+      @apply(--layout-center-center);
 
     }
 
     .nr {
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
-      height: 60vh;
-      width: 100%;
-          }
+      height: 60vw;
+      width: 60vw;
+
+      max-width: 200px;
+      max-height: 200px;
+
+      border-radius: 50%;
+      border: 1px solid rgba(0,0,0,0.1);
+    }
+
 
 
     h1 {
@@ -119,35 +155,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
 
 
-    .mainbtn {
-      height: 50px;
-      min-height: 50px;
-      width: 50px;
-      min-height: 50px;
-      border-radius: 50%;
-      background-color: rgba(0,0,0,0.1);
-      border: none;
-      outline: 0;
-      margin: 5px;
-      padding: 0px;
 
-    }
-    .mainbtn img {
-      margin: 0px;
-      padding: 0px;
-      width: 80%;
-      height: 80%;
-    }
+
 
   </style>
   <template>
 
     <div class="peers">
 
-      <div class="addpeerbar">
+      <div id="toolbar">
+
+
         <button class="backbtn" on-tap="back">
-          <img src="../../images/decline.svg">
+          <img src="../../images/back.svg">
         </button>
+
+        <span class="flex"></span>
+
 
       </div>
 
@@ -157,24 +181,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <h1><span>{{peers.length}}</span></h1>
         </div>
 
-        <button class="mainbtn" on-tap="newpeer">
-          <img src="../../images/plusval.svg">
-        </button> 
 
-      </div>
+          <div class="confirmbtns">
 
+            <button on-tap="newpeer" class="confirmbtn">
+              <img src="../../images/add.svg">
+            </button>
 
-
-<!--       <div class="peerlist">
-        <tempate is="dom-repeat" items="{{peers}}" as="t" observer="{{peers.*}}">
-          <div class="peerlistitem">
-            <h3 class="flex">??<span>{{t.peer}}</span></h3>
-            <img src="../../images/accept-green.svg">
           </div>
 
-        </tempate>
+
+
       </div>
-     -->
+
     </div>
 
   </template>
