@@ -18,7 +18,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         color: black;
       }
     </style>
-    <button on-tap="back">Back</button>
     <h1>Godfather of: </h1>
     <template is="dom-repeat" items="{{children}}">
       <div>USERID Child: <span>{{item.child}}</span>
@@ -55,10 +54,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         stage = document.querySelector("lo-stage");
       },
       
-      back: function(){
-        this.fire('change-stage', {stage: 0});
-      },
-
       _children: function(){
         lomqtt = document.querySelector("lo-mqtt");
         //console.log("HEY! NIE OP MIJN GEZICHT!!!", this.children);
