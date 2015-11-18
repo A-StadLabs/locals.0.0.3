@@ -55,6 +55,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.$.mqtt.connect();
   });
 
+  document.addEventListener("deviceready", onDeviceReady, false);
+  function onDeviceReady() {
+      console.log(device.cordova);
+  }
+
 
 
 })(document);

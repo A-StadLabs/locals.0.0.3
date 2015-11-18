@@ -26,6 +26,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </style>
   <template>
+  <button on-tap="startScan">SCAN!</button>
   <button on-tap="back">X</button>
   
  
@@ -62,8 +63,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       var that = this;
 
 
+/*
 
+      document.addEventListener('qrcoderead', function(e){
+        that.codevalue = e.detail;
+        console.log("code: ",e.detail);
+        that.fire('got-code', { partner: e.detail, command: this.command, objectname: this.objectnaam, objectconfig: this.objectconfig, objectdata: this.objectdata });
+        return e.detail;
+      });
+*/
+    },
 
+    startScan: function(){
+     
       cordova.plugins.barcodeScanner.scan(
             function (result) {
                 alert("We got a barcode\n" +
@@ -75,18 +87,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 alert("Scanning failed: " + error);
             }
          );
-/*
-      document.addEventListener('qrcoderead', function(e){
-        that.codevalue = e.detail;
-        console.log("code: ",e.detail);
-        that.fire('got-code', { partner: e.detail, command: this.command, objectname: this.objectnaam, objectconfig: this.objectconfig, objectdata: this.objectdata });
-        return e.detail;
-      });
-*/
-    },
 
+      
+    },
     back: function(){
-      stopVideo();
+     
       this.fire('back');
       
     }
