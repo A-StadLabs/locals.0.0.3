@@ -1,4 +1,4 @@
-  /*
+/*
   Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
   This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
   The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
@@ -246,26 +246,6 @@
     });
   });
 
-<<<<<<< HEAD
-  gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.css'], ['styles', reload]);
-  gulp.watch(['app/elements/**/*.css'], ['elements', reload]);
-  // gulp.watch(['app/{scripts,elements}/**/{*.js,*.html}'], ['jshint']);
-  gulp.watch(['app/images/**/*'], reload);
-});
-
-// Build and serve the output from the dist build
-gulp.task('serve:dist', ['build'], function () {
-  browserSync({
-    port: 5001,
-    notify: false,
-    logPrefix: 'PSK',
-    snippetOptions: {
-      rule: {
-        match: '<span id="browser-sync-binding"></span>',
-        fn: function (snippet) {
-          return snippet;
-=======
   // Clean output directory
   gulp.task('clean', function(cb) {
     del(['.tmp', gulp.paths.dist], cb);
@@ -294,7 +274,6 @@ gulp.task('serve:dist', ['build'], function () {
         middleware: [historyApiFallback()],
         routes: {
           '/bower_components': 'bower_components'
->>>>>>> origin/master
         }
       }
     });

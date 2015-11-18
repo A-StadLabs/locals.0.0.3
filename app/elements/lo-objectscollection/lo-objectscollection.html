@@ -311,9 +311,15 @@ See authors.md for a list of all members.
   Polymer({
     is: 'lo-objectscollection',
 
-    behaviors: [
-        Polymer.NeonAnimatableBehavior
+    // behaviors: [
+    //     Polymer.NeonAnimatableBehavior
+    // ],
+
+
+        behaviors: [
+      Polymer.NeonSharedElementAnimatableBehavior
     ],
+
 
     properties: {
       publickey: {
