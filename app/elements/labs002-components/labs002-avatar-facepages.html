@@ -13,21 +13,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="labs002-avatar-facepages">
   <style>
-    :host {
-      display: block;
+
+      :host {
+        display: block;
       --this-facecolor: var(--primary-purple);
+        height: 100%;
+        width: 100%;
+
+      }
 
 
-    }
+      neon-animated-pages {
+        height: 100%;
+      }
 
-    neon-animated-pages {
-      height: 100%;
+      .svgcontainer {
+        width: 100%;
+        height: 100%;
+      }
 
-    }
-
-    .facecolor {
-      fill: var(--this-facecolor);
-    }
+      .facecolor {
+        fill: var(--this-facecolor);
+      } 
 
 
   </style>
@@ -38,22 +45,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
           <neon-animatable>
-        <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
-          viewBox="0 0 190 340" enable-background="new 0 0 190 340" xml:space="preserve">
-        <circle fill="#000100" cx="78.487" cy="135.092" r="4.252"/>
-        <circle fill="#000100" cx="111.927" cy="135.092" r="4.252"/>
-        <g>
-          <path fill="#000100" opacity="0.3" d="M94.899,178.102h-0.884c-7.701,0-11.393-3.289-11.546-3.429c-0.612-0.558-0.655-1.507-0.097-2.118
-            c0.558-0.613,1.507-0.656,2.119-0.098c0.021,0.018,3.073,2.645,9.524,2.645h0.884c6.445,0,9.496-2.619,9.524-2.645
-            c0.61-0.559,1.562-0.516,2.119,0.098c0.558,0.611,0.515,1.562-0.099,2.118C106.292,174.812,102.6,178.102,94.899,178.102z"/>
-        </g>
-        </svg>
+            <div class="svgcontainer">
+            <svg version="1.1" x="0px" y="0px" viewBox="-55 20 300 300" enable-background="new -55 20 300 300" xml:space="preserve">
+            <g id="FACE">
+              <circle opacity="0.7" fill="#000100" enable-background="new    " cx="80.138" cy="137.849" r="3.827"/>
+              <circle opacity="0.7" fill="#000100" enable-background="new    " cx="110.234" cy="137.849" r="3.827"/>
+              <g opacity="0.2">
+                <path fill="#1D1D1B" d="M94.909,176.559h-0.795c-6.931,0-10.254-2.961-10.392-3.086c-0.551-0.502-0.589-1.356-0.087-1.906
+                  c0.502-0.553,1.356-0.591,1.907-0.088c0.019,0.016,2.765,2.38,8.571,2.38h0.795c5.8,0,8.546-2.357,8.571-2.38
+                  c0.55-0.503,1.406-0.465,1.908,0.088c0.501,0.55,0.463,1.406-0.09,1.906C105.163,173.598,101.84,176.559,94.909,176.559z"/>
+              </g>
+            </g>
+            </svg>
+            </div>
           </neon-animatable>
-
-
-
-
-
 
     </neon-animated-pages>
 

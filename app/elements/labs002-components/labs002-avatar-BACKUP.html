@@ -1,8 +1,76 @@
 <!-- Copyright (c) 2015 The Locals Project Authors. All rights reserved.
 See authors.md for a list of all members.
  -->
+<!-- 
+ {
+  "component": "labs002-avatar",
+  "conditions": [
+    {
+      "objectname": ""
+    }
+  ],
+  "config": {
+    "beard": [
+      0,
+      "red"
+    ],
+    "lijf": [
+      0,
+      "var(--primary-lightblue)"
+    ],
+    "bottom": [
+      2,
+      "red"
+    ],
+    "face": [
+      0,
+      "red"
+    ],
+    "glasses": [
+      0,
+      "red"
+    ],
+    "head": [
+      0,
+      "red"
+    ],
+    "shoes": [
+      2,
+      "black"
+    ],
+    "snit": [
+      3,
+      "red"
+    ],
+    "top": [
+      0,
+      "black"
+    ]
+  },
+  "data": {
+    "birthdate": "01/01/1970",
+    "birthplace": "Geboorteplaats",
+    "firstname": "Voornaam",
+    "lastname": "Achternaam"
+  },
+  "description": "Lorem ipsum",
+  "enabled": true,
+  "hash": "hahaha",
+  "height": 100,
+  "locked": false,
+  "name": "Avatar",
+  "version": "0.0.1",
+  "width": 100
+} -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+
+
 <link rel="import" href="labs002-avatar-snitpages.html">
 <link rel="import" href="labs002-avatar-glassespages.html">
 <link rel="import" href="labs002-avatar-beardpages.html">
@@ -16,11 +84,12 @@ See authors.md for a list of all members.
 
 <link rel="import" href="labs002-colorpicker.html">
 
+<link rel="import" href="../lo-configbtns/lo-configbtns.html">
+
 <dom-module id="labs002-avatar">
   <style>
     :host {
       display: block;
-      position: relative;
 
       padding: 0px;
       margin: 0px;
@@ -32,54 +101,26 @@ See authors.md for a list of all members.
       --this-shoescolor: var(--primary-purple);
       --this-bodycolor: var(--primary-lightblue);
 
+      --object-width: 162px;
+      --object-height: 281px;
 
       width: 100%;
       height: 100%;
-
-      --zoom-items-visible: hidden;
-
-
     }
-
 
     neon-animated-pages {
       height: 100%;
-    }
-
-    .canvas {
-      height: 100%;
-      width: 100%;
-    }
-
-    .container {
-      height: 100%;
-/*      margin-top: 25%;*/
     }
 
     .fixit {
       position: absolute;
     }
 
-
-
-    .avatar {
-      width: 280px;
-/*      height: 100%;*/
-/*      border: 1px solid blue;      */
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
+    .avatarparts {
+      width: var(--object-width);
+      height: var(--object-height);
       margin: 0px;
       padding: 0px;
-
-    }
-
-
-
-     .avatarparts {
-      width: 200px;
-      height: 360px;
-      margin: 0px;
-/*      border: 1px solid red;      */
     }
 
     .avatarparts svg {
@@ -87,71 +128,87 @@ See authors.md for a list of all members.
       height: 100%;
     }
 
+    .container {
+      width: 100%;
+      height: 100%;
 
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);  
+      margin: 0px;
+      padding: 0px;
+    }
 
-
-
+    .valuescontainer {
+      width: 70%;
+      min-width: 200px;
+      height: 85%;
+/*      min-height: 200px; 
+*/      background-color: white;
+    }
 
     /* ALL MATTERS avatarvisual */
 
-    .visualbtns {
-      height: 360px;
-      margin: 0px;
-      padding: 0px;
-/*      border: 1px solid black;*/
-/*      background-color: rgba(0,0,0,0.1);      */
- 
+    .visualcontainer {
+      width: 100%;
+      height: 100%;
+      @apply(--layout-vertical);
     }
 
-    .selector {
+    .visualwithbtns {
+      height: 100%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);   
+
+    }
+
+    .visualbtns {
+      width: 20%;
+      height: var(--object-height);
+      @apply(--layout-vertical);
+    }
+
+    .leftbtns {
       @apply(--layout-horizontal);
       @apply(--layout-center);
-      width: 100%;
+      @apply(--layout-end-justified);
     }
 
-    .selector button {
-      outline: 0;
-      border: none;
-      background-color: rgba(0,0,0,0.05);
-      width: 26px;
-      height: 26px;
-      border-radius: 13px;
+    .rightbtns {
       @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-      padding: 0px;
-      margin: 0px;
-/*      border: 1px solid red;*/
+      @apply(--layout-center);
+      @apply(--layout-start-justified);
+    }
+
+    .iron {
+      height: 100%;
     }
 
 
-
-    #selectsnit {
+    .selectsnit {
       height: 35%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);      
     }
 
-    #selectglasses {
+    .selectglasses {
       height: 10%;
     }
 
-    #selectbeard {
+    .selectbeard {
       height: 15%;
     }
 
-    #selecttop {
+    .selecttop {
       height: 15%;
     }
 
-    #selectbottom {
+    .selectbottom {
       height: 10%;
     }
 
-    #selectshoes {
+    .selectshoes {
       height: 15%;
     }
-
-
-
-
 
     labs002-avatar-snitpages {
       width: 100%;
@@ -182,7 +239,6 @@ See authors.md for a list of all members.
       width: 100%;
     }
 
-
     /* Colors */
     .beardcolor {
       fill: var(--this-beardcolor);
@@ -202,8 +258,6 @@ See authors.md for a list of all members.
     .bodycolor {
       fill: var(--this-bodycolor);
     }
-
-
     .fillgreen {
       fill: var(--primary-green);
     }
@@ -257,355 +311,193 @@ See authors.md for a list of all members.
     }
 
 
-
-/*
-    .colorselector {
-      margin-top: 10px; 
+    .colorpicker {
       width: 100%;
-      height: 12%;
-    }
-    .colorselector svg {
-      width: 10px;
-      height: 10px;
-    }
+      height: 10%;
 
-
-    .valuesedit {
-      background-color: black;
-      opacity: 0.95;
-      width: 100%;
-      height: 100%;
-      z-index: 99999999999;
-
-    }
-*/
-
-
-    iron-selector {
-      height: 100%;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
     }
 
     labs002-colorpicker {
-      height: 50px;
-      width: 200px;
+      width: 100%;
+      max-width: 600px;
     }
 
-
-
-.yeye {
-  background-color: yellow;
-}
 
   </style>
   <template>
 
 
 <!-- Hier begint ALLES -->
-<h1>AVATAR</h1>
+<!-- <h1>AVATAR</h1> -->
 <neon-animated-pages id="pages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
 
-<!-- sectie 0 //   HIER BEGINT DE  FIXEDPEUP(NIET-EDIT)-SECTIE -->
+
+<!-- sectie 0 //   HIER BEGINT DE VISUAL EDIT -->
+
+
   <neon-animatable>
-    <div class="canvas">
-      <div class="layout horizontal center-center container">
+      <div class="visualcontainer">
 
-        <!-- VOLLEDIGE PEUP -->
+      <template is="dom-if" if="{{edit}}">
 
-        <div class="avatar" on-tap="toggleAvatarbtns">
+        <div class="colorpicker">
 
-        <!-- PEUP // parts -->
-          <div class="snit fixit avatarparts">
-            <labs002-avatar-snitpages 
-              selected="{{avatarSnit}}" 
-              color="{{avatarSnitColor}}" 
-              SnitEntry="{{SnitEntry}}" 
-              SnitExit="{{SnitExit}}">
-            </labs002-avatar-snitpages>
-          </div>
-     
-          <div class="glasses fixit avatarparts">
-            <labs002-avatar-glassespages 
-              selected="{{avatarGlasses}}" 
-              color="{{avatarGlassesColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
-            </labs002-avatar-glassespages>
-          </div>
-
-          <div class="face fixit avatarparts">
-            <labs002-avatar-facepages 
-              selected="{{avatarFace}}" 
-              color="{{avatarFaceColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
-            </labs002-avatar-facepages>
-          </div>
-
-          <div class="beard fixit avatarparts">
-            <labs002-avatar-beardpages 
-              selected="{{avatarBeard}}" 
-              color="{{avatarBeardColor}}" 
-              BeardEntry="{{BeardEntry}}" 
-              BeardExit="{{BeardExit}}">
-            </labs002-avatar-beardpages>
-          </div>
-
-          <div class="head fixit avatarparts">
-            <labs002-avatar-headpages 
-              selected="{{avatarHead}}" 
-              color="{{avatarHeardColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
-            </labs002-avatar-headpages>
-          </div>
-
-          <div class="top fixit avatarparts">
-            <labs002-avatar-toppages 
-              selected="{{avatarTop}}" 
-              color="{{avatarTopColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
-            </labs002-avatar-toppages>
-          </div>
-
-          <div class="bottom fixit avatarparts">
-            <labs002-avatar-bottompages 
-              selected="{{avatarBottom}}" 
-              color="{{avatarBottomColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
-            </labs002-avatar-bottompages>
-          </div>
-
-          <div class="shoes fixit avatarparts">
-            <labs002-avatar-shoespages 
-              selected="{{avatarShoes}}" 
-              color="{{avatarShoesColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
-            </labs002-avatar-shoespages>
-          </div>
-
-          <div class="body fixit avatarparts">
-            <labs002-avatar-bodypages 
-              selected="{{avatarBody}}" 
-              color="{{avatarBodyColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
-            </labs002-avatar-bodypages>
-          </div>
-
-          <div class="avatarparts"></div>
-      
-
-
-
-
+          <labs002-colorpicker
+            colorselected="{{selectedcolor}}">
+          </labs002-colorpicker>
 
         </div>
-      </div>
 
-    </div>
-
-  </neon-animatable>
-
-
-
-
-
-<!-- sectie 1 //   HIER BEGINT DE VISUAL EDIT -->
-
-
-  <neon-animatable>
-    <div class="canvas">
-      <div class="container layout vertical center-center">
+        </template>
 
         <!-- VOLLEDIGE PEUP -->
-
-        <div class="avatar layout horizontal center-center">
-
+        <div class="visualwithbtns">
           <!-- PEUP // 1e rij knopjes -->
-          <div class="layout vertical visualbtns">
-            <iron-selector id="editselected" selected="{{itemtocolor}}" attr-for-selected="name">
+          <template is="dom-if" if="{{edit}}">
+          <div class="visualbtns leftbtns">
+            <div class="iron">
 
-              <div id="selectsnit" class="selector"  name="snit">
-                <button on-tap="_PrevSnit">
-                  <img src="arrow_left.svg">
-                </button>
+              <div class="selectsnit">
+                <lo-configbtns context="snit" on-btn-tapped="previous"></lo-configbtns>
               </div>
-              <div id="selectglasses" class="selector" name="glasses">
-                <button on-tap="_PrevGlasses">
-                  <img src="arrow_left.svg">
-                </button>
+
+              <div class="selectglasses">
+                <lo-configbtns context="glasses" on-btn-tapped="previous"></lo-configbtns>
               </div>
-              <div id="selectbeard" class="selector" name="beard">
-                <button on-tap="_PrevBeard">
-                  <img src="arrow_left.svg">
-                </button>
+
+              <div class="selectbeard">
+                <lo-configbtns context="beard" on-btn-tapped="previous"></lo-configbtns>
               </div>
-              <div id="selecttop" class="selector" name="top">
-                <button on-tap="_PrevTop">
-                  <img src="arrow_left.svg">
-                </button>
+
+              <div class="selecttop">
+                <lo-configbtns context="top" on-btn-tapped="previous"></lo-configbtns>
               </div>
-              <div id="selectbottom" class="selector" name="bottom">
-                <button on-tap="_PrevBottom">
-                  <img src="arrow_left.svg">
-                </button>
+
+              <div class="selectbottom">
+                <lo-configbtns context="bottom" on-btn-tapped="previous"></lo-configbtns>
               </div>
-              <div id="selectshoes" class="selector" name="shoes">
-                <button on-tap="_PrevShoes">
-                  <img src="arrow_left.svg">
-                </button>
+
+              <div class="selectshoes">
+                <lo-configbtns context="shoes" on-btn-tapped="previous"></lo-configbtns>
               </div>
-            </iron-selector>
           </div>
+
+        </div>
+        </template>
 
 
           <!-- PEUP // parts -->
+          <div class="avatarparts">
+
           <div class="snit fixit avatarparts">
             <labs002-avatar-snitpages 
-              selected="{{avatarSnit}}" 
-              color="{{avatarSnitColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              id="snit"
+              nrofitems="{{nrofsnits}}">
             </labs002-avatar-snitpages>
           </div>
      
           <div class="glasses fixit avatarparts">
             <labs002-avatar-glassespages 
-              selected="{{avatarGlasses}}" 
-              color="{{avatarGlassesColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              id="glasses"
+              nrofitems="{{nrofglasses}}">
             </labs002-avatar-glassespages>
           </div>
 
           <div class="face fixit avatarparts">
             <labs002-avatar-facepages 
-              selected="{{avatarFace}}" 
-              color="{{avatarFaceColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              id="face">
             </labs002-avatar-facepages>
           </div>
 
           <div class="beard fixit avatarparts">
             <labs002-avatar-beardpages 
-              selected="{{avatarBeard}}" 
-              color="{{avatarBeardColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              id="beard"
+              nrofitems="{{nrofbeard}}">
             </labs002-avatar-beardpages>
           </div>
 
           <div class="head fixit avatarparts">
             <labs002-avatar-headpages 
-              selected="{{avatarHead}}" 
-              color="{{avatarHeardColor}}" 
-              entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              id="head"
+              nrofitems="{{nrofhead}}">
             </labs002-avatar-headpages>
           </div>
 
           <div class="top fixit avatarparts">
             <labs002-avatar-toppages 
-              selected="{{avatarTop}}" 
-              color="{{avatarTopColor}}" 
+              id="top"
               entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              exitSnit="{{exitAnimationSnit}}"
+              nrofitems="{{nroftop}}">
             </labs002-avatar-toppages>
           </div>
 
           <div class="bottom fixit avatarparts">
             <labs002-avatar-bottompages 
-              selected="{{avatarBottom}}" 
-              color="{{avatarBottomColor}}" 
+              id="bottom"
               entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              exitSnit="{{exitAnimationSnit}}"
+              nrofitems="{{nrofbottom}}">
             </labs002-avatar-bottompages>
           </div>
 
           <div class="shoes fixit avatarparts">
             <labs002-avatar-shoespages 
-              selected="{{avatarShoes}}" 
-              color="{{avatarShoesColor}}" 
+              id="shoes"
               entryAnimation="{{entrySnit}}" 
-              exitSnit="{{exitAnimationSnit}}">
+              exitSnit="{{exitAnimationSnit}}"
+              nrofitems="{{nrofshoes}}">
             </labs002-avatar-shoespages>
           </div>
 
           <div class="body fixit avatarparts">
             <labs002-avatar-bodypages 
-              selected="{{avatarBody}}" 
-              color="{{avatarBodyColor}}" 
+              id="lijf"
               entryAnimation="{{entrySnit}}" 
               exitSnit="{{exitAnimationSnit}}">
             </labs002-avatar-bodypages>
           </div>
 
-          <div class="avatarparts"></div>
-      
-        <!-- FIXED PEUP // btns -->
-<!--         <div class="avatarbtns layout vertical">
-          <button on-tap="toVisual">
-                <img src="visualbtn.svg">
-          </button>
-          <button on-tap="toWaarden">
-                <img src="waardenbtn.svg">
-          </button>
-        </div> -->
-
-
-          <!-- PEUP // 2e rij knopjes -->
-          <div class="layout vertical visualbtns">
-            <iron-selector id="editselected" selected="{{itemtocolor}}" attr-for-selected="name">
-
-              <div id="selectsnit" class="selector"  name="snit">
-                <button on-tap="_NextSnit">
-                  <img src="arrow_right.svg">
-                </button>
-              </div>
-              <div id="selectglasses" class="selector" name="glasses">
-                <button on-tap="_NextGlasses">
-                  <img src="arrow_right.svg">
-                </button>
-              </div>
-              <div id="selectbeard" class="selector" name="beard">
-                <button on-tap="_NextBeard">
-                  <img src="arrow_right.svg">
-                </button>
-              </div>
-              <div id="selecttop" class="selector" name="top">
-                <button on-tap="_NextTop">
-                  <img src="arrow_right.svg">
-                </button>
-              </div>
-              <div id="selectbottom" class="selector" name="bottom">
-                <button on-tap="_NextBottom">
-                  <img src="arrow_right.svg">
-                </button>
-              </div>
-              <div id="selectshoes" class="selector" name="shoes">
-                <button on-tap="_NextShoes">
-                  <img src="arrow_right.svg">
-                </button>
-              </div>
-
-            </iron-selector>            
           </div>
 
-        </div>
 
-        <!-- PEUP // colorpickers (voor item én voor body) -->
-        <template is="dom-if" if="{{itemtocolor}}">
-        <labs002-colorpicker itemtocolor="{{itemtocolor}}" colorselected="{{avatarSnitColor}}"></labs-colorpicker>
+      <template is="dom-if" if="{{edit}}">
+          <!-- PEUP // 2e rij knopjes -->
+          <div class="visualbtns rightbtns">
+            <div class="iron">
+
+              <div class="selectsnit">
+                <lo-configbtns context="snit" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectglasses">
+                <lo-configbtns context="glasses" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectbeard">
+                <lo-configbtns context="beard" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selecttop">
+                <lo-configbtns context="top" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectbottom">
+                <lo-configbtns context="bottom" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+
+              <div class="selectshoes">
+                <lo-configbtns context="shoes" on-btn-tapped="next" next></lo-configbtns>
+              </div>
+          </div>
+
+          </div>
         </template>
 
-        <labs002-colorpicker itemtocolor="body"></labs-colorpicker>
-      
       </div>
-    </div>  
+     </div>
 
   </neon-animatable>
 
@@ -613,56 +505,55 @@ See authors.md for a list of all members.
 
 
 
-  <!-- sectie 2 //   HIER BEGINT DE WAARDEN-SECTIE -->
+  <!-- sectie 1 //   HIER BEGINT DE WAARDEN-SECTIE -->
   <neon-animatable>
-    <div class="canvas">
-      <div class="layout vertical center-center container">
+  <div class="container">
+      <div class="layout vertical center-center valuescontainer">
 
 <!--         DO YOUT THING -->
-        <h1>Waarden</h1>
 
         <template is="dom-if" if="{{!locked}}">
         
         <paper-input-container>
           <label>Voornaam</label>
-          <input autofocus type="text" is="iron-input" bind-value="{{firstname}}">
+          <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstname}}">
         </paper-input-container>
 
         <paper-input-container>
           <label>Naam</label>
-          <input autofocus type="text" is="iron-input" bind-value="{{lastname}}">
+          <input type="text" is="iron-input" bind-value="{{objectdata.lastname}}">
         </paper-input-container>
 
         <paper-input-container>
           <label>Geboortedatum</label>
-          <input autofocus type="text" is="iron-input" bind-value="{{birthdate}}" >
+          <input type="text" is="iron-input" bind-value="{{objectdata.birthdate}}" >
         </paper-input-container>
 
         <paper-input-container>
           <label>Geboorteplaats</label>
-          <input autofocus type="text" is="iron-input" bind-value="{{birthplace}}" >
+          <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
         </paper-input-container>
 
         </template>
+
 
         <template is="dom-if" if="{{locked}}">
           <p>Voornaam: <span>{{firstname}}</span></p>
           <p>{{lastname}}</p>
           <p>{{birthdate}}</p>
           <p>{{birthplace}}</p>
+
+        <!-- HIEF DAN DIE BFFN FIE FAFIFEEFT --> 
           <button on-tap="unlock">unlock</button>
         </template>
 
-        <button on-tap="save">Hier dan valideren</button>
-<!--         TOT HIER -->
-
-      </div>
     </div>
+    </div>
+
   </neon-animatable>
 
 
 </neon-animated-pages>
-<!-- HIER eindigt ALLES -->
 
   </template>
   <script>
@@ -675,28 +566,24 @@ See authors.md for a list of all members.
       ],
 
       properties: {
-      config: {
+      objectconfig: {
           type: Object,
-          observer: "_configChanged"
+          observer: "_configChanged",
+          notify: true
       },
 
-      data: {
+      objectdata: {
           type: Object,
-          observer: "_dataChanged"
-        },
-
-      editmode: {
-        type: Boolean,
-        value: false,
-        observer: "editListener"
+          observer: "_dataChanged",
+          notify: true
       },
 
-      // editvisual: {
+      // editvalues: {
       //   type: Boolean,
       //   value: false
       // },
 
-      editvalues: {
+      edit: {
         type: Boolean,
         value: false
       },
@@ -708,190 +595,236 @@ See authors.md for a list of all members.
 
       itemtocolor: {
         type: String,
-        value: '',
-        notify: true,
-        observer: "_kleurChanged"        
+        value: ''
       },
 
       opened: {
         type: Boolean,
         value: false,
         observer: "editListener"
-      }
+      },
 
+      active: {
+        type: Boolean,
+        value: false
+      },
+
+      selecteditem: {
+        type: String,
+        observer: "_selecteditem",
+        value: ""
+      },
+
+      selectedcolor: {
+        type: String,
+        observer: "_selectedcolor"
+      }
 
       },
 
+      // listeners: {
+      //   'tap': '_checkwhattap'
+      // },
+
+      _checkwhattap : function(e){
+        console.log("Klikken op ", e.target);
+      },
 
       ready: function(){
         this.selected = 0;
-
-        console.log('avatar is ready');
+        //console.log('avatar is ready');
         this.editmode = false;
+        this.itemtocolor = "lijf";
         //console.log('avatar conf: ', this.config.beard[0]);
+      },
 
-        
+     
+
+
+      created: function() {
+        //console.log(this.localName + '#' + this.id + ' was created');
+      },
+
+      attached: function() {
+        this.async(function() {
+          //console.log(this.localName + '#' + this.id + ' was attached');
+          //this.selected = 1;
+          this._configChanged();
+          this._dataChanged();
+       });
+
+      this.entryAnimation = 'fade-in-animation';
+      this.exitAnimation = 'fade-out-animation';
+
 
       },
 
-      created: function() {
-    console.log(this.localName + '#' + this.id + ' was created');
-  },
-
-  attached: function() {
-    this.async(function() {
-      console.log(this.localName + '#' + this.id + ' was attached');
-      //this.selected = 1;
-      this._configChanged();
-      this._dataChanged();
-   });
-  },
-
   detached: function() {
     this.async(function() {
-      console.log(this.localName + '#' + this.id + ' was detached');
+      //console.log(this.localName + '#' + this.id + ' was detached');
    });
   },
 
   attributeChanged: function(name, type) {
-    console.log(this.localName + '#' + this.id + ' attribute ' + name +
-      ' was changed to ' + this.getAttribute(name));
+    //console.log(this.localName + '#' + this.id + ' attribute ' + name +
+     // ' was changed to ' + this.getAttribute(name));
   },
 
       _showData: function(){
         this.editvalues =! this.editvalues;
-        console.log('SHOW DATA TOGGLED', this.editvalues);
+        //console.log('SHOW DATA TOGGLED', this.editvalues);
       },
 
       unlock: function(){
         this.locked = false;
       },
 
-      save: function(){
-        this.data.locked = true;
-        this.locked = true;
-        this.data.firstname = this.firstname;
-        this.data.name = this.lastname;
-        this.data.birthplace = this.birthplace;
-        this.data.birthdate = this.birthdate;
-        this.fire('save', {objectname: this.name, objectconfig: this.config, objectdata: this.data });
-      },
 
       _test: function(e){
-        console.log('hallo ',e);
+        //console.log('hallo ',e);
         this.config = e;
       },
 
+      previous: function(e){
+        this.selecteditem = e.target.context;
+        //console.log("PREVIOUS ", this.selecteditem);
+        var item = document.getElementById(this.selecteditem);
+        //console.log("current select is ", item.selected);
+        //console.log("Item is ", item);
+        //item.selected--;
+        console.log("PREV: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
+        //console.log("CONFIG item is ", this.objectconfig[this.selecteditem][0]);
+         if(this.objectconfig[this.selecteditem][0]>=1){
+          console.log(this.objectconfig[this.selecteditem][0]);
+          this.objectconfig[this.selecteditem][0]--;
+          e.target.active = true;
+        } else {
+          e.target.active = false;
+        };
+        //console.log("new select is", item.selected);
+        this._configChanged();
+
+        // IK WOU DE ANIMATIE VAN RECHTS NAAR LINKS LATEN GAAN, BIJ VORIGE
+        item.entryAnimation = "slide-to-left-animation";
+        item.exitAnimation = "slide-right-animation";
+        //console.log("current entry animation is ", item.entryAnimation);
+        //console.log("current exit animation is ", item.exitAnimation);
+
+
+      },
+
+      next: function(e){
+        this.selecteditem = e.target.context;
+        var item = document.getElementById(this.selecteditem);
+        //console.log("NEXT ", e.target.context, item.nrofitems);
+        console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
+        //console.log("current select is ", item.selected);
+        //console.log("Item is ", item);
+        //console.log("CONFIG item is ", this.objectconfig[this.selecteditem][0]);
+        //item.selected++;
+        if(this.objectconfig[this.selecteditem][0]<=item.nrofitems-1){
+          console.log(this.objectconfig[this.selecteditem][0]);
+          this.objectconfig[this.selecteditem][0]++;
+          e.target.active = true;
+        } else {
+          e.target.active = false;
+        };
+        //console.log("new select is", item.selected);
+        //console.log("NEW CONFIG item is ", this.objectconfig[this.selecteditem][0]);
+        this._configChanged();
+
+        // IK WOU DE ANIMATIE VAN LINKS NAAR RECHTS LATEN GAAN, BIJ VOLGENDE
+        item.entryAnimation = "slide-to-right-animation";
+        item.exitAnimation = "slide-left-animation";
+        //console.log("current entry animation is ", item.entryAnimation);
+        //console.log("current exit animation is ", item.exitAnimation);
+      },
+
       _configChanged: function(){
-        console.log('avatar conf changed: ', this.config);
-        this.avatarSnit = this.config.snit[0];
-        this.avatarSnitColor = this.config.snit[1];
+        //console.log('avatar conf changed: ', JSON.stringify(this.objectconfig));
 
-        this.avatarGlasses = this.config.glasses[0];
-        this.avatarGlassesColor = this.config.glasses[1];
+        this.$.snit.selected = this.objectconfig.snit[0];
+        this.$.snit.color = this.objectconfig.snit[1];
 
-        this.avatarBeard = this.config.beard[0];
-        this.avatarBeardColor = this.config.beard[1];
+        this.$.glasses.selected = this.objectconfig.glasses[0];
+        this.$.glasses.color = this.objectconfig.glasses[1];
 
-        this.avatarFace = this.config.face[0];
-        this.avatarFaceColor = this.config.face[1];
-        this.entryAnimation = 'fade-in-animation';
-        this.exitAnimation = 'fade-out-animation';
+        this.$.beard.selected = this.objectconfig.beard[0];
+        this.$.beard.color = this.objectconfig.beard[1];
 
-        this.avatarHead = this.config.head[0];
-        this.avatarHeadColor = this.config.head[1];
+        this.$.face.selected = this.objectconfig.face[0];
+        this.$.face.color = this.objectconfig.face[1];
 
-        this.avatarTop = this.config.top[0];
-        this.avatarTopColor = this.config.top[1];
+         this.$.head.selected = this.objectconfig.head[0];
+        // this.$.head.color = this.objectconfig.head[1];
 
-        this.avatarBottom = this.config.bottom[0];
-        this.avatarBottomColor = this.config.bottom[1];
+        this.$.top.selected = this.objectconfig.top[0];
+        this.$.top.color = this.objectconfig.top[1];
 
-        this.avatarShoes = this.config.shoes[0];
-        this.avatarShoesColor = this.config.shoes[1];
+        this.$.bottom.selected = this.objectconfig.bottom[0];
+        this.$.bottom.color = this.objectconfig.bottom[1];
 
-        this.avatarBody = this.config.body[0];
-        this.avatarBodyColor = this.config.body[1];
+        this.$.shoes.selected = this.objectconfig.shoes[0];
+        this.$.shoes.color = this.objectconfig.shoes[1];
 
-        //this.data.locked = false;
-        
-        // this.avatarSnit = this.config[snit][0];
-        // this.avatarSnitColor = this.config.snit[1];
+        this.$.lijf.selected = this.objectconfig.lijf[0];
+        this.$.lijf.color = this.objectconfig.lijf[1];
 
-        // this.avatarGlasses = this.config[1].avatarGlasses[0];
-        // this.avatarGlassesColor = this.config[1].avatarGlasses[1];
-
-        // this.avatarBeard = this.config[1].avatar[2].avatarBeard[0];
-        // this.avatarBeardColor = this.config[1].avatar[2].avatarBeard[1];
-
-        // this.avatarFace = this.config[1].avatar[3].avatarFace[0];
-        // this.avatarFaceColor = this.config[1].avatar[3].avatarFace[1];
-
-        // this.avatarHead = this.config[1].avatar[4].avatarHead[0];
-        // this.avatarHeadColor = this.config[1].avatar[4].avatarHead[1];
-
-        // this.avatarTop = this.config[1].avatar[5].avatarTop[0];
-        // this.avatarTopColor = this.config[1].avatar[5].avatarTop[1];
-
-        // this.avatarBottom = this.config[1].avatar[6].avatarBottom[0];
-        // this.avatarBottomColor = this.config[1].avatar[6].avatarBottom[1];
-
-        // this.avatarShoes = this.config[1].avatar[7].avatarShoes[0];
-        // this.avatarShoesColor = this.config[1].avatar[7].avatarShoes[1];
-
-        // this.avatarBody = this.config[1].avatar[8].avatarBody[0];
-        // this.avatarBodyColor = this.config[1].avatar[8].avatarBody[1];
+        this.$.head.color = this.objectconfig.lijf[1];
 
       },
 
       _dataChanged: function(){
-        console.log('Avatar data changed: ', this.data);
-        this.firstname = this.data.firstname;
-        this.lastname = this.data.name;
-        this.birthdate = this.data.birthdate;
-        this.birthplace = this.data.birthplace;
-
-        this.locked = this.data.locked;
+        //console.log('Avatar data changed: ', this.objectdata);
+        this.firstname = this.objectdata.firstname;
+        this.lastname = this.objectdata.lastname;
+        this.birthdate = this.objectdata.birthdate;
+        this.birthplace = this.objectdata.birthplace;
+        //this.locked = this..locked;
       },
 
 
-      toVisual: function(){
-        this.selected = 1;
-        this.editmode = !this.editmode;
+      toEdit: function(){
       },
 
-      // toWaarden: function(){
-      //   this.selected = 2;
-      //   this.editmode = !this.editmode;
-      //   console.log('Logshit!');
+      _selectedcolor: function(){
+        //console.log("DIT IS DE GESELECTEERDE KLEUR" , this.selectedcolor);
+        if(this.objectconfig){
+          var item = this.selecteditem;
+          var color = this.selectedcolor;
+          this.objectconfig[item][1] = color;
+          var avataritem = document.getElementById(item);
+          avataritem.color = color;
+          this._configChanged();
+          //console.log("Ik ken het avatar onderdeel ", avataritem);
+          //console.log("KAN DIT?",this.objectconfig[item][1]);
+        };
+      },
+
+      _selecteditem: function(){
+        //console.log("DIT IS HET GESELECTEEERDE ITEM: ", this.selecteditem);
+      },
+
+
+      // colorisSelected: function(){
+      //   console.log("OK, nu toe dan??");
       // },
 
 
-      toggleAvatarbtns: function(){
-
-        console.log("Visible of the avatarbtns?", this.avatarbtnsvisible);
-        this.avatarbtnsvisible =! this.avatarbtnsvisible;
-
-          if (this.avatarbtnsvisible) {
-            this.customStyle['--zoom-items-visible'] = 'visible';
-          } else {
-            this.customStyle['--zoom-items-visible'] = 'hidden';
-          };
-            this.updateStyles(); 
+      back: function(){
+      this.fire('change-stage', { stage: 0, entry: 'slide-down-animation', exit: 'slide-up-animation'});
+      this.selected = 0;
+      this.opened = false;
       },
 
       editListener: function(){
+          //console.log("Opened !!!!");
+          if(this.opened){
+          this.selected = 1;
+          } else {
+            this.selected = 0;
 
-        // Dit is dus "opened" geworden
-
-          // console.log("LISTEN editmode!", this.editmode);
-
-          // if (this.editmode) {
-          //   this.fire('edit-state', {state: this.editmode});
-             
-          // } else {
-          //   this.fire('edit-state', {state: this.editmode});
-          // };
+          }; 
       },
 
 
@@ -908,176 +841,6 @@ See authors.md for a list of all members.
       //   console.log(this.itemtoColor);
       // },
       
-
-      _kleurChanged: function(){
-        console.log('Dit is dus nu het item dan:' , this.itemtocolor);
-      },
-
-
-
-
-      /* Snit */
-
-      _NextSnit: function(){
-
-        // this.SnitEntry = 'slide-from-right-animation';
-        // this.SnitExit = 'slide-left-animation';
-
-        this.avatarSnit++;
-        this.config.snit[0] = this.avatarSnit;
-
-        },
-
-      _PrevSnit: function(){
-                  console.log('TETTE');
-        if (this.avatarSnit >= 1) {
-              this.avatarSnit--;
-             this.config.snit[0] = this.avatarSnit;
-        };
-      },
-
-
-
-
-      /* Glasses */
-
-      _NextGlasses: function(){
-                  console.log('TETTE');
-          // this.avatarGlasses++;
-          // this.config[1].avatar[1].avatarGlasses[0] = this.avatarGlasses;
-        },
-
-      _PrevGlasses: function(){
-                  console.log('TETTE');
-        // if (this.avatarGlasses >= 1) {
-        //       this.avatarGlasses--;
-        //       this.config[1].avatar[1].avatarGlasses[0] = this.avatarGlasses;
-        // };
-
-      },
-
-
-
-
-      /* Beard */
-
-      _NextBeard: function(){
-          this.avatarBeard++;
-          //console.log(this.avatarBeard);
-          this.config[1].avatar[2].avatarBeard[0] = this.avatarBeard;
-          //console.log(this.config[1].avatar[2].avatarBeard[0]);
-        },
-
-      _PrevBeard: function(){
-        if (this.avatarBeard >= 1) {
-              this.avatarBeard--;
-              this.config[1].avatar[2].avatarBeard[0] = this.avatarBeard;
-        };
-
-      },
-
-
-
-
-      /* Head */
-
-      _NextHead: function(){
-          this.avatarHead++;
-          //console.log(this.avatarHead);
-          this.config[1].avatar[4].avatarHead[0] = this.avatarHead;
-          //console.log(this.config[1].avatar[4].avatarHead[0]);
-        },
-
-      _PrevHead: function(){
-        if (this.avatarHead >= 1) {
-              this.avatarHead--;
-              this.config[1].avatar[4].avatarHead[0] = this.avatarHead;
-        };
-
-      },
-
-
-
-
-      /* Top */
-
-      _NextTop: function(){
-          this.avatarTop++;
-          //console.log(this.avatarTop);
-          this.config[1].avatar[5].avatarTop[0] = this.avatarTop;
-          //console.log(this.config[1].avatar[5].avatarTop[0]);
-        },
-
-      _PrevTop: function(){
-        if (this.avatarTop >= 1) {
-              this.avatarTop--;
-              this.config[1].avatar[5].avatarTop[0] = this.avatarTop;
-        };
-
-      },
-
-
-
-
-      /* Bottom */
-
-      _NextBottom: function(){
-          this.avatarBottom++;
-          //console.log(this.avatarBottom);
-          this.config[1].avatar[6].avatarBottom[0] = this.avatarBottom;
-          //console.log(this.config[1].avatar[6].avatarBottom[0]);
-        },
-
-      _PrevBottom: function(){
-        if (this.avatarBottom >= 1) {
-              this.avatarBottom--;
-              this.config[1].avatar[6].avatarBottom[0] = this.avatarBottom;
-        };
-
-      },
-
-
-
-
-      /* Shoes */
-
-      _NextShoes: function(){
-          this.avatarShoes++;
-          //console.log(this.avatarShoes);
-          this.config[1].avatar[7].avatarShoes[0] = this.avatarShoes;
-          //console.log(this.config[1].avatar[7].avatarShoes[0]);
-        },
-
-      _PrevShoes: function(){
-        if (this.avatarShoes >= 1) {
-              this.avatarShoes--;
-              this.config[1].avatar[7].avatarShoes[0] = this.avatarShoes;
-        };
-
-      },
-
-
-
-
-      /* Body */
-
-      _NextBody: function(){
-          this.avatarBody++;
-
-
-          //console.log(this.avatarBody);
-          this.config[1].avatar[8].avatarBody[0] = this.avatarBody;
-          //console.log(this.config[1].avatar[8].avatarBody[0]);
-        },
-
-      _PrevBody: function(){
-        if (this.avatarBody >= 1) {
-              this.avatarBody--;
-              this.config[1].avatar[8].avatarBody[0] = this.avatarBody;
-        };
-
-      }
-
 
 
 

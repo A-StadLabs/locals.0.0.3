@@ -106,6 +106,92 @@ See authors.md for a list of all members.
 
 
 
+
+
+
+
+
+    .objectscollection2 {
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+      width: 100vw;
+      margin: 0px;
+      height: 80vh;
+      padding: 0px;
+      background: green;
+    }
+
+
+    .object {
+      width: 40vw;
+      min-width: 200px;
+      height: 40vw;
+      min-height: 200px;
+      /*border: 1px solid red;*/
+      background-color: white;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+      margin: 3px;
+
+    }
+
+    .objectvalbar {
+      height: 15%;
+      width: 100%;
+      padding: 2%;
+      box-sizing:border-box;
+      background: transparent;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      @apply(--layout-end-justified);
+    }
+
+    p {
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .objectvalbar img {
+      height: 30px;
+    }
+
+
+    lo-previewnext {
+      height: 65%;
+      width: 65%;
+    }
+
+    .objectvaluesbar {
+      height: 20%;
+      width: 100%;
+      padding: 6px 10px 6px 10px;
+      box-sizing:border-box;
+
+      background-color: #FAFAFA;
+
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+
+    }
+
+    .objectfirstvalue {
+      height: 100%;
+      width: 250px;
+
+      overflow:hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+    }
+
+
+    .objectvaluesbar img {
+      height: 25px;
+      opacity: 0.25;
+    }
+
+
 </style>
 <template>
 
@@ -114,13 +200,60 @@ See authors.md for a list of all members.
       <div class="mainbtns">
         <button class="mainbtn" on-tap="FireAddData"><img src="../../images/add.svg"></button>
         <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/godfather2.svg"></button>
-
-<!--         <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/QR.svg"></button>-->
+        <!--  <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/QR.svg"></button> -->
       </div>
     </div>
 
     <div class="scrollstage">
-    <div class="objectscollection">
+
+
+
+
+
+      <!-- TEST START -->
+    <div class="objectscollection2">
+      <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
+
+        <div class="object">
+
+          <div class="objectvalbar" on-tap="FireValidations">
+            <img src="../../images/accept.svg">
+            <p>{{item.array.objectpeers.length}}</p>
+          </div>
+
+          <lo-previewnext 
+            objectcomponent="{{item.array.objectcomponent}}" 
+            objectname="{{item.array.objectname}}" 
+            objectconfig="{{item.array.objectconfig}}"
+            objectdata="{{item.array.objectdata}}"
+            objectpeers="{{item.array.objectpeers}}"
+            publickey="{{publickey}}"
+            hash="{{item.array.objecthash}}"
+            width="{{item.array.width}}"
+            height="{{item.array.height}}"
+            locked="{{item.array.locked}}"
+            >
+          </lo-previewnext>
+
+          <div class="objectvaluesbar" on-tap="FireValues">
+            <div class="objectfirstvalue"><p>{{item.array.objectdata.firstval}}</p></div>
+            <img src="../../images/locked.svg">
+          </div>
+
+        </div>
+
+      </template>
+    </div>
+      <!-- TEST STOP -->
+
+
+
+
+
+
+
+
+<!--     <div class="objectscollection">
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
         <lo-preview 
@@ -138,7 +271,7 @@ See authors.md for a list of all members.
         </lo-preview>
 
       </template>
-    </div>
+    </div> -->
     
     </div>
 </div>
@@ -273,6 +406,14 @@ See authors.md for a list of all members.
 
     FireAddData: function(){
       this.fire('object-picker');
+    },
+
+    FireValidations: function(e){
+      console.log(e);
+    },
+
+    FireValues: function(){
+
     }
 
   });

@@ -13,21 +13,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="labs002-avatar-headpages">
   <style>
-    :host {
-      display: block;
-      --this-bodycolor: var(--primary-lightblue);
+      :host {
+        display: block;
+      --this-bodycolor: var(--primary-purple);
+        height: 100%;
+        width: 100%;
+
+      }
 
 
-    }
+      neon-animated-pages {
+        height: 100%;
+      }
 
-    neon-animated-pages {
-      height: 100%;
+      .svgcontainer {
+        width: 100%;
+        height: 100%;
+      }
 
-    }
-
-    .bodycolor {
-      fill: var(--this-bodycolor);
-    }
+      .bodycolor {
+        fill: var(--this-bodycolor);
+      } 
 
 
   </style>
@@ -36,22 +42,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <neon-animated-pages id="headpages" selected="{{selected}}"  entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
 
-
+          <!-- -->
           <neon-animatable>
-              <svg class="bodycolor" version="1.1" id="BALD" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 190 340"
-               >
-              <path class="bodycolor" d="M156.686,122.724c1.4-9.476,4.689-16.967,3.145-35.637c-1.023-12.361-11.012-39.508-44.454-47.646
-              c-6.543-2.328-13.586-3.607-20.928-3.607c-7.344,0-14.385,1.279-20.929,3.607c-33.442,8.139-43.431,35.285-44.454,47.646
-              c-1.552,18.748,1.771,26.224,3.162,35.756c-6.33,1.689-10.609,7.818-9.777,14.503l1.672,13.429
-              c0.854,6.867,6.792,11.856,13.57,11.673c0.818,6.884,1.551,12.787,2.049,16.851c1.988,16.218,7.551,19.557,20.43,28.144
-              c12.879,8.586,21.467,13.356,34.277,13.356s21.396-4.771,34.275-13.356c12.879-8.587,18.441-11.926,20.43-28.144
-              c0.5-4.07,1.234-9.984,2.055-16.883c6.956,0.414,13.132-4.629,14.004-11.641l1.672-13.429
-              C167.733,130.512,163.249,124.246,156.686,122.724z"/>
-              </svg>
+            <div class="svgcontainer">
+            <svg version="1.1" x="0px" y="0px" viewBox="-55 20 300 300" enable-background="new -55 20 300 300" xml:space="preserve">
+            <g id="BALD">
+              <path class="bodycolor" d="M150.518,126.719c1.26-8.529,4.221-15.271,2.832-32.074c-0.92-11.125-9.913-35.557-40.01-42.881
+                c-5.889-2.095-12.227-3.246-18.834-3.246c-6.61,0-12.947,1.151-18.836,3.246C45.57,59.089,36.58,83.521,35.66,94.645
+                c-1.396,16.873,1.594,23.602,2.846,32.18c-5.697,1.521-9.548,7.037-8.799,13.053l1.505,12.086
+                c0.769,6.18,6.113,10.67,12.213,10.506c0.736,6.195,1.396,11.507,1.844,15.166c1.789,14.597,6.796,17.601,18.387,25.33
+                c11.591,7.728,19.321,12.021,30.85,12.021s19.257-4.295,30.848-12.021c11.591-7.729,16.595-10.733,18.387-25.33
+                c0.45-3.663,1.11-8.985,1.849-15.194c6.261,0.373,11.818-4.166,12.604-10.477l1.505-12.086
+                C160.459,133.728,156.424,128.088,150.518,126.719z"/>
+            </g>
+            </svg>
+            </div>
           </neon-animatable>
-
-
-
+          <!-- -->
 
 
 

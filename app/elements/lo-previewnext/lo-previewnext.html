@@ -1,0 +1,89 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+<dom-module id="lo-previewnext">
+  <template>
+    <style>
+      :host {
+        display: block;
+
+        --preview-width: 100%;
+        --preview-height: 100%;
+
+        width: var(--preview-width);
+        height: var(--preview-height);
+        overflow: hidden;
+      }
+
+
+      #rendercanvas {
+        width: var(--preview-width);
+        height: var(--preview-height);
+        margin: 0px;
+      }
+
+
+    </style>
+    <div id="rendercanvas"></div>
+  </template>
+  <script>
+  (function() {
+    'use strict';
+
+    var elem;
+
+    Polymer({
+      is: 'lo-previewnext',
+
+      properties: {
+
+        objectconfig: {
+          type: Object,
+          observer: "attached"
+        },
+        objectdata: {
+          type: Object,
+          observer: "attached"
+        }
+        
+      },
+
+      listeners: {
+        'tap': 'open'
+      },
+
+      attached: function(){
+        var rendercanvas = this.$.rendercanvas;
+        if(this.objectcomponent){
+        this.importHref("../elements/labs002-components/"+this.objectcomponent+".html", function(e) {
+        
+        rendercanvas.innerHTML = '';
+        elem = document.createElement(this.objectcomponent);
+        elem.objectconfig = this.objectconfig;
+        elem.objectname = this.objectname;
+        elem.objectdata = this.objectdata;
+        elem.hash = this.hash;
+        rendercanvas.appendChild(elem);
+      }, function(e) {
+         //console.log('import',e);
+        // loading error
+      });
+      };
+      },
+
+      open: function(){
+        this.fire("object-selected", { object: this.objectname, entry: 'slide-down-animation', exit: 'slide-up-animation' });
+      }
+    });
+  })();
+  </script>
+</dom-module>

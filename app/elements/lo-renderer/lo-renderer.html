@@ -449,7 +449,7 @@ See authors.md for a list of all members.
       var object = document.getElementById(this.objectname);
 
         this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
-        //console.log("KLEUR! ", JSON.stringify(this.objectconfig));
+        console.log("KLEUR! ", JSON.stringify(this.objectconfig));
         // Hier moet nog een check komen; als de hash van de nieuwe set data niet dezelfde is als de vorige hash moeten alle peers gedelete worden.
 
       object.opened = false;
