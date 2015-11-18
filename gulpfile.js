@@ -131,6 +131,7 @@ gulp.task('images', function () {
 gulp.task('copy', function () {
   var app = gulp.src([
     'app/*',
+    'app/images',
     '!app/test',
     '!app/cache-config.json'
   ], {
