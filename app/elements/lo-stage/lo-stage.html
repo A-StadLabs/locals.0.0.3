@@ -443,38 +443,7 @@ See authors.md for a list of all members.
 
         //console.log(e);
 
-        this.importHref("../elements/lo-qrreader/lo-qrreader.html", function(g) {
-          this.addEventListener("got-code", function(f){
-            //Hier doet em shit als em een code terug krijgt. 
-            //this.$.objectcoll.callback(e.detail);
-            // console.log('Got Code.', f.detail.partner);
-            // console.log('partner: ', f.detail.partner);
-            // console.log('Action to perform: ', e.detail.command);
-            // console.log('Dataset: ', e.detail.objectname);
-            // console.log('Config: ', e.detail.objectconfig);
-            // console.log('Data: ', e.detail.objectdata);
-            // console.log('Userid: ', e.detail.userid);
-            // console.log('HASH: ', e.detail.hash);
-            var partner = f.detail.partner;
-            var command = e.detail.command;
-            var objectname = e.detail.objectname;
-            var objectdata = e.detail.objectdata;
-            var objectconfig = e.detail.objectconfig;
-            var userid = e.detail.userid;
-            var hash = e.detail.hash;
-            //console.log("Nieuwe getuige: ", partner, command, objectname, objectconfig, objectdata, userid, hash);
-            //console.log("sending verification req");
-            lomqtt.subscribe("validate/"+this.publickey, 2);
-            lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);
-            //this.$.lomqtt.send("sync/"+e.detail.partner, "SYNC1|"+mytopic, 2);
-          });
-        // e.target.import is the import document.
-        changeStage(2);
-        //console.log('import',e);
-      }, function(g) {
-        //console.log('import',e);
-        // loading error
-      });
+        console.log("QR reader wordt geactiveerd");
         
       },
 
