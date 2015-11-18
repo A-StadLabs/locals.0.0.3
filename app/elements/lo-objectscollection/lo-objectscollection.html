@@ -27,6 +27,9 @@ See authors.md for a list of all members.
       overflow: none;
       margin: 0px;
       padding: 0px;
+
+      background-color: var(--primary-green);
+
     }
 
     .scrollstage {
@@ -118,27 +121,32 @@ See authors.md for a list of all members.
       margin: 0px;
       height: 80vh;
       padding: 0px;
-      background: green;
-    }
+/*      background: green;
+*/    }
 
 
     .object {
       width: 40vw;
       min-width: 200px;
+      max-width: 400px;
       height: 40vw;
       min-height: 200px;
-      /*border: 1px solid red;*/
+      max-height: 400px;
       background-color: white;
+/*      background-color: rgba(255,255,255,0.25);*/
       @apply(--layout-vertical);
       @apply(--layout-center);
       margin: 3px;
+
+      box-shadow: 0px 2px 2px rgba(0,0,0,0.15);
+
 
     }
 
     .objectvalbar {
       height: 15%;
       width: 100%;
-      padding: 2%;
+      padding: 15px;
       box-sizing:border-box;
       background: transparent;
       @apply(--layout-horizontal);
@@ -149,6 +157,8 @@ See authors.md for a list of all members.
     p {
       margin: 0px;
       padding: 0px;
+        font-family: Opensans;
+
     }
 
     .objectvalbar img {
@@ -157,40 +167,44 @@ See authors.md for a list of all members.
 
 
     lo-previewnext {
-      height: 65%;
-      width: 65%;
+      height: 60%;
+      width: 60%;
     }
 
     .objectvaluesbar {
-      height: 20%;
+      height: 25%;
       width: 100%;
-      padding: 6px 10px 6px 10px;
+      padding: 0px 10px 10px 10px;
       box-sizing:border-box;
 
-      background-color: #FAFAFA;
-
+/*      background-color: #FAFAFA;
+*/
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
 
     }
 
     .objectfirstvalue {
-      height: 100%;
-      width: 250px;
-
-      overflow:hidden;
-      white-space: nowrap;
-      text-overflow:ellipsis;
+      height: 60%;
+      width: 70%;
+      background-color: transparent;
+      border-bottom: 2px solid rgba(0,0,0,0.15);
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
     }
 
 
-    .objectvaluesbar img {
-      height: 25px;
-      opacity: 0.25;
+    .firstvallock {
+      height: 60%;
+      border-bottom: 2px solid rgba(0,0,0,0.15);
     }
 
+
+    .firstvallock img {
+      height: 100%;
+      width: 100%;
+      opacity: 0.25;
+    }
 
 </style>
 <template>
@@ -237,7 +251,7 @@ See authors.md for a list of all members.
 
           <div class="objectvaluesbar" on-tap="FireValues">
             <div class="objectfirstvalue"><p>{{item.array.objectdata.firstval}}</p></div>
-            <img src="../../images/locked.svg">
+            <div class="firstvallock"><img src="../../images/locked.svg"></div>
           </div>
 
         </div>

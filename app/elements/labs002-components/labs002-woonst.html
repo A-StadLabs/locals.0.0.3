@@ -44,244 +44,107 @@ See authors.md for a list of all members.
 
 <dom-module id="labs002-woonst">
   <style>
-    :host {
+     :host {
       display: block;
-      position: relative;
-
-      padding: 0px;
-      margin: 0px;
-
-      width: 100%;
       height: 100%;
+      width: 100%;
 
-      --object-width: 190px;
-      --object-height: 340px;
 
     }
-
 
     neon-animated-pages {
       height: 100%;
     }
 
-    .woonstparts {
-      width: var(--object-width);
-      height: var(--object-height);
-      margin: 0px;
-      padding: 0px;
-    }
-
-    .woonstparts svg {
+    .canvas {
+/*      border: 1px solid green;*/
       height: 100%;
       width: 100%;
-    }
-
-
-    .container {
-      width: 100%;
-      height: 100%;
 
       @apply(--layout-horizontal);
-      @apply(--layout-center-center);  
-      margin: 0px;
-      padding: 0px;
-    }
-
-
-    .valuescontainer {
-      height: 100%;
-      width: 100%;
-/*      @apply(--layout-vertical);
-      @apply(--layout-center-center);*/
-      background-color: white;
-
-    }
-
-
-
-
-
-    /* ALL MATTERS EDIT VISUAL */
-
-    .visualcontainer {
-      width: 100%;
-      height: 100%;
-      background-color: transparent;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);      
-    }
-
-    .visualbtns {
-      width: 15%;
-      height: 100%;
-      @apply(--layout-vertical);
-    }
-
-    .leftbtns {
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-      @apply(--layout-end-justified);
-    }
-
-    .rightbtns {
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-      @apply(--layout-start-justified);
-    }
-
-    .selector button {
-      outline: 0;
-      border: none;
-      background-color: rgba(0,0,0,0.05);
-
-      width: 10vw;
-      min-width: 35px;
-      max-width: 60px;
-
-      height: 10vw;
-      min-height: 35px;
-      max-height: 60px;
-
-      border-radius: 50%;
-      padding: 0px;
-      margin: 0px;
-    }
-
-
-    .selector img {
-      width: 100%;
-    }
-
-/*    .visual {
-      width: 70%;
-      height: 100%;
-      @apply(--layout-vertical);
       @apply(--layout-center-center);
+    }
+
+    .whitebg {
+      background-color: white;
+    }
+
+    .righttbtns {
+      height: 100%;
+      max-height: 400px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+    }
+
+
+    .pagecontainer {
+      width: 100%;
+      max-width: 400px;
+      height: 100%;
+      max-height: 400px;
+      position: relative;
 
     }
 
-    .visual svg {
+    .absolutepos {
+      position: absolute;
       width: 100%;
-    }*/
+      height: 100%;
 
-    /* ALL MATTERS EDIT VALUES */
-
-
-    labs002-avatar-woonstpages {
-      width: 100%;
     }
+
 
   </style>
   <template>
 
-
-<!-- Hier begint ALLES -->
-<!-- <h1>AVATAR</h1> -->
-<neon-animated-pages id="pages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
-
-
-
-<!-- sectie 0 //   HIER BEGINT DE VISUAL EDIT -->
-
+<neon-animated-pages
+  id="woonstmainpages"
+  selected="{{selected}}"
+  entry-animation="{{entryAnimation}}"
+  exit-animation="{{exitAnimation}}">
 
   <neon-animatable>
-      <div class="visualcontainer">
+  <div class="canvas">
 
-        <!-- VOLLEDIGE WOONST -->
-        <template is="dom-if" if="{{edit}}">
+    <template is="dom-if" if="{{edit}}">
+      <div class="leftbtns">
+        <lo-configbtns context="woonst" on-btn-tapped="previous"></lo-configbtns>
+      </div>                
+    </template>
 
-        <div class="visualbtns leftbtns">
-<!--           <iron-selector id="editselected" selected="{{itemtocolor}}" attr-for-selected="name">
+    <div class="pagecontainer">
 
-            <div id="selectsnit" class="selector"  name="snit">
-              <button on-tap="_PrevHouse">
-                <img src="../../images/arrow_left.svg">
-              </button>
-            </div>
-
-          </iron-selector> -->
-
-          <lo-configbtns context="woonst" on-btn-tapped="previous"></lo-configbtns>
-
-        </div>
-
-        </template>
-
-
-          <div class="woonstparts">
-              <labs002-avatar-woonstpages 
-              id="woonst">
-              </labs002-avatar-woonstpages>
-          </div>
-
-        <template is="dom-if" if="{{edit}}">
-
-        <div class="visualbtns rightbtns">
-<!--           <iron-selector id="editselected" selected="{{itemtocolor}}" attr-for-selected="name">
-
-            <div id="selectsnit" class="selector"  name="snit">
-              <button on-tap="_NextHouse">
-                <img src="../../images/arrow_right.svg">
-              </button>
-            </div>
-
-          </iron-selector> -->
-          <lo-configbtns context="woonst" on-btn-tapped="next" next></lo-configbtns>
-        </div>
-        </template>
+      <div class="absolutepos">
+        <labs002-avatar-woonstpages 
+          id="woonst"
+          nrofitems="{{nrofwoonst}}">
+        </labs002-avatar-woonstpages>
       </div>
 
+    </div>
+
+    <template is="dom-if" if="{{edit}}">
+      <div class="righttbtns">
+        <lo-configbtns context="woonst" on-btn-tapped="next" next></lo-configbtns>
+      </div>                
+    </template>
+
+  </div>
   </neon-animatable>
 
 
-
-
-
-  <!-- sectie 1 //   HIER BEGINT DE WAARDEN-SECTIE -->
   <neon-animatable>
-    <div class="canvas">
-      <div class="valuescontainer">
+    <div class="canvas whitebg">
 
-<!--         DO YOUT THING -->
+      <paper-input-container>
+        <label>De eerste value?</label>
+        <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstval}}">
+      </paper-input-container>
 
-        <template is="dom-if" if="{{!locked}}">
-        
-        <paper-input-container>
-          <label>Straat</label>
-          <input autofocus type="text" is="iron-input" bind-value="{{objectdata.straat}}">
-        </paper-input-container>
-
-        <paper-input-container>
-          <label>Nummer</label>
-          <input type="text" is="iron-input" bind-value="{{objectdata.nummer}}">
-        </paper-input-container>
-
-        <paper-input-container>
-          <label>Postcode</label>
-          <input type="text" is="iron-input" bind-value="{{objectdata.postcode}}" >
-        </paper-input-container>
-
-        <paper-input-container>
-          <label>Plaats</label>
-          <input type="text" is="iron-input" bind-value="{{objectdata.plaats}}" >
-        </paper-input-container>
-
-        </template>
-
-
-        <template is="dom-if" if="{{locked}}">
-          <p>{{straat}}</p>
-          <p>{{nummer}}</p>
-          <p>{{postcode}}</p>
-          <p>{{plaats}}</p>
-
-        <!-- HIEF DAN DIE BFFN FIE FAFIFEEFT --> 
-          <button on-tap="unlock">unlock</button>
-        </template>
-
-      </div>
     </div>
   </neon-animatable>
+
+
 
 
 </neon-animated-pages>
@@ -297,76 +160,50 @@ See authors.md for a list of all members.
       ],
 
       properties: {
-      objectconfig: {
+         objectconfig: {
           type: Object,
-          observer: "_configChanged",
-          notify: true
-      },
-
-      objectdata: {
-          type: Object,
-          observer: "_dataChanged",
-          notify: true
+          notify: true,
+          observer: "_configChanged"
         },
 
-      edit: {
-        type: Boolean,
-        value: false
-      },
+        objectdata: {
+          type: Object,
+          notify: true,
+          observer: "_dataChanged"
+        },
 
+        edit: {
+          type: Boolean,
+          value: false
+        },
 
-      editvalues: {
-        type: Boolean,
-        value: false
-      },
+        opened: {
+          type: Boolean,
+          value: false
+        },
 
-      avatarbtnsvisible: {
-        type: Boolean,
-        value: false
-      },
+        objecthash: {
+          type: String
+        }
 
-      opened: {
-        type: Boolean,
-        value: false,
-        observer: "editListener"
-      },
-
-
-      selecteditem: {
-        type: String,
-        observer: "_selecteditem",
-        value: "woonst"
-      },
 
       },
 
 
       ready: function(){
-        this.selected = 0;
-        // this.woonstselected= 0;
-
-        //  console.log('avatar is ready');
-        this.editmode = false;
-        //console.log('avatar conf: ', this.config.beard[0]);
+        this.$.woonstmainpages.selected = 0;
       },
 
-
-      created: function() {
-        //console.log(this.localName + '#' + this.id + ' was created');
-      },
 
       attached: function() {
         this.async(function() {
-        //console.log(this.localName + '#' + this.id + ' was attached');
-        //this.selected = 1;
         this._configChanged();
         this._dataChanged();
       });
 
-        this.entryAnimation = 'slide-from-right-animation';
-        this.exitAnimation = 'slide-left-animation';
+      this.entryAnimation = 'fade-in-animation';
+      this.exitAnimation = 'fade-out-animation';
       },
-
 
       detached: function() {
         this.async(function() {
@@ -374,33 +211,52 @@ See authors.md for a list of all members.
        });
       },
 
-      attributeChanged: function(name, type) {
-        //console.log(this.localName + '#' + this.id + ' attribute ' + name +
-        //  ' was changed to ' + this.getAttribute(name));
-      },
-
-      _showData: function(){
-        this.editvalues =! this.editvalues;
-        //console.log('SHOW DATA TOGGLED', this.editvalues);
-      },
-
-      unlock: function(){
-        this.locked = false;
-      },
 
 
-      _test: function(e){
-        //console.log('hallo ',e);
-        this.config = e;
+
+    previous: function(e){
+        this.selecteditem = e.target.context;
+        var item = document.getElementById(this.selecteditem);
+        console.log("PREV: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
+         if(this.objectconfig[this.selecteditem][0]>=1){
+          console.log(this.objectconfig[this.selecteditem][0]);
+          this.objectconfig[this.selecteditem][0]--;
+          e.target.active = true;
+        } else {
+          e.target.active = false;
+        };
+        this._configChanged();
+        item.entryAnimation = "slide-to-left-animation";
+        item.exitAnimation = "slide-right-animation";
       },
+
+      next: function(e){
+        this.selecteditem = e.target.context;
+        var item = document.getElementById(this.selecteditem);
+        console.log(item);
+        console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
+        if(this.objectconfig[this.selecteditem][0]<=item.nrofitems-1){
+          console.log(this.objectconfig[this.selecteditem][0]);
+          this.objectconfig[this.selecteditem][0]++;
+          e.target.active = true;
+        } else {
+          e.target.active = false;
+        };
+        this._configChanged();
+        item.entryAnimation = "slide-to-right-animation";
+        item.exitAnimation = "slide-left-animation";
+      },
+
+
 
       _configChanged: function(){
-        //console.log('avatar conf changed: ', JSON.stringify(this.objectconfig));
-        this.$.woonst.selected = this.objectconfig.gebouw[0];
+         console.log('woonst conf changed: ', JSON.stringify(this.objectconfig));
+        this.$.woonst.selected = this.objectconfig.woonst[0];
         this.straat = this.objectconfig.straat;
         this.nummer = this.objectconfig.nummer;
         this.postcode = this.objectconfig.postcode;
         this.plaats = this.objectconfig.plaats;   
+
       },
 
       _dataChanged: function(){
@@ -412,91 +268,32 @@ See authors.md for a list of all members.
         this.locked = this.objectdata.locked;
       },
 
-      toVisual: function(){
-        this.selected = 1;
-        this.woonstselected = 0;
-        this.editmode = !this.editmode;
+      unlock: function(){
+        this.locked = false;
       },
 
 
+      _selectedcolor: function(){
+        if(this.objectconfig){
+          var item = this.selecteditem;
+          var color = this.selectedcolor;
+          this.objectconfig[item][1] = color;
+          var avataritem = document.getElementById(item);
+          avataritem.color = color;
+          this._configChanged();
+        };
+      },
+
 
       editListener: function(){
-          //console.log("Opened !!!!");
           if(this.opened){
           this.selected = 1;
           } else {
             this.selected = 0;
-
           }; 
       },
 
-      _showVisual: function(){
-          this.fire('background-activ');
-          this.ToggleVisual();
-      },
 
-      // _NextHouse: function(){
-      //   this.entryWoonst = 'slide-from-right-animation';
-      //   this.exitWoonst = 'slide-left-animation';
-
-      //   console.log('nexxxxthouse');
-      //   this.woonstselected++;
-      //   console.log('nexxxxthouse', this.woonstselected);
-
-      //   },
-
-      // _PrevHouse: function(){
-      //   console.log('prevvvvvhouse');
-
-      //   this.entryWoonst = 'slide-from-left-animation';
-      //   this.exitWoonst = 'slide-right-animation';
-
-
-      //   if (this.woonstselected >= 1) {
-      //   this.woonstselected--;
-      //   console.log('prevvvvvhouse', this.woonstselected);
-
-      //   };
-
-      // },
-
-      // _woonstselectedChanged: function(){
-      //   this.objectconfig.gebouw[0] = this.woonstselected;
-      // },
-
-      _selecteditem: function(){
-        //console.log("DIT IS HET GESELECTEEERDE ITEM: ", this.selecteditem);
-      },
-
-
-      previous: function(e){
-        // this.selecteditem = e.target.context;
-        // console.log("PREVIOUS ", this.selecteditem);
-        // var item = document.getElementById(this.selecteditem);
-        // console.log("current select is ", item.selected);
-        // console.log("Item is ", item);
-        //item.selected--;
-        //console.log("CONFIG item is ", this.objectconfig.gebouw[0]);
-        this.objectconfig.gebouw[0]--;
-        // console.log("new select is", item.selected);
-        this._configChanged();
-      },
-
-      next: function(e){
-        // this.selecteditem = e.target.context;
-        // console.log("NEXT ", this.selecteditem);
-        // var item = document.getElementById(this.selecteditem);
-        // console.log("current select is ", item.selected);
-        // console.log("Item is ", item);
-
-        //console.log("CONFIG item is ", this.objectconfig.gebouw[0]);
-        //item.selected++;
-        this.objectconfig.gebouw[0]++;
-        // console.log("new select is", item.selected);
-        //console.log("NEW CONFIG item is ", this.objectconfig.gebouw[0]);
-        this._configChanged();
-      },
-      
 
 
 

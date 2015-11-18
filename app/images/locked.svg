@@ -3,7 +3,12 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
-<rect x="11.193" y="18.89" fill="none" stroke="#333333" stroke-width="2.126" stroke-miterlimit="10" width="17.613" height="11.245"/>
-<path fill="none" stroke="#333333" stroke-width="2.126" stroke-miterlimit="10" d="M15.033,18.039V15.31
-	c0,0-0.371-5.444,4.756-5.444c5.129,0,4.657,5.562,4.657,5.562v2.61"/>
+<g>
+	<path d="M27.839,28.87H12.161V18.138h15.678V28.87z M14.161,26.87h11.678v-6.732H14.161V26.87z"/>
+</g>
+<g>
+	<path d="M17.143,18.478h-2v-2.119c-0.004-0.03-0.144-2.34,1.305-3.891c0.829-0.887,1.969-1.337,3.388-1.337
+		c1.408,0,2.536,0.45,3.352,1.338c1.453,1.582,1.27,3.965,1.261,4.066l0.004,1.942h-2V16.45c0.005-0.096,0.116-1.708-0.743-2.635
+		c-0.427-0.46-1.04-0.685-1.873-0.685c-0.855,0-1.485,0.229-1.927,0.702c-0.849,0.908-0.77,2.442-0.769,2.458L17.143,18.478z"/>
+</g>
 </svg>

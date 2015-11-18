@@ -117,7 +117,12 @@ See authors.md for a list of all members.
       background-color: white;
     }
 
-
+    .righttbtns {
+      height: 100%;
+      max-height: 400px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+    }
 
 
     .pagecontainer {
@@ -148,9 +153,13 @@ See authors.md for a list of all members.
 
     <template is="dom-if" if="{{edit}}">
       <div class="leftbtns">
+        <lo-configbtns context="snit" on-btn-tapped="previous"></lo-configbtns>
+        <lo-configbtns context="glasses" on-btn-tapped="previous"></lo-configbtns>
+        <lo-configbtns context="beard" on-btn-tapped="previous"></lo-configbtns>
         <lo-configbtns context="top" on-btn-tapped="previous"></lo-configbtns>
-<!--         <lo-configbtns context="skeletontype" on-btn-tapped="previous"></lo-configbtns>
- -->      </div>                
+        <lo-configbtns context="bottom" on-btn-tapped="previous"></lo-configbtns>
+        <lo-configbtns context="shoes" on-btn-tapped="previous"></lo-configbtns>
+      </div>                
     </template>
 
     <div class="pagecontainer">
@@ -220,9 +229,15 @@ See authors.md for a list of all members.
 
     <template is="dom-if" if="{{edit}}">
       <div class="righttbtns">
+
+        <lo-configbtns context="snit" on-btn-tapped="next" next></lo-configbtns>
+        <lo-configbtns context="glasses" on-btn-tapped="next" next></lo-configbtns>
+        <lo-configbtns context="beard" on-btn-tapped="next" next></lo-configbtns>
         <lo-configbtns context="top" on-btn-tapped="next" next></lo-configbtns>
-<!--         <lo-configbtns context="skeletontype" on-btn-tapped="next" next></lo-configbtns>
- -->      </div>                
+        <lo-configbtns context="bottom" on-btn-tapped="next" next></lo-configbtns>
+        <lo-configbtns context="shoes" on-btn-tapped="next" next></lo-configbtns>
+
+      </div>                
     </template>
 
   </div>
