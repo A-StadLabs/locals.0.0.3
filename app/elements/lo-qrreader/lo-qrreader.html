@@ -12,31 +12,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 <dom-module id="lo-qrreader">
 
-<script type="text/javascript" src="../../scripts/lib/jquery-1.7.2.min.js"></script>
-
-<script type="text/javascript" src="../../scripts/camera.js"></script>
-<script type="text/javascript" src="../../scripts/init.js"></script>
-
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/grid.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/version.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/detector.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/formatinf.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/errorlevel.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/bitmat.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/datablock.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/bmparser.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/datamask.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/rsdecoder.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/gf256poly.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/gf256.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/decoder.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/QRCode.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/findpat.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/alignpat.js"></script>
-<script type="text/javascript" src="../../scripts/lib/jsqrcode/databr.js"></script>
-
-<script type="text/javascript" src="../../scripts/qr.js"></script>
-
   <style>
     :host {
       display: block;
@@ -52,8 +27,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   </style>
   <template>
   <button on-tap="back">X</button>
-    <video id="camsource" autoplay class="camsource">Put your fallback message here.</video>
-    <canvas id="qr-canvas" width="320" height="240" style="display:none"></canvas>
+  
+ 
   </template>
 </dom-module>
 <script>
@@ -86,12 +61,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       var that = this;
 
+
+
+
+      cordova.plugins.barcodeScanner.scan(
+            function (result) {
+                alert("We got a barcode\n" +
+                      "Result: " + result.text + "\n" +
+                      "Format: " + result.format + "\n" +
+                      "Cancelled: " + result.cancelled);
+            }, 
+            function (error) {
+                alert("Scanning failed: " + error);
+            }
+         );
+/*
       document.addEventListener('qrcoderead', function(e){
         that.codevalue = e.detail;
         console.log("code: ",e.detail);
         that.fire('got-code', { partner: e.detail, command: this.command, objectname: this.objectnaam, objectconfig: this.objectconfig, objectdata: this.objectdata });
         return e.detail;
       });
+*/
     },
 
     back: function(){
