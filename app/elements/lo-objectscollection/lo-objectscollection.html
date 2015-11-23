@@ -26,13 +26,16 @@ See authors.md for a list of all members.
       display: block;
       height: 100vh;
 /*      width: 100vw;*/
-      --objectscollection-width: 240px;
-      --objectscollection-left: 0px;
+/*      --objectscollection-width: 240px;
+      --objectscollection-left: 0px;*/
       overflow: none;
       margin: 0px;
       padding: 0px;
 
-      background-color: var(--primary-gray);
+      background-color: white;
+
+
+      --obj-calc: calc(100vw/2);
 
     }
 
@@ -42,7 +45,7 @@ See authors.md for a list of all members.
       width: 100vw;
       margin: 0px;
       padding: 0px;
-      height: 80vh;
+      height: 90vh;
     }
 
     .objectscanvas {
@@ -62,42 +65,45 @@ See authors.md for a list of all members.
     }
 
     #toolbar {
-      height: 20vh;
+      height: 60px;
       /*min-height: 120px;*/
       width: 100vw;
       padding: 0px;
       background-color: transparent;
       color: black;
       @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
+      @apply(--layout-center-center);
+/*      @apply(--layout-end-justified);*/
+
+      border-bottom: 1px solid var(--primary-gray);
     }
 
-    .mainbtns {
-      @apply(--layout-vertical);
-      @apply(--layout-center);
-      padding: 10px;
-    }
 
     .mainbtn {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      background-color: rgba(0,0,0,0.1);
+      height: 60px;
+      width: 60px;
+      background-color: var(--primary-blue);
       border: none;
-      outline: 0;
-      margin: 5px;
+      outline: 0; 
+      margin: 0px;
       padding: 0px;
 
     }
     .mainbtn img {
       margin: 0px;
       padding: 0px;
+      width: 100%;
+      height: 100%;
     }
 
     .QR {
+      height: 60px;
+      width: 60px;
       background-color: white;
-      height: 40px;
-      width: 40px;
+      border: none;
+      outline: 0;
+      margin: 0px;
+      padding: 0px;
     }
 
     .QR img {
@@ -123,37 +129,32 @@ See authors.md for a list of all members.
       @apply(--layout-wrap);
       width: 100vw;
       margin: 0px;
-      height: 80vh;
       padding: 0px;
 /*      background: green;
 */    }
 
 
     .object {
-      width: 40vw;
+/*      width: 40vw;
       min-width: 200px;
       max-width: 400px;
       height: 40vw;
       min-height: 200px;
-
       max-height: 400px;*/
 
-      border-right: 1px solid var(--primary-gray);
-      border-bottom: 1px solid var(--primary-gray);
+      border: 1px solid var(--primary-gray);
+      border-bottom: 2px solid var(--primary-gray);
       box-sizing:border-box;
 
       width: var(--obj-calc);
       height: var(--obj-calc);
 
-      max-height: 400px;
       background-color: white;
-/*      background-color: rgba(255,255,255,0.25);*/
       @apply(--layout-vertical);
       @apply(--layout-center);
-      margin: 3px;
 
-      box-shadow: 0px 2px 2px rgba(0,0,0,0.15);
-
+/*      box-shadow: 0px 2px 2px rgba(0,0,0,0.15);
+*/
 
     }
 
@@ -224,12 +225,20 @@ See authors.md for a list of all members.
 <template>
 
 <div class="objectscanvas">
+
+
+<iron-media-query query="(min-width:600px) and (max-width: 900px)" query-matches="{{isBetween600_900px}}"></iron-media-query>
+<iron-media-query query="(min-width:901px)" query-matches="{{isMore900px}}"></iron-media-query>
+
+
     <div id="toolbar"> 
-      <div class="mainbtns">
-        <button class="mainbtn" on-tap="FireAddData"><img src="../../images/add.svg"></button>
-        <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/godfather2.svg"></button>
+
+        <button class="QR" on-tap="_menuToggle"><img src="../../images/menu-blue.svg"></button>
+        <span class="flex"></span>
+
+        <button class="QR" on-tap="_toQR"><img src="../../images/godfather2-blue.svg"></button>
+        <button class="mainbtn" on-tap="FireAddData"><img src="../../images/add-white.svg"></button>
         <!--  <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/QR.svg"></button> -->
-      </div>
     </div>
 
     <div class="scrollstage">
