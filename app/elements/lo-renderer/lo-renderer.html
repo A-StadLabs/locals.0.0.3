@@ -9,6 +9,12 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
 
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
+
+
+
+
 <dom-module id="lo-renderer">
   <style>
     :host {
@@ -157,7 +163,10 @@ See authors.md for a list of all members.
 
 
 
-
+#testcase {
+  height: 100%;
+  width: 100%;
+}
 
 
 </style>
@@ -171,8 +180,8 @@ See authors.md for a list of all members.
         </button>
       </div> -->
 
-
-  <neon-animated-pages selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+<div id="testcase">
+  <neon-animated-pages selected="{{selected}}" >
     <neon-animatable>
       <div class="container">
 
@@ -224,7 +233,7 @@ See authors.md for a list of all members.
     </neon-animatable>
 
   </neon-animated-pages>
-
+</div>
 </template>
 </dom-module>
 <script>
@@ -235,9 +244,7 @@ See authors.md for a list of all members.
   Polymer({
     is: 'lo-renderer',
 
-    behaviors: [
-      Polymer.NeonAnimationRunnerBehavior
-    ],
+      behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
 
 
     properties: {
@@ -293,7 +300,35 @@ See authors.md for a list of all members.
       type: Boolean,
       value: false,
       notify: true
-    }
+    },
+
+
+      animationConfig: { 
+          value: function(){
+            return {
+              'entry': {
+                name: 'hero-animation',
+                id: 'hero',
+                toPage: this
+              },
+              'exit': {
+                name: 'hero-animation',
+                id: 'hero',
+                fromPage: this
+              }
+            }
+          }
+        },
+
+        sharedElements: {
+          value: function(){
+            return {
+              'hero': this.$.testcase
+            }
+          }
+        }
+
+
 
     },
 
