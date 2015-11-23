@@ -251,7 +251,7 @@ See authors.md for a list of all members.
     <div class="objectscollection2">
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
-        <div class="object">
+        <div class="object" id="{{item.array.objectname}}">
 
           <div class="objectvalbar">
             <img src="../../images/accept.svg">
@@ -334,13 +334,7 @@ See authors.md for a list of all members.
   Polymer({
     is: 'lo-objectscollection',
 
-    // behaviors: [
-    //     Polymer.NeonAnimatableBehavior
-    // ],
-
-
-      behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
-
+    behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
 
     properties: {
       publickey: {
@@ -379,23 +373,18 @@ See authors.md for a list of all members.
         observer: "_queryCheck"
       },
 
-
-
-
-
-
-        animationConfig: { 
+      animationConfig: { 
           value: function(){
             return {
               'entry': {
                 name: 'hero-animation',
                 id: 'hero',
-                toPage: this
+                fromPage: this
               },
               'exit': {
                 name: 'hero-animation',
                 id: 'hero',
-                fromPage: this
+                toPage: this
               }
             }
           }
@@ -408,23 +397,19 @@ See authors.md for a list of all members.
            } 
           }
         }
-
-
-
-
     },
 
-
     ready: function(){
-
       var that = this;
-
-      this.addEventListener('object-selected',function(e){
-        target = document.getElementById(e.detail.object);
-        console.log("NI OP MY GEZICHT",target);
-        that.fire('change-stage',{stage: 1});
+      this.addEventListener('object-selected', function(e){
+        that.setTarget(e.detail.object);
       });
+    },
 
+    setTarget: function(e){
+      console.log("Awel waarom niet ", e);
+      var target = document.getElementById(e);
+      console.log('target: ', target);
     },
 
     _selposchanged: function(){
