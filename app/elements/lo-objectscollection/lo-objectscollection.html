@@ -145,7 +145,9 @@ See authors.md for a list of all members.
       width: var(--obj-calc);
       height: var(--obj-calc);
 
-      background-color: transparent;
+      max-height: 400px;
+      background-color: white;
+/*      background-color: rgba(255,255,255,0.25);*/
       @apply(--layout-vertical);
       @apply(--layout-center);
       margin: 3px;
@@ -401,7 +403,6 @@ See authors.md for a list of all members.
 
 
 
-
     },
 
 
@@ -509,10 +510,11 @@ See authors.md for a list of all members.
         this.customStyle['--obj-calc'] = 'calc(100vw/2)';
       }
        this.updateStyles(); 
-    },
+    }
 
 
->>>>>>> 71dd0e0f13b64615131642c278db12cd35dfaa37
+
+    
 
   });
 })();
