@@ -22,6 +22,8 @@ See authors.md for a list of all members.
 
 <link rel="import" href="../lo-localstorageapi/lo-localstorageapi.html">
 <link rel="import" href="../lo-objectscollection/lo-objectscollection.html">
+<link rel="import" href="../lo-objectdetail/lo-objectdetail.html">
+
 <link rel="import" href="../lo-qrrender/lo-qrrender.html">
 <link rel="import" href="../lo-dialog/lo-dialog.html">
 <link rel="import" href="../lo-godfather/lo-godfather.html">
@@ -95,17 +97,8 @@ See authors.md for a list of all members.
     }
 
     .workmode {
-/*      background-color: rgba(236,173,95,0.95);
-*/      background-color: rgba(0,0,0,0.1);
-
-/*      background-image: url("https://s-media-cache-ak0.pinimg.com/originals/28/e9/2c/28e92c4ca494f3e611fd94f95cec4b29.jpg");*/
+      background-color: rgba(0,0,0,0.1);
     }
-
-/*    lo-renderer {
-      max-width: 300px;
-      max-height: 300px;
-
-    }*/
 
 
 
@@ -152,7 +145,7 @@ See authors.md for a list of all members.
   <paper-drawer-panel force-narrow="true">
   <div drawer id="drawer">dit is de drawer</div>
 
-  <neon-animated-pages id="pages" selected="{{selected}}" class="color" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}" main>
+  <neon-animated-pages id="pages" selected="{{selected}}" class="color" main>
 
   <!-- Stage 0: Alle datasets renderen -->
 <!--   <button on-tap="_addDataset">+</button>
@@ -162,12 +155,13 @@ See authors.md for a list of all members.
     publickey="{{publickey}}" 
     objectsdata="{{localapi}}" 
     class="color"
-    position="1">
+    position="1"
+    hero-id="hero">
   </lo-objectscollection>
 
+
+
   <!-- Stage 1: De geopende state van het object -->
-  <div class="canvas workmode">
-<!--     <button on-tap="_toWhere"><</button> -->
     <lo-renderer 
       objectname="{{activename}}" 
       objectdata="{{activedata}}" 
@@ -180,10 +174,7 @@ See authors.md for a list of all members.
       activ
       preview="false"
       locked="{{activelocked}}">
-    </lo-renderer> 
-
-     
-  </div>
+    </lo-renderer>   
 
   <!-- Stage 2: QR code lezer -->
   <neon-animatable>
@@ -332,21 +323,21 @@ See authors.md for a list of all members.
 
         this.selected = 0;
 
-        this.entryAnimation = 'slide-from-right-animation';
-        this.exitAnimation = 'slide-left-animation';
+        // this.entryAnimation = 'slide-from-right-animation';
+        // this.exitAnimation = 'slide-left-animation';
 
         var that = this;
         
         this.addEventListener('change-stage', function(e){
-          that.entryAnimation = e.detail.entry;
-          that.exitAnimation = e.detail.exit;
+          // that.entryAnimation = e.detail.entry;
+          // that.exitAnimation = e.detail.exit;
           that.selected = e.detail.stage;
 
         }); 
 
 
-        this.addEventListener("object-selected", function(e){
-          //console.log("Object selected: ", e.detail.object);
+        this.addEventListener('object-selected', function(e){
+          console.log("Object selected: ", e.detail);
           var object = e.detail.object;
           that.activename = object;
           that.activedata = that.localapi.collection[object].data;
@@ -358,11 +349,15 @@ See authors.md for a list of all members.
           that.activelocked = that.localapi.collection[object].locked;
           that.$.activeobject._dataset();
 
-          that.entryAnimation = e.detail.entry;
-          that.exitAnimation = e.detail.exit;
 
-          that.selected = 1;
+          // that.selected = 1;
         });
+
+
+
+
+
+
 
         this.addEventListener('save-it', function(e){
           lomqtt = that.$.lomqtt;
@@ -402,8 +397,7 @@ See authors.md for a list of all members.
         this.addEventListener('object-picker', function(){
           importPage("elements/lo-objectpicker/lo-objectpicker.html").then(function(){
               //that._addDataset();
-              that.entryAnimation = 'slide-from-right-animation';
-              that.exitAnimation = 'slide-left-animation';
+
               that.selected = 5;
             }, function(err){
               console.log(err, "error");
@@ -483,8 +477,8 @@ See authors.md for a list of all members.
       // Navigational stuff
       /** * This one shows the qr code associated with this device */
       _toQR:function(){
-        this.entryAnimation = 'slide-from-right-animation';
-        this.exitAnimation = 'slide-left-animation';
+        // this.entryAnimation = 'slide-from-right-animation';
+        // this.exitAnimation = 'slide-left-animation';
         this.selected = 3;
         //console.log("To qr");
         this.qrcode = this.deviceid;
@@ -494,8 +488,8 @@ See authors.md for a list of all members.
       },
 
     _toWhere:function(){
-      this.entryAnimation = 'slide-from-left-animation';
-      this.exitAnimation = 'slide-right-animation';
+      // this.entryAnimation = 'slide-from-left-animation';
+      // this.exitAnimation = 'slide-right-animation';
       this.selected = 0;
     },
 

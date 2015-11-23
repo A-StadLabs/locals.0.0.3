@@ -6,8 +6,12 @@ See authors.md for a list of all members.
 
 <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
-
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
+
+
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
+
 
 <link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
 
@@ -139,14 +143,14 @@ See authors.md for a list of all members.
       min-height: 200px;
       max-height: 400px;*/
 
-      border: 1px solid var(--primary-gray);
-      border-bottom: 2px solid var(--primary-gray);
+      border-right: 1px solid var(--primary-gray);
+      border-bottom: 1px solid var(--primary-gray);
       box-sizing:border-box;
 
       width: var(--obj-calc);
       height: var(--obj-calc);
 
-      background-color: white;
+      background-color: transparent;
       @apply(--layout-vertical);
       @apply(--layout-center);
 
@@ -249,9 +253,9 @@ See authors.md for a list of all members.
     <div class="objectscollection2">
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
-        <div class="object">
+        <div class="object" id="{{item.array.objectname}}">
 
-          <div class="objectvalbar" on-tap="FireValidations">
+          <div class="objectvalbar">
             <img src="../../images/accept.svg">
             <p>{{item.array.objectpeers.length}}</p>
           </div>
@@ -270,7 +274,7 @@ See authors.md for a list of all members.
             >
           </lo-previewnext>
 
-          <div class="objectvaluesbar" on-tap="FireValues">
+          <div class="objectvaluesbar">
             <div class="objectfirstvalue"><p>{{item.array.objectdata.firstval}}</p></div>
             <div class="firstvallock"><img src="../../images/locked.svg"></div>
           </div>
@@ -326,7 +330,7 @@ See authors.md for a list of all members.
   };
 
   var lomqtt;
-
+  var target;
  
 
   Polymer({
@@ -337,9 +341,7 @@ See authors.md for a list of all members.
     // ],
 
 
-        behaviors: [
-      Polymer.NeonSharedElementAnimatableBehavior
-    ],
+      behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
 
 
     properties: {
@@ -368,17 +370,6 @@ See authors.md for a list of all members.
         type: Number,
         notify: true
       },
-
-      // queryMedium: {
-      //   type: Boolean,
-      //   observer: "_queryMediumChanged"
-      // },
-
-      // queryBig: {
-      //   type: Boolean,
-      //   observer: "_queryBigChanged"
-      // },
-
       
       isBetween600_900px: {
         type: Boolean,
@@ -388,14 +379,54 @@ See authors.md for a list of all members.
       isMore900px: {
         type: Boolean,
         observer: "_queryCheck"
-      }
+      },
+
+
+
+
+
+
+        animationConfig: { 
+          value: function(){
+            return {
+              'entry': {
+                name: 'hero-animation',
+                id: 'hero',
+                toPage: this
+              },
+              'exit': {
+                name: 'hero-animation',
+                id: 'hero',
+                fromPage: this
+              }
+            }
+          }
+        },
+
+        sharedElements: {
+          value: function(){
+           return {
+            'hero': target
+           } 
+          }
+        }
+
+
+
 
 
     },
 
+
     ready: function(){
 
       var that = this;
+
+      this.addEventListener('object-selected',function(e){
+        target = document.getElementById(e.detail.object);
+        console.log("NI OP MY GEZICHT",target);
+        that.fire('change-stage',{stage: 1});
+      });
 
     },
 
@@ -482,29 +513,6 @@ See authors.md for a list of all members.
 
     },
 
-    // _queryMediumChanged: function(){
-    //   if(this.queryMedium){
-    //     console.log("De M query is", this.queryMedium);
-    //     this.customStyle['--obj-calc'] = 'calc(100vw/3)';
-    //   } else {
-    //     console.log("De M query is", this.queryMedium);
-    //     this.customStyle['--obj-calc'] = 'calc(100vw/2)';
-    //   };
-    //    this.updateStyles(); 
-    // },
-
-
-
-    // _queryBigChanged: function(){
-    //   if(this.queryBig){
-    //     console.log("De B query is", this.queryBig);
-    //     // this.customStyle['--obj-calc'] = 'calc(100vw/5)';
-    //   } else {
-    //     console.log("De B query is", this.queryBig);
-    //     // this.customStyle['--obj-calc'] = 'calc(100vw/3)';
-    //   };
-    //    this.updateStyles(); 
-    // }
 
     _queryCheck: function (){
       console.log('MediaQuery ==', this.isBetween600_900px);
@@ -517,7 +525,9 @@ See authors.md for a list of all members.
         this.customStyle['--obj-calc'] = 'calc(100vw/2)';
       }
        this.updateStyles(); 
-    }
+    },
+
+
 
 
 
