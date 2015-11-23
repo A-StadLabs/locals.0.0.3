@@ -453,24 +453,29 @@ See authors.md for a list of all members.
         //console.log(e);
 
         console.log("QR reader wordt geactiveerd");
-
-
   
         cordova.plugins.barcodeScanner.scan(
               function (result) {
-                  alert("We got a barcode\n" +
-                        "Result: " + result.text + "\n" +
-                        "Format: " + result.format + "\n" +
-                        "Cancelled: " + result.cancelled);
+                  // alert("We got a barcode\n" +
+                  //       "Result: " + result.text + "\n" +
+                  //       "Format: " + result.format + "\n" +
+                  //       "Cancelled: " + result.cancelled);
+                  var partner = result.text;
+                  var command = e.detail.command;
+                  var objectname = e.detail.objectname;
+                  var objectdata = e.detail.objectdata;
+                  var objectconfig = e.detail.objectconfig;
+                  var userid = e.detail.userid;
+                  var hash = e.detail.hash;
+                  lomqtt.subscribe("validate/"+this.publickey, 2);
+                  lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);
+                  changeStage(2);
+
               }, 
               function (error) {
                   alert("Scanning failed: " + error);
               }
            );
-
-
-
-        
       },
 
     
@@ -599,7 +604,6 @@ See authors.md for a list of all members.
             break;
 
             case "VERIFY":
-
               // Another user wants a dataset verified by this user
               //console.log("sync request", commandarray);
               peerd.title = "VERIFY";
@@ -625,7 +629,6 @@ See authors.md for a list of all members.
               //if(app.localapi.collection[objectname].data === objectdata);
               //app.localapi.lastupdate = Date.now();
             break;
-
           };
 
         };
