@@ -1,0 +1,121 @@
+<!-- A-Labs -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="labs002-avatar-facepages">
+  <style>
+
+      :host {
+        display: block;
+      --this-facecolor: var(--primary-purple);
+        height: 100%;
+        width: 100%;
+
+      }
+
+
+      neon-animated-pages {
+        height: 100%;
+      }
+
+      .svgcontainer {
+        width: 100%;
+        height: 100%;
+      }
+
+      .facecolor {
+        fill: var(--this-facecolor);
+      } 
+
+
+  </style>
+  <template>
+
+
+      <neon-animated-pages id="facepages" selected="{{selected}}"  entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+
+
+          <neon-animatable>
+            <div class="svgcontainer">
+            <svg version="1.1" x="0px" y="0px" viewBox="-55 20 300 300" enable-background="new -55 20 300 300" xml:space="preserve">
+            <g id="FACE">
+              <circle opacity="0.7" fill="#000100" enable-background="new    " cx="80.138" cy="137.849" r="3.827"/>
+              <circle opacity="0.7" fill="#000100" enable-background="new    " cx="110.234" cy="137.849" r="3.827"/>
+              <g opacity="0.2">
+                <path fill="#1D1D1B" d="M94.909,176.559h-0.795c-6.931,0-10.254-2.961-10.392-3.086c-0.551-0.502-0.589-1.356-0.087-1.906
+                  c0.502-0.553,1.356-0.591,1.907-0.088c0.019,0.016,2.765,2.38,8.571,2.38h0.795c5.8,0,8.546-2.357,8.571-2.38
+                  c0.55-0.503,1.406-0.465,1.908,0.088c0.501,0.55,0.463,1.406-0.09,1.906C105.163,173.598,101.84,176.559,94.909,176.559z"/>
+              </g>
+            </g>
+            </svg>
+            </div>
+          </neon-animatable>
+
+    </neon-animated-pages>
+
+
+
+
+
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-avatar-facepages',
+
+      behaviors: [
+      Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+        selected: {
+          type: Number
+        },
+
+        color: {
+          type: String,
+          value: '',
+          observer: '_Watchit'
+        }
+      },
+
+      ready: function(){
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
+      },
+
+      _Watchit: function(){
+
+
+      this.customStyle['--this-facecolor'] = this.color;
+      this.updateStyles(); 
+
+      }
+
+
+
+    });
+  })();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,14 @@
+{
+  "name": "object-hash",
+  "homepage": "https://github.com/puleos/object-hash",
+  "version": "0.9.2",
+  "_release": "0.9.2",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.9.2",
+    "commit": "527cfcdc276924d14a8c768319dceaa5e9e0f6e7"
+  },
+  "_source": "git://github.com/puleos/object-hash.git",
+  "_target": "~0.9.1",
+  "_originalSource": "puleos/object-hash"
+}

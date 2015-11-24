@@ -1,0 +1,186 @@
+<!-- A-Labs -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input.html">
+<link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
+
+<dom-module id="labs002-basisprofiel">
+  <style>
+    :host {
+      display: block;
+      background-color: white;
+
+      padding: 30px;
+      box-sizing:border-box;
+
+      height: 100%;
+      box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
+
+
+    }
+
+    h1 {
+      font-weight: 300;
+      -webkit-font-smoothing: antialiased;
+      color: black;
+      margin: 0px;
+      padding: 0px;
+    }
+
+/*    button {
+      width: 200px;
+      height: 200px;
+    }*/
+
+
+
+
+
+
+    paper-input-container {
+      --paper-input-container-color:rgba(0,0,0,0.15);
+      --paper-input-container-focus-color: var(--primary-lightgrey);
+    }
+
+
+    .paper-input-container-0 label, paper-input-char-counter, .paper-input-container-0 input {
+    font-family: Opensans;
+    }
+
+
+    .paper-input-container-0 input {
+      font-size: 30px;
+      line-height: 10px;
+      color: black;
+      font-weight: 300;
+    }
+
+
+
+
+  </style>
+<template>
+<!-- <div>Hello from <span>{{objectname}}</span></div> -->
+<!-- <p>HASH: <span>{{objecthash}}</span></p> -->
+
+<!-- <h1>{{username}}</h1> -->
+<!-- 	<input type="text" id="userinput" value="{{objectdata.username}}"/>
+ -->
+
+    <paper-input-container>
+    <label>Voornaam</label>
+    <input
+      id="userinput"
+      type="text"
+      is="iron-input"
+      value="{{objectdata.username}}" >
+    </paper-input-container>
+
+<!--     <paper-input-container>
+    <label>Achternaam</label>
+    <input
+      id="userinput"
+      type="text"
+      is="iron-input"
+      bind-value="" >
+    </paper-input-container> -->
+
+
+	<button on-tap="save">Save</button>
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-basisprofiel',
+
+      properties: {
+      	objectname: {
+	    	type: String
+	     },
+	      objectconfig: {
+	        type: Object,
+	        notify: true
+	        //observer: "_config"
+	      },
+	      objectdata: {
+	        type: Object,
+	        notify: true,
+	        observer: "_data"
+	      },
+	      objectcomponent: {
+	        type: String
+	      },
+	      opened: {
+	        type: Boolean,
+	        value: false
+	      },
+        objecthash: {
+          type: String
+        }
+
+      },
+
+
+      ready: function(){
+        //console.log('skeleton is ready'); 
+      },
+ 
+      _data: function(){
+      	//console.log("Observer?", this.objectdata);
+      	this.username = this.objectdata.username;
+      },
+
+      refresh: function(){
+        //console.log("REFRESHHHHHMENTS!!");
+        this.username = this.objectdata.username;
+      },
+
+      save: function(){
+        this.username = this.$.userinput.value;
+      	//console.log('text unput value: ', this.username);
+        //console.log('has value: ', this.objectdata["username"]);
+      	this.objectdata["username"] = this.username; 
+        //console.log('new value: ', this.objectdata["username"]);
+      	this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash });
+      },
+
+      created: function() {
+    	 //console.log(this.localName + '#' + this.id + ' was created');
+  	 },
+
+    attached: function() {
+      this.async(function() {
+        //console.log(this.localName + '#' + this.id + ' was attached');
+        //this.selected = 1;
+        //this._configChanged();
+        //this._dataChanged();
+      });
+    },
+
+    detached: function() {
+      this.async(function() {
+        //console.log(this.localName + '#' + this.id + ' was detached');
+     });
+    },
+
+    attributeChanged: function(name, type) {
+      //console.log(this.localName + '#' + this.id + ' attribute ' + name +
+        //' was changed to ' + this.getAttribute(name));
+    }
+
+  });
+
+})();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
