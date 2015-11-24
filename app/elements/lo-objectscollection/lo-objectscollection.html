@@ -290,34 +290,7 @@ See authors.md for a list of all members.
 
       </template>
     </div>
-      <!-- TEST STOP -->
-
-
-
-
-
-
-
-
-<!--     <div class="objectscollection">
-      <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
-
-        <lo-preview 
-          objectcomponent="{{item.array.objectcomponent}}" 
-          objectname="{{item.array.objectname}}" 
-          objectconfig="{{item.array.objectconfig}}"
-          objectdata="{{item.array.objectdata}}"
-          objectpeers="{{item.array.objectpeers}}"
-          publickey="{{publickey}}"
-          hash="{{item.array.objecthash}}"
-          width="{{item.array.width}}"
-          height="{{item.array.height}}"
-          locked="{{item.array.locked}}"
-          >
-        </lo-preview>
-
-      </template>
-    </div> -->
+     
     
     </div>
 </div>
@@ -385,11 +358,11 @@ See authors.md for a list of all members.
       animationConfig: { 
           value: function(){
             return {
-              'entry': {
+              'entry': [{
                 name: 'hero-animation',
                 id: 'hero',
                 toPage: this
-              },
+              }],
               'exit': {
                 name: 'hero-animation',
                 id: 'hero',
@@ -410,19 +383,10 @@ See authors.md for a list of all members.
 
     ready: function(){
       var that = this;
-      this.addEventListener('object-selected', function(e){
-        that.setTarget(e.detail.object);
-      });
+     
     },
 
-    setTarget: function(e){
-      console.log("Awel waarom niet ", e);
-      var target = document.getElementById(e);
-      console.log('target: ', target);
-      this.sharedElements = {
-        'hero': target
-      };
-    },
+    
 
     _selposchanged: function(){
       this.customStyle['--objectscollection-left'] = 280*this.position.toString()+"px";
@@ -504,10 +468,7 @@ See authors.md for a list of all members.
 
     },
 
-    vierkantje: function(){
-      this.fire('vierkantje-clicked');
-    },
-
+   
 
     _queryCheck: function (){
       console.log('MediaQuery ==', this.isBetween600_900px);
