@@ -161,7 +161,7 @@
 <!--        <h2>Locals</h2>
          <p>We gaan dan nu een nieuwe user aanmaken is dat goed?</p> -->
         <div class="intro"><img src="../../images/bg-intro.png"></div> 
-        <button class="normalbutton" on-tap="createUser">Ik ben nieuw</button>
+        <button class="normalbutton" on-tap="createUser">Ik ben alleen</button>
         <button class="smallbutton" on-tap="syncUser">Ik heb al een user</button>
       </div>
       </neon-animatable>
@@ -250,11 +250,12 @@
       },
 
       scanQRcode: function(){
-        console.log("Starting qr scanner");
+        console.log("Starting qr scanner!");
         cordova.plugins.barcodeScanner.scan(
               function (result) {
                 console.log("QR Scan result:  ", result.text);
-                this.processQRCode(result.text);
+                var newuser = document.querySelector("#newuser");
+                newuser.processQRCode(result.text);
               }, 
               function (error) {
                   alert("Scanning failed: " + error);
