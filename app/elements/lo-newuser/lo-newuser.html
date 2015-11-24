@@ -161,7 +161,7 @@
 <!--        <h2>Locals</h2>
          <p>We gaan dan nu een nieuwe user aanmaken is dat goed?</p> -->
         <div class="intro"><img src="../../images/bg-intro.png"></div> 
-        <button class="normalbutton" on-tap="createUser">Ik ben nieuw</button>
+        <button class="normalbutton" on-tap="createUser">Ik ben alleen</button>
         <button class="smallbutton" on-tap="syncUser">Ik heb al een user</button>
       </div>
       </neon-animatable>
@@ -250,6 +250,7 @@
       },
 
       scanQRcode: function(){
+
         var self = this;
         cordova.plugins.barcodeScanner.scan(
               function (result) {
@@ -259,7 +260,7 @@
                   alert("Scanning failed: " + error);
               }
            );
-      }
+      },
 
     createUser: function(){
       var localapi = this.$.localapielem;
@@ -348,31 +349,31 @@
 
     processQRCode: function(e){
       console.log("Processing QR code: ", e, " Promise: ", this.promise);
-
+      var pol = document.querySelector("#newuser");
       //publish topic e.detail.partner body SYNC
       switch(this.promise){
         case "SYNC":
           console.log("Sync scanning");
           syncdevice = e;
-          this.topic = e;
-          var mytopic = this.deviceid;
-          this.$.pub.topic = "sync/"+e; 
-          this.$.pub.payload="SYNC1|"+mytopic;
-          this.$.pub.qos=2;
-          this.$.pub.retained=false;
-          this.$.pub.publish();
-          this.$.lomqtt.subscribe(mytopic);
-          this.send("sync/"+e, "SYNC1|"+mytopic, 2);
+          pol.topic = e;
+          var mytopic = pol.deviceid;
+          pol.$.pub.topic = "sync/"+e; 
+          pol.$.pub.payload="SYNC1|"+mytopic;
+          pol.$.pub.qos=2;
+          pol.$.pub.retained=false;
+          pol.$.pub.publish();
+          pol.$.lomqtt.subscribe(mytopic);
+          pol.send("sync/"+e, "SYNC1|"+mytopic, 2);
         break;
         case "SYNC2":
           console.log("ready to dispatch OK event");
-          this.publickey = e;
-          this.send("sync/"+syncdevice, "SYNC3|"+this.deviceid, 2);
+          pol.publickey = e;
+          pol.send("sync/"+syncdevice, "SYNC3|"+pol.deviceid, 2);
         break;
         case "SYNC4":
           console.log("ready to dispatch OK event");
-            this.privatekey = e;
-            this.send("sync/"+syncdevice, "SYNCOK|"+this.deviceid, 2);
+            pol.privatekey = e;
+            pol.send("sync/"+syncdevice, "SYNCOK|"+pol.deviceid, 2);
             document.location.href = 'index.html'; 
         break;
       }
