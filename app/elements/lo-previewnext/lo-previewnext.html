@@ -33,6 +33,14 @@
 
     var elem;
 
+    function importPage(url){
+    return new Promise(function(resolve, reject){
+      Polymer.Base.importHref(url, function(e){
+        resolve(e.target.import);
+      }, reject);
+    });
+  };
+
     Polymer({
       is: 'lo-previewnext',
 
@@ -56,7 +64,8 @@
       attached: function(){
         var rendercanvas = this.$.rendercanvas;
         if(this.objectcomponent){
-        this.importHref("https://cdn.rawgit.com/A-StadLabs/locals.0.0.3/master/app/elements/labs002-components/"+this.objectcomponent+".html", function(e) {
+        //this.importHref("../elements/labs002-components/"+this.objectcomponent+".html", function(e) {
+          importPage("elements/labs002-components/"+this.objectcomponent+".html").then(function(){
         
         rendercanvas.innerHTML = '';
         elem = document.createElement(this.objectcomponent);
