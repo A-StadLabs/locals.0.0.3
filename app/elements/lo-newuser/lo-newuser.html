@@ -250,9 +250,10 @@
       },
 
       scanQRcode: function(){
+        var self = this;
         cordova.plugins.barcodeScanner.scan(
               function (result) {
-                this.processQRCode(result.text);
+                self.processQRCode(result.text);
               }, 
               function (error) {
                   alert("Scanning failed: " + error);
