@@ -25,17 +25,21 @@ See authors.md for a list of all members.
     :host {
       display: block;
       height: 100vh;
-/*      width: 100vw;*/
-/*      --objectscollection-width: 240px;
-      --objectscollection-left: 0px;*/
       overflow: none;
       margin: 0px;
       padding: 0px;
 
-      background-color: white;
-
+      background-color: transparent;
 
       --obj-calc: calc(100vw/2);
+      --render-calc: calc(98vw/2);
+      --val-size: 90px;
+
+      --obj-kleur: var(--primary-gray);
+
+      --p-size: 14px;
+      --p-vals: 10px;
+
 
     }
 
@@ -54,7 +58,7 @@ See authors.md for a list of all members.
       padding: 0px;
     }
 
-    .objectscollection {
+/*    .objectscollection {
       @apply(--layout-horizontal);
       @apply(--layout-center);
       width: var(--objectscollection-width);
@@ -62,27 +66,26 @@ See authors.md for a list of all members.
       margin: 0px;
       height: 60vh;
       padding: 0px 15vw 0px 15vw;
-    }
+    }*/
 
     #toolbar {
       height: 60px;
-      /*min-height: 120px;*/
       width: 100vw;
       padding: 0px;
-      background-color: transparent;
-      color: black;
+/*      background-color: var(--primary-blue);
+*/      color: black;
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
-/*      @apply(--layout-end-justified);*/
 
-      border-bottom: 1px solid var(--primary-gray);
+
     }
 
 
     .mainbtn {
+      background-color: var(--primary-blue);
+
       height: 60px;
       width: 60px;
-      background-color: var(--primary-blue);
       border: none;
       outline: 0; 
       margin: 0px;
@@ -99,7 +102,7 @@ See authors.md for a list of all members.
     .QR {
       height: 60px;
       width: 60px;
-      background-color: white;
+      background-color: transparent;
       border: none;
       outline: 0;
       margin: 0px;
@@ -113,106 +116,110 @@ See authors.md for a list of all members.
       padding: 0px;
     }
 
-    lo-renderer {
-    }
-
-
-
-
-
-
 
 
 
     .objectscollection2 {
+      width: 100vw;
       @apply(--layout-horizontal);
       @apply(--layout-wrap);
-      width: 100vw;
       margin: 0px;
       padding: 0px;
-/*      background: green;
-*/    }
+    }
+
+
+    .objectvlak {
+      width: var(--obj-calc);
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+      padding-top: calc(1vw/2);
+    }
 
 
     .object {
-/*      width: 40vw;
-      min-width: 200px;
-      max-width: 400px;
-      height: 40vw;
-      min-height: 200px;
-      max-height: 400px;*/
-
-      border: 1px solid var(--primary-gray);
-      border-bottom: 2px solid var(--primary-gray);
-      box-sizing:border-box;
-
-      width: var(--obj-calc);
-      height: var(--obj-calc);
-
-      background-color: white;
+      width: var(--render-calc);
+      background-color: transparent;
       @apply(--layout-vertical);
       @apply(--layout-center);
-
-/*      box-shadow: 0px 2px 2px rgba(0,0,0,0.15);
-*/
-
+      box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+/*      background-image: url("../../images/bg-blue3.png");
+      background-size: auto 110%;*/
     }
 
     .objectvalbar {
-      height: 15%;
-      width: 100%;
-      padding: 15px;
-      box-sizing:border-box;
-      background: transparent;
+/*      background-color: white;*/
+      height: var(--val-size);
+      width: var(--render-calc);
       @apply(--layout-horizontal);
       @apply(--layout-center);
       @apply(--layout-end-justified);
-    }
 
-    p {
-      margin: 0px;
-      padding: 0px;
-        font-family: Opensans;
-
-    }
-
-    .objectvalbar img {
-      height: 30px;
-    }
-
-
-    lo-previewnext {
-      height: 60%;
-      width: 60%;
-    }
-
-    .objectvaluesbar {
-      height: 25%;
-      width: 100%;
-      padding: 0px 10px 10px 10px;
       box-sizing:border-box;
+      padding: 15px 15px 0px 10px;
+    }
 
-/*      background-color: #FAFAFA;
-*/
+
+    .objectvals {
+/*      background-color: white;*/
+      height: 100%;
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
 
     }
+
+    .objectvals img {
+      height: 70%;
+      width: 70%;
+    }
+
+    .objectvals p {
+      margin-left: 3px;
+      font-size: var(--p-vals);
+      font-family: OpensansSemibold;
+    }
+
+
+    .objectvaluesbar {
+/*      background-color: white;*/
+      height: 60px;
+      width: var(--render-calc);
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      box-sizing:border-box;
+      padding: 0px 10px 10px 10px;
+    }
+
+
+    .objectvaluesbar p {
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: var(--p-size);
+    }
+
+
+    lo-previewnext {
+      width: var(--render-calc);
+      height: var(--render-calc);
+/*      background-color: rgba(255,255,255,0.25);*/
+    }
+
+
 
     .objectfirstvalue {
       height: 60%;
       width: 70%;
       background-color: transparent;
-      border-bottom: 2px solid rgba(0,0,0,0.15);
+/*      border-bottom: 2px solid rgba(0,0,0,0.15);*/
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
     }
 
 
-    .firstvallock {
+/*    .firstvallock {
       height: 60%;
       border-bottom: 2px solid rgba(0,0,0,0.15);
-    }
+    }*/
 
 
     .firstvallock img {
@@ -260,11 +267,14 @@ See authors.md for a list of all members.
  -->
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
+        <div class="objectvlak">
         <div class="object" id="{{item.array.objectname}}">
 
           <div class="objectvalbar">
-            <img src="../../images/accept.svg">
+            <div class="objectvals">
+            <img src="../../images/accept-small.svg">
             <p>{{item.array.objectpeers.length}}</p>
+            </div>
           </div>
 
           <lo-previewnext 
@@ -277,16 +287,19 @@ See authors.md for a list of all members.
             hash="{{item.array.objecthash}}"
             width="{{item.array.width}}"
             height="{{item.array.height}}"
-            locked="{{item.array.locked}}"
-            >
+            locked="{{item.array.locked}}">
           </lo-previewnext>
 
           <div class="objectvaluesbar">
+<!--             <img src="../../images/accept-blue.svg">
+            <p>{{item.array.objectpeers.length}}</p> -->
             <div class="objectfirstvalue"><p>{{item.array.objectdata.firstval}}</p></div>
-            <div class="firstvallock"><img src="../../images/locked.svg"></div>
           </div>
+        </div>
+
 
         </div>
+
 
       </template>
     </div>
@@ -475,10 +488,22 @@ See authors.md for a list of all members.
 
       if(this.isBetween600_900px){
         this.customStyle['--obj-calc'] = 'calc(100vw/3)';
+        this.customStyle['--render-calc'] = 'calc(98vw/3)'; 
+        this.customStyle['--val-size'] = '40px'; 
+        this.customStyle['--p-vals'] = '14px'; 
+
       } else if(this.isMore900px){
-        this.customStyle['--obj-calc'] = 'calc(100vw/5)';
+        this.customStyle['--obj-calc'] = 'calc(100vw/4)';
+        this.customStyle['--render-calc'] = 'calc(98vw/4)';
+        this.customStyle['--val-size'] = '60px'; 
+        this.customStyle['--p-vals'] = '16px'; 
+        
       } else if(!this.isBetween600_900px && !this.isMore900px) {
         this.customStyle['--obj-calc'] = 'calc(100vw/2)';
+        this.customStyle['--render-calc'] = 'calc(98vw/2)';        
+          this.customStyle['--val-size'] = '35px'; 
+        this.customStyle['--p-vals'] = '12px'; 
+
       }
        this.updateStyles(); 
     }
