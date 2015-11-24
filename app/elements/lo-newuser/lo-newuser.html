@@ -186,6 +186,23 @@
 
     var syncdevice;
 
+    function processQR(e){
+      console.log("got code:",e);
+    };
+
+    function scanQRcode(){
+      cordova.plugins.barcodeScanner.scan(
+            function (result) {
+              // hoe kan ik een functie aanspreken BUITEN deze context?
+              var newuser = document.querySelector("#newuser");
+              newuser.processQRCode(result.text);
+            }, 
+            function (error) {
+                alert("Scanning failed: " + error);
+            }
+         );
+    };
+
     function importPage(url){
     return new Promise(function(resolve, reject){
       Polymer.Base.importHref(url, function(e){
@@ -309,15 +326,15 @@
        this.$.mqtt.subscribe("sync/"+this.deviceid, 2);
       
       this.promise = "SYNC";
-      importPage("elements/lo-qrreader/lo-qrreader.html").then(function(){
-        //var element = document.createElement("labs002-stage");
-        //body.appendChild(element)
+      // importPage("elements/lo-qrreader/lo-qrreader.html").then(function(){
+      //   //var element = document.createElement("labs002-stage");
+      //   //body.appendChild(element)
         
-        
+      scanQRcode();
 
-      }, function(err){
-        console.log(err, "error");
-      });
+      // }, function(err){
+      //   console.log(err, "error");
+      // });
 
     },
 
@@ -331,33 +348,34 @@
       },
 
     processQRCode: function(e){
-      console.log("Processing QR code: ", e.detail.partner, " Promise: ", this.promise);
+      console.log("Processing QR code: ", e, " Promise: ", this.promise);
 
       //publish topic e.detail.partner body SYNC
       switch(this.promise){
         case "SYNC":
           console.log("Sync scanning");
-          syncdevice = e.detail.partner;
-          this.topic = e.detail.partner;
+          syncdevice = e;
+          this.topic = e;
           var mytopic = this.deviceid;
-          // this.$.pub.topic = "sync/"+e.detail.partner; 
+          // this.$.pub.topic = "sync/"+e; 
           // this.$.pub.payload="SYNC1|"+mytopic;
           // this.$.pub.qos=2;
           // this.$.pub.retained=false;
           // this.$.pub.publish();
           //this.$.lomqtt.subscribe(mytopic);
-          this.send("sync/"+e.detail.partner, "SYNC1|"+mytopic, 2);
+          this.send("sync/"+e, "SYNC1|"+mytopic, 2);
         break;
         case "SYNC2":
           console.log("ready to dispatch OK event");
-          this.publickey = e.detail.partner;
+          this.publickey = e;
           this.send("sync/"+syncdevice, "SYNC3|"+this.deviceid, 2);
         break;
         case "SYNC4":
           console.log("ready to dispatch OK event");
-            this.privatekey = e.detail.partner;
+            this.privatekey = e;
             this.send("sync/"+syncdevice, "SYNCOK|"+this.deviceid, 2);
-            window.location = "/";          
+            //window.location = "/"; 
+            location.reload();         
         break;
       }
       
@@ -378,11 +396,13 @@
         case "SYNC2":
           console.log("Receiving public key");
           //this.publickey = e.detail.msg[1];
+          scanQRcode();
           this.promise = "SYNC2";
           //this.$.lomqtt.send("sync/"+partner, "SYNC3|"+this.deviceid);
         break;
         case "SYNC4":
           console.log("Sync4 request");
+          scanQRcode();
           this.promise = "SYNC4";
         break;
       };

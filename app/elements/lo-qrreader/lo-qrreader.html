@@ -54,6 +54,8 @@
 
       var that = this;
 
+      //this.startScan();
+
 
 /*
 
@@ -67,13 +69,19 @@
     },
 
     startScan: function(){
+      var that = this;
      
       cordova.plugins.barcodeScanner.scan(
             function (result) {
-                alert("We got a barcode\n" +
-                      "Result: " + result.text + "\n" +
-                      "Format: " + result.format + "\n" +
-                      "Cancelled: " + result.cancelled);
+
+              this.codevalue = result.text;
+        console.log("code: ",result.text);
+        that.fire('got-code', { partner: result.text, command: this.command, objectname: this.objectnaam, objectconfig: this.objectconfig, objectdata: this.objectdata });
+        return result.text;
+                //alert("We got a barcode\n" +
+                     // "Result: " + result.text + "\n" +
+                      //"Format: " + result.format + "\n" +
+                      //"Cancelled: " + result.cancelled);
             }, 
             function (error) {
                 alert("Scanning failed: " + error);

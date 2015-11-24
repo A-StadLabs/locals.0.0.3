@@ -27,6 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app._nolocaluserFound = function(){
       importPage("elements/lo-newuser/lo-newuser.html").then(function(){
         var element = document.createElement("lo-newuser");
+        element.id = "newuser";
         body.appendChild(element);
       }, function(err){
         console.log(err, "error");
