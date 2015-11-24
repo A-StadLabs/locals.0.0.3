@@ -357,12 +357,12 @@
           syncdevice = e;
           this.topic = e;
           var mytopic = this.deviceid;
-          // this.$.pub.topic = "sync/"+e; 
-          // this.$.pub.payload="SYNC1|"+mytopic;
-          // this.$.pub.qos=2;
-          // this.$.pub.retained=false;
-          // this.$.pub.publish();
-          //this.$.lomqtt.subscribe(mytopic);
+          this.$.pub.topic = "sync/"+e; 
+          this.$.pub.payload="SYNC1|"+mytopic;
+          this.$.pub.qos=2;
+          this.$.pub.retained=false;
+          this.$.pub.publish();
+          this.$.lomqtt.subscribe(mytopic);
           this.send("sync/"+e, "SYNC1|"+mytopic, 2);
         break;
         case "SYNC2":
@@ -374,8 +374,7 @@
           console.log("ready to dispatch OK event");
             this.privatekey = e;
             this.send("sync/"+syncdevice, "SYNCOK|"+this.deviceid, 2);
-            //window.location = "/"; 
-            location.reload();         
+            document.location.href = 'index.html'; 
         break;
       }
       
