@@ -221,6 +221,12 @@ See authors.md for a list of all members.
       opacity: 0.25;
     }
 
+    .square {
+      width: 100px;
+      height: 100px;
+      background-color: yellow;
+    }
+
 </style>
 <template>
 
@@ -249,6 +255,9 @@ See authors.md for a list of all members.
 
       <!-- TEST START -->
     <div class="objectscollection2">
+
+      <div class="square" id="vierkantje"></div>
+
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
         <div class="object" id="{{item.array.objectname}}">
@@ -379,12 +388,12 @@ See authors.md for a list of all members.
               'entry': {
                 name: 'hero-animation',
                 id: 'hero',
-                fromPage: this
+                toPage: this
               },
               'exit': {
                 name: 'hero-animation',
                 id: 'hero',
-                toPage: this
+                fromPage: this
               }
             }
           }
@@ -393,7 +402,7 @@ See authors.md for a list of all members.
         sharedElements: {
           value: function(){
            return {
-            'hero': target
+            'hero': this.$.vierkantje
            } 
           }
         }

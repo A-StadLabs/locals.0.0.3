@@ -156,14 +156,16 @@ See authors.md for a list of all members.
       width: 100%;
     }
 
-
-
-
-
-#testcase {
+  #testcase {
   height: 100%;
   width: 100%;
-}
+  }
+
+  .square {
+      width: 200px;
+      height: 100px;
+      background-color: yellow;
+    }
 
 
 </style>
@@ -173,6 +175,8 @@ See authors.md for a list of all members.
   <neon-animated-pages selected="{{selected}}" >
     <neon-animatable>
       <div class="container">
+
+          <div id="vierkantje" class="square"></div>
 
           <div id="rendercanvas">
           </div>
@@ -312,7 +316,7 @@ See authors.md for a list of all members.
         sharedElements: {
           value: function(){
             return {
-              'hero': this.$.rendercanvas
+              'hero': this.$.vierkantje
             }
           }
         }
