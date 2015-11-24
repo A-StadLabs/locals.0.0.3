@@ -278,6 +278,9 @@
       }
     });
 
+    var phonegap = require('connect-phonegap');
+    phonegap.listen();
+
     gulp.watch(['app/**/*.html'], reload);
     gulp.watch(['app/styles/**/*.css'], ['styles', reload]);
     gulp.watch(['app/elements/**/*.css'], ['elements', reload]);

@@ -47,5 +47,8 @@
   "cordovaPlatforms": [
     "android",
     "ios"
-  ]
+  ],
+  "dependencies": {
+    "connect-phonegap": "^0.18.1"
+  }
 }
