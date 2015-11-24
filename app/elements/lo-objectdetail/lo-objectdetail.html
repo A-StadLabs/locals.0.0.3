@@ -20,19 +20,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         display: block;
         width: 100vw;
         height: 100vh;
-        background-color: red;
       }
 
       .object {
-        background-color: green;
-        width: 50vw;
-        height: 50vh;
+        width: 100vw;
+        height: 100vh;
       }
 
     </style>
 
-      <div class="object" id="objvlak"> ??
+      <div class="object" id="vierkantje">
+        <content></content>
       </div>
+
 
   </template>
   <script>
@@ -54,34 +54,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           notify: true
         },
 
-      sharedElements: {
-        type: Object,
-        value: function() {
-          return {
-            'hero': this.$.objvlak,
+
+      animationConfig: { 
+          value: function(){
+            return {
+              'entry': {
+                name: 'hero-animation',
+                id: 'hero',
+                toPage: this
+              },
+              'exit': {
+                name: 'hero-animation',
+                id: 'hero',
+                fromPage: this
+              }
+            }
+          }
+        },
+
+        sharedElements: {
+          value: function(){
+            return {
+              'hero': this.$.vierkantje
+            }
           }
         }
-      },
 
-      // animationConfig: {
-      //   type: Object,
-      //   value: function() {
-      //     return {
-      //       'entry': [{
-      //         name: 'transform-animation',
-      //         toPage: this,
-      //       }, {
-      //         name: 'hero-animation',
-      //         id: 'hero',
-      //         node: this.$.objvlak,
-      //         toPage: this
-      //       }],
-      //       'exit': [{
 
-      //       }]
-      //     }
-      //   }
-      // }
+
+
+
 
 
 

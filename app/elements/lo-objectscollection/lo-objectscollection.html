@@ -256,8 +256,8 @@ See authors.md for a list of all members.
       <!-- TEST START -->
     <div class="objectscollection2">
 
-      <div class="square" id="vierkantje"></div>
-
+<!--       <div class="square" id="vierkantje" on-tap="vierkantje"></div>
+ -->
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
         <div class="object" id="{{item.array.objectname}}">
@@ -402,7 +402,7 @@ See authors.md for a list of all members.
         sharedElements: {
           value: function(){
            return {
-            'hero': this.$.vierkantje
+            'hero': target
            } 
           }
         }
@@ -419,6 +419,9 @@ See authors.md for a list of all members.
       console.log("Awel waarom niet ", e);
       var target = document.getElementById(e);
       console.log('target: ', target);
+      this.sharedElements = {
+        'hero': target
+      };
     },
 
     _selposchanged: function(){
@@ -499,6 +502,10 @@ See authors.md for a list of all members.
     FireValues: function(){
 
 
+    },
+
+    vierkantje: function(){
+      this.fire('vierkantje-clicked');
     },
 
 

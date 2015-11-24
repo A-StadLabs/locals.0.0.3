@@ -152,6 +152,7 @@ See authors.md for a list of all members.
     position="1">
   </lo-objectscollection>
 
+  <lo-objectdetail>
   <!-- Stage 1: De geopende state van het object -->
   <div class="canvas workmode">
     <lo-renderer 
@@ -168,6 +169,7 @@ See authors.md for a list of all members.
       locked="{{activelocked}}">
     </lo-renderer> 
   </div>
+</lo-objectdetail>
 
   <!-- Stage 2: QR code lezer -->
   <neon-animatable>
@@ -330,6 +332,8 @@ See authors.md for a list of all members.
 
         this.addEventListener("object-selected", function(e){
           //console.log("Object selected: ", e.detail.object);
+          that.selected = 1;
+
           var object = e.detail.object;
           that.activename = object;
           that.activedata = that.localapi.collection[object].data;
@@ -344,8 +348,15 @@ See authors.md for a list of all members.
           that.entryAnimation = e.detail.entry;
           that.exitAnimation = e.detail.exit;
 
+        });
+
+
+        this.addEventListener('vierkantje-clicked', function(){
+
           that.selected = 1;
         });
+
+
 
         this.addEventListener('save-it', function(e){
           lomqtt = that.$.lomqtt;
