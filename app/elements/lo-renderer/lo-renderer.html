@@ -176,7 +176,6 @@ See authors.md for a list of all members.
     <neon-animatable>
       <div class="container">
 
-
           <div id="rendercanvas">
           </div>
 
@@ -232,6 +231,8 @@ See authors.md for a list of all members.
 (function() {
 
   var elem; 
+
+  var object;
 
   Polymer({
     is: 'lo-renderer',
@@ -378,7 +379,7 @@ See authors.md for a list of all members.
     },
 
     back: function(){
-      this.fire('change-stage', { stage: 0, entry: 'slide-down-animation', exit: 'slide-up-animation'});
+      this.fire('change-stage', { stage: 0 });
       this.selected = 0;
       this.opened = false;
       //console.log("doet dit wel iets");
@@ -426,14 +427,17 @@ See authors.md for a list of all members.
     },
 
     toValues: function(){
-      var object = document.getElementById(this.objectname);
+      //var object = document.getElementById(this.objectname);
+      object = this.$.rendercanvas.firstChild;
+      console.log("RENDERER: ", object);
       object.selected = 1;
       this.opened = true;
       // this.selected = 1;
     },
 
     toVisual: function(){
-      var object = document.getElementById(this.objectname);
+      //var object = document.getElementById(this.objectname);
+      object = this.$.rendercanvas.firstChild;
       //object.selected = 1;
       this.opened = true;
       object.edit = true;
