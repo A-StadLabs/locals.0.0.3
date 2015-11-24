@@ -190,19 +190,6 @@
       console.log("got code:",e);
     };
 
-    function scanQRcode(){
-      cordova.plugins.barcodeScanner.scan(
-            function (result) {
-              // hoe kan ik een functie aanspreken BUITEN deze context?
-              var newuser = document.querySelector("#newuser");
-              newuser.processQRCode(result.text);
-            }, 
-            function (error) {
-                alert("Scanning failed: " + error);
-            }
-         );
-    };
-
     function importPage(url){
     return new Promise(function(resolve, reject){
       Polymer.Base.importHref(url, function(e){
@@ -261,6 +248,17 @@
         var deviceid = uuid.v4();
         this.deviceid = deviceid;
       },
+
+      scanQRcode: function(){
+        cordova.plugins.barcodeScanner.scan(
+              function (result) {
+                this.processQRCode(result.text);
+              }, 
+              function (error) {
+                  alert("Scanning failed: " + error);
+              }
+           );
+      }
 
     createUser: function(){
       var localapi = this.$.localapielem;
@@ -330,7 +328,7 @@
       //   //var element = document.createElement("labs002-stage");
       //   //body.appendChild(element)
         
-      scanQRcode();
+      this.scanQRcode();
 
       // }, function(err){
       //   console.log(err, "error");
@@ -395,13 +393,13 @@
         case "SYNC2":
           console.log("Receiving public key");
           //this.publickey = e.detail.msg[1];
-          scanQRcode();
+          this.scanQRcode();
           this.promise = "SYNC2";
           //this.$.lomqtt.send("sync/"+partner, "SYNC3|"+this.deviceid);
         break;
         case "SYNC4":
           console.log("Sync4 request");
-          scanQRcode();
+          this.scanQRcode();
           this.promise = "SYNC4";
         break;
       };
