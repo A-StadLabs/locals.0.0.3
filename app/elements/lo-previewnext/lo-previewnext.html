@@ -63,16 +63,17 @@
 
       attached: function(){
         var rendercanvas = this.$.rendercanvas;
+        var that = this;
         if(this.objectcomponent){
         //this.importHref("../elements/labs002-components/"+this.objectcomponent+".html", function(e) {
           importPage("elements/labs002-components/"+this.objectcomponent+".html").then(function(){
         
         rendercanvas.innerHTML = '';
-        elem = document.createElement(this.objectcomponent);
-        elem.objectconfig = this.objectconfig;
-        elem.objectname = this.objectname;
-        elem.objectdata = this.objectdata;
-        elem.hash = this.hash;
+        elem = document.createElement(that.objectcomponent);
+        elem.objectconfig = that.objectconfig;
+        elem.objectname = that.objectname;
+        elem.objectdata = that.objectdata;
+        elem.hash = that.hash;
         rendercanvas.appendChild(elem);
       }, function(e) {
          //console.log('import',e);

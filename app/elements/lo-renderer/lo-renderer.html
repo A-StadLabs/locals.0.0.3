@@ -230,6 +230,15 @@ See authors.md for a list of all members.
 <script>
 (function() {
 
+
+    function importPage(url){
+    return new Promise(function(resolve, reject){
+      Polymer.Base.importHref(url, function(e){
+        resolve(e.target.import);
+      }, reject);
+    });
+  };
+
   var elem; 
 
   var object;
@@ -390,28 +399,30 @@ See authors.md for a list of all members.
     _dataset: function(){
       if(this.objectcomponent){      
       //this.importHref("../elements/labs002-components/"+this.objectcomponent+".html", function(e) {
-        var rendercanvas = this.$.rendercanvas;
+        var that = this;
+        importPage("elements/labs002-components/"+this.objectcomponent+".html").then(function(){
+        var rendercanvas = that.$.rendercanvas;
         rendercanvas.innerHTML = '';
-        elem = document.createElement(this.objectcomponent);
+        elem = document.createElement(that.objectcomponent);
         //var newelem = document.querySelector("labs002-avatar");
         // e.target.import is the import document.
-        //console.log(elem, "config: ", this.objectconfig);
-        //console.log(elem, "data: ", this.objectdata);
-        elem.objectconfig = this.objectconfig;
-        elem.objectdata = this.objectdata;
-        elem.objectname = this.objectname;
-        elem.locked = this.locked;
-        elem.objecthash = this.hash;
+        //console.log(elem, "config: ", that.objectconfig);
+        //console.log(elem, "data: ", that.objectdata);
+        elem.objectconfig = that.objectconfig;
+        elem.objectdata = that.objectdata;
+        elem.objectname = that.objectname;
+        elem.locked = that.locked;
+        elem.objecthash = that.hash;
         elem.active = false;
         elem.opened = false;
         elem.selected = 0;
         elem.mode = 0;
-        elem.id = this.objectname;
+        elem.id = that.objectname;
         rendercanvas.appendChild(elem);
-      //}, function(e) {
+      }, function(e) {
          //console.log('import',e);
         // loading error
-      //});
+      });
     };
     },
 
