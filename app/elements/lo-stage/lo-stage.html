@@ -465,7 +465,7 @@ See authors.md for a list of all members.
 
         var lomqtt = this.$.lomqtt;
 
-        //console.log(e);
+        console.log(e);
 
         console.log("QR reader wordt geactiveerd");
 
@@ -479,6 +479,8 @@ See authors.md for a list of all members.
             var objectconfig = e.detail.objectconfig;
             var userid = e.detail.userid;
             var hash = e.detail.hash;
+
+            console.log(e);
             
             lomqtt.subscribe("validate/"+this.publickey, 2);
             lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);
