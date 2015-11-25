@@ -136,7 +136,7 @@ See authors.md for a list of all members.
   topic="{{publickey}}" id="lomqtt"></lo-mqtt>
 
 
-  <paper-drawer-panel force-narrow="true">
+  <paper-drawer-panel force-narrow="true" >
   <div drawer id="drawer">dit is de drawer</div>
 
   <neon-animated-pages id="pages" selected="{{selected}}" class="color" main>
@@ -466,8 +466,9 @@ See authors.md for a list of all members.
         var lomqtt = this.$.lomqtt;
 
         console.log(e);
-
         console.log("QR reader wordt geactiveerd");
+
+        lomqtt.subscribe("validate/"+this.publickey, 2);
 
         cordova.plugins.barcodeScanner.scan(
         function (result) {
@@ -482,14 +483,12 @@ See authors.md for a list of all members.
 
             console.log(e);
             
-            lomqtt.subscribe("validate/"+this.publickey, 2);
+            //lomqtt.subscribe("validate/"+this.publickey, 2);
             lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);
             
           }, function(error){
             console.log("QR Error");
-          });
-
-        
+          });  
       },
 
     
@@ -502,7 +501,7 @@ See authors.md for a list of all members.
         //console.log("To qr");
         this.qrcode = this.deviceid;
         //this.$.lomqtt.subscribe("sync/"+this.deviceid, 0);
-        //this.$.lomqtt.subscribe("verify/"+this.deviceid, 2);
+        this.$.lomqtt.subscribe("verify/"+this.deviceid, 2);
         //this.$.lomqtt.send("sync/"+this.deviceid, "SYNC1", 0);
       },
 
@@ -512,9 +511,7 @@ See authors.md for a list of all members.
       this.selected = 0;
     },
 
-    _toScanner: function(){
-      this.selected = 2;
-    },
+   
 
     _mqttconnected: function(){
       if(this.publickey){
@@ -530,7 +527,7 @@ See authors.md for a list of all members.
      
 
       msgreceived: function(e){
-        //console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
+        console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
 
         var commandarray = e.detail.msg.split("|");
 
@@ -620,7 +617,7 @@ See authors.md for a list of all members.
             case "VERIFY":
 
               // Another user wants a dataset verified by this user
-              //console.log("sync request", commandarray);
+              console.log("verify request", commandarray);
               peerd.title = "VERIFY";
               peerd.body = "Wil je getuige zijn van deze dataset?";
               peerd.command = command;
@@ -666,7 +663,7 @@ See authors.md for a list of all members.
         var hash = e.detail.hash;
         var lomqtt = this.$.lomqtt;
 
-        //console.log("Process command: ",command);
+        console.log("Process command: ",command);
 
         switch(command){
           case "SYNC1":
@@ -683,7 +680,7 @@ See authors.md for a list of all members.
           break;
 
           case "VERIFY":
-            //console.log("Ik word getuige van ", userid2);
+            console.log("Ik word getuige van ", partner);
             //(user1, user2, objectname, objecthash)
             lomqtt.send("validate/"+partner, "VALIDATE"+"|"+this.publickey+"|"+objectname+"|"+null+"|"+null+"|"+this.publickey+"|"+hash, 2);
             //loxmpp.sendgroupMessage(this.userid, userid2, objectname, hash);

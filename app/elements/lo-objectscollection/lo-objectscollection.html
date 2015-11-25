@@ -474,12 +474,14 @@ See authors.md for a list of all members.
     validate: function(e){
       var i = e.target.id;
       var data = this.objectsdata_new.collection[i].data;
+      var hash = this.objectsdata_new.collection[i].hash;
       var config = this.objectsdata_new.collection[i].config;
       var name = this.objectsdata_new.collection[i].name;
       this.fire('qr-reader', {  
         command: "VERIFY", 
         objectname: name, 
-        objectconfig: config, 
+        objectconfig: config,
+        hash: hash, 
         objectdata: JSON.stringify(data) 
       });
     },
