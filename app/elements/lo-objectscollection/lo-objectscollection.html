@@ -31,25 +31,24 @@ See authors.md for a list of all members.
 
       background-color: transparent;
 
-      --obj-calc: calc(100vw/2);
-      --render-calc: calc(98vw/2);
+      --obj-calc: calc(92vw/2);
+      --avatar-calc: 92vw;
+
       --val-size: 90px;
 
       --obj-kleur: var(--primary-gray);
 
       --p-size: 14px;
-      --p-vals: 10px;
-
+      --p-valids: 10px;
+      overflow-x: scroll;
+      overflow-y: none;
 
     }
 
     .scrollstage {
-      overflow-x: scroll;
-      overflow-y: none;
       width: 100vw;
-      margin: 0px;
-      padding: 0px;
-      height: 90vh;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
     }
 
     .objectscanvas {
@@ -58,41 +57,32 @@ See authors.md for a list of all members.
       padding: 0px;
     }
 
-/*    .objectscollection {
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-      width: var(--objectscollection-width);
-      margin-right: var(--objectscollection-left);
-      margin: 0px;
-      height: 60vh;
-      padding: 0px 15vw 0px 15vw;
-    }*/
 
     #toolbar {
-      height: 60px;
+      height: 100px;
       width: 100vw;
-      padding: 0px;
-/*      background-color: var(--primary-blue);
-*/      color: black;
+      padding: 15px;
+      box-sizing:border-box;
+      color: black;
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
-
-
+      background-color: transparent;
     }
 
 
-    .mainbtn {
-      background-color: var(--primary-blue);
+    .addbtn {
+      background-color: rgba(255,255,255,0.0);
 
       height: 60px;
       width: 60px;
+      border-radius: 50%;
       border: none;
       outline: 0; 
       margin: 0px;
       padding: 0px;
 
     }
-    .mainbtn img {
+    .addbtn img {
       margin: 0px;
       padding: 0px;
       width: 100%;
@@ -102,10 +92,12 @@ See authors.md for a list of all members.
     .QR {
       height: 60px;
       width: 60px;
-      background-color: transparent;
+            border-radius: 50%;
+
+      background-color: rgba(255,255,255,0.0);
       border: none;
       outline: 0;
-      margin: 0px;
+      margin: 8px;
       padding: 0px;
     }
 
@@ -117,122 +109,134 @@ See authors.md for a list of all members.
     }
 
 
+    .menubtn {
+      height: 60px;
+      width: 60px;
+      border: none;
+      outline: 0;
+      margin: 8px;
+      padding: 0px;
+      background-color: transparent;
+    }
+
+    .menubtn img {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+
+
+
 
 
     .objectscollection2 {
-      width: 100vw;
+      width: 92vw;
       @apply(--layout-horizontal);
+            @apply(--layout-start);
+
       @apply(--layout-wrap);
       margin: 0px;
       padding: 0px;
     }
 
 
-    .objectvlak {
-      width: var(--obj-calc);
-      @apply(--layout-vertical);
-      @apply(--layout-center);
-      padding-top: calc(1vw/2);
-    }
 
 
     .object {
-      width: var(--render-calc);
-      background-color: transparent;
+      width: var(--obj-calc);
+      background-color: white;
       @apply(--layout-vertical);
-      @apply(--layout-center);
-      box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
-/*      background-image: url("../../images/bg-blue3.png");
-      background-size: auto 110%;*/
-    }
-
-    .objectvalbar {
-/*      background-color: white;*/
-      height: var(--val-size);
-      width: var(--render-calc);
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-      @apply(--layout-end-justified);
-
-      box-sizing:border-box;
-      padding: 15px 15px 0px 10px;
-    }
-
-
-    .objectvals {
-/*      background-color: white;*/
-      height: 100%;
-      @apply(--layout-horizontal);
       @apply(--layout-center-center);
 
+      box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+
     }
 
-    .objectvals img {
-      height: 70%;
-      width: 70%;
+
+
+    #Avatar {
+      width: var(--avatar-calc);
+            max-width: 400px;
+
     }
 
-    .objectvals p {
-      margin-left: 3px;
-      font-size: var(--p-vals);
-      font-family: OpensansSemibold;
+    #labs002-avatar {
+      height: var(--avatar-calc);
+            max-height: 400px;
+
     }
 
 
     .objectvaluesbar {
+        width: var(--obj-calc);
+
 /*      background-color: white;*/
-      height: 60px;
-      width: var(--render-calc);
-      @apply(--layout-horizontal);
+      height: 110px;
+      @apply(--layout-vertical);
       @apply(--layout-center-center);
       box-sizing:border-box;
-      padding: 0px 10px 10px 10px;
+      padding: 0px 20px 10px 20px;
     }
 
 
-    .objectvaluesbar p {
-      margin: 0px;
-      padding: 0px;
-      font-family: Opensans;
-      font-size: var(--p-size);
+
+
+    .valids {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+
     }
+
+    .valids img {
+      height: 70%;
+      width: 70%;
+    }
+
+    .valids p {
+      margin-right: 5px;
+      font-size: var(--p-valids);
+      font-family: OpensansSemibold;
+      color: var(--primary-blue);
+    }
+
 
 
     lo-previewnext {
-      width: var(--render-calc);
-      height: var(--render-calc);
-/*      background-color: rgba(255,255,255,0.25);*/
-    }
+      width: 100%;
+      height: var(--obj-calc);
+      }
 
 
 
     .objectfirstvalue {
-      height: 60%;
-      width: 70%;
-      background-color: transparent;
-/*      border-bottom: 2px solid rgba(0,0,0,0.15);*/
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-    }
-
-
-/*    .firstvallock {
-      height: 60%;
-      border-bottom: 2px solid rgba(0,0,0,0.15);
-    }*/
-
-
-    .firstvallock img {
-      height: 100%;
       width: 100%;
-      opacity: 0.25;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
     }
+
+    .objectfirstvalue p {
+      width: 100%;
+      text-align: center;
+
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: var(--p-size);
+      color: #333333;
+
+    }
+
+
 
     .square {
       width: 100px;
       height: 100px;
-      background-color: yellow;
+      background-color: transparent;
     }
+
+
 
 </style>
 <template>
@@ -244,19 +248,19 @@ See authors.md for a list of all members.
 <iron-media-query query="(min-width:901px)" query-matches="{{isMore900px}}"></iron-media-query>
 
 
-    <div id="toolbar"> 
 
-        <button class="QR" on-tap="_menuToggle"><img src="../../images/menu-blue.svg"></button>
-        <span class="flex"></span>
-
-        <button class="QR" on-tap="_toQR"><img src="../../images/godfather2-blue.svg"></button>
-        <button class="mainbtn" on-tap="FireAddData"><img src="../../images/add-white.svg"></button>
-        <!--  <button class="mainbtn QR" on-tap="_toQR"><img src="../../images/QR.svg"></button> -->
-    </div>
 
     <div class="scrollstage">
 
+    <div id="toolbar"> 
 
+        <button class="menubtn" on-tap="_menuToggle"><img src="../../images/menu-white.svg"></button>
+        <span class="flex"></span>
+
+        <button class="QR" on-tap="_toQR"><img src="../../images/godfather2-blue.svg"></button>
+        <button class="addbtn" on-tap="FireAddData"><img src="../../images/add-blue.svg"></button>
+        <!--  <button class="addbtn QR" on-tap="_toQR"><img src="../../images/QR.svg"></button> -->
+    </div>
 
 
 
@@ -267,15 +271,7 @@ See authors.md for a list of all members.
  -->
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
 
-        <div class="objectvlak">
         <div class="object" id="{{item.array.objectname}}">
-
-          <div class="objectvalbar">
-            <div class="objectvals">
-            <img src="../../images/accept-small.svg">
-            <p>{{item.array.objectpeers.length}}</p>
-            </div>
-          </div>
 
           <lo-previewnext 
             objectcomponent="{{item.array.objectcomponent}}" 
@@ -285,23 +281,50 @@ See authors.md for a list of all members.
             objectpeers="{{item.array.objectpeers}}"
             publickey="{{publickey}}"
             hash="{{item.array.objecthash}}"
-            width="{{item.array.width}}"
+            id="{{item.array.objectcomponent}}"
             height="{{item.array.height}}"
-            locked="{{item.array.locked}}">
+            locked="{{item.array.locked}}"
+            >
           </lo-previewnext>
+        <span class="flex"></span>
 
           <div class="objectvaluesbar">
-<!--             <img src="../../images/accept-blue.svg">
-            <p>{{item.array.objectpeers.length}}</p> -->
-            <div class="objectfirstvalue"><p>{{item.array.objectdata.firstval}}</p></div>
+            
+            <div class="objectfirstvalue">
+              <p>{{item.array.objectdata.firstval}}</p>
+            </div>
+            
+            <div class="valids">
+              <p>{{item.array.objectpeers.length}}</p>
+              <img src="../../images/accept-blue.svg">
+
+            </div>
           </div>
-        </div>
 
 
         </div>
+
+
 
 
       </template>
+
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+      <div class="square"></div>
+
+
     </div>
      
     
@@ -487,22 +510,25 @@ See authors.md for a list of all members.
       console.log('MediaQuery ==', this.isBetween600_900px);
 
       if(this.isBetween600_900px){
-        this.customStyle['--obj-calc'] = 'calc(100vw/3)';
-        this.customStyle['--render-calc'] = 'calc(98vw/3)'; 
+        this.customStyle['--obj-calc'] = 'calc(92vw/3)';
+        this.customStyle['--avatar-calc'] = 'calc(92vw/3)';
+
         this.customStyle['--val-size'] = '40px'; 
-        this.customStyle['--p-vals'] = '14px'; 
+        this.customStyle['--p-valids'] = '14px'; 
 
       } else if(this.isMore900px){
-        this.customStyle['--obj-calc'] = 'calc(100vw/4)';
-        this.customStyle['--render-calc'] = 'calc(98vw/4)';
+        this.customStyle['--obj-calc'] = 'calc(92vw/5)';
+        this.customStyle['--avatar-calc'] = 'calc(92vw/5)';
+
         this.customStyle['--val-size'] = '60px'; 
-        this.customStyle['--p-vals'] = '16px'; 
+        this.customStyle['--p-valids'] = '16px'; 
         
       } else if(!this.isBetween600_900px && !this.isMore900px) {
-        this.customStyle['--obj-calc'] = 'calc(100vw/2)';
-        this.customStyle['--render-calc'] = 'calc(98vw/2)';        
-          this.customStyle['--val-size'] = '35px'; 
-        this.customStyle['--p-vals'] = '12px'; 
+        this.customStyle['--obj-calc'] = 'calc(92vw/2)';
+        this.customStyle['--avatar-calc'] = 'calc(92vw)';
+
+        this.customStyle['--val-size'] = '35px'; 
+        this.customStyle['--p-valids'] = '12px'; 
 
       }
        this.updateStyles(); 
