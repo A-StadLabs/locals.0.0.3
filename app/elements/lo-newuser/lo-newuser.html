@@ -161,7 +161,7 @@
 <!--        <h2>Locals</h2>
          <p>We gaan dan nu een nieuwe user aanmaken is dat goed?</p> -->
         <div class="intro"><img src="../../images/bg-intro.png"></div> 
-        <button class="normalbutton" on-tap="createUser">Ik ben alleen</button>
+        <button class="normalbutton" on-tap="createUser">Ik ben nieuw</button>
         <button class="smallbutton" on-tap="syncUser">Ik heb al een user</button>
       </div>
       </neon-animatable>
@@ -374,7 +374,7 @@
           console.log("ready to dispatch OK event");
             pol.privatekey = e;
             pol.send("sync/"+syncdevice, "SYNCOK|"+pol.deviceid, 2);
-            document.location.href = 'index.html'; 
+            document.location.href = 'file:///android_asset/www/index.html'; 
         break;
       }
       

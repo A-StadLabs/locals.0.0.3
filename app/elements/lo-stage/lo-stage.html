@@ -446,6 +446,18 @@ See authors.md for a list of all members.
       },
 
      
+      scanQRcode: function(){
+
+        var self = this;
+        cordova.plugins.barcodeScanner.scan(
+              function (result) {
+                self.processQRCode(result.text);
+              }, 
+              function (error) {
+                  alert("Scanning failed: " + error);
+              }
+           );
+      },
 
       /** * Dees functie opent de qr reader en wacht tot em iets terug krijgt. */
 
