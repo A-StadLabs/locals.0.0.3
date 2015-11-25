@@ -1,0 +1,119 @@
+<!-- A-Labs -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="labs002-avatar-bgpages">
+  <style>
+      :host {
+        display: block;
+      --this-bgcolor: var(--primary-purple);
+        height: 100%;
+        width: 100%;
+
+      }
+
+
+      neon-animated-pages {
+        height: 100%;
+      }
+
+      .svgcontainer {
+        width: 100%;
+        height: 100%;
+      }
+
+      .bgcolor {
+        fill: var(--this-bgcolor);
+      } 
+
+
+  </style>
+  <template>
+
+
+      <neon-animated-pages id="bgpages" selected="{{selected}}"  entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
+
+          <!-- -->
+          <neon-animatable>
+            <div class="svgcontainer">
+            <img src="../../images/bg-blue3.png">
+            </div>
+          </neon-animatable>
+          <!-- -->
+
+
+    </neon-animated-pages>
+
+
+
+
+
+
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-avatar-bgpages',
+
+      behaviors: [
+      Polymer.NeonAnimatableBehavior
+      ],
+
+      properties: {
+        selected: {
+          type: Number
+        },
+
+        color: {
+          type: String,
+          value: '',
+          observer: '_Watchit'
+        },
+
+        nrofitems: {
+          type: Number,
+          value: 2,
+          notify: true
+        }
+      },
+
+      ready: function(){
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
+      },
+
+
+      _Watchit: function(){
+
+      this.customStyle['--this-bgcolor'] = this.color;
+      this.updateStyles(); 
+
+
+      }
+
+
+
+    });
+  })();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

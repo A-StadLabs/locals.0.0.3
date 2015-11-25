@@ -136,8 +136,8 @@ See authors.md for a list of all members.
   topic="{{publickey}}" id="lomqtt"></lo-mqtt>
 
 
-  <paper-drawer-panel force-narrow="true" >
-  <div drawer id="drawer">dit is de drawer</div>
+  <paper-drawer-panel force-narrow="true" id="drawer">
+  <div drawer >dit is de drawer</div>
 
   <neon-animated-pages id="pages" selected="{{selected}}" class="color" main>
 
@@ -417,7 +417,7 @@ See authors.md for a list of all members.
         });
 
         this.addEventListener('menu-toggle', function(e){
-          console.log('Open jij even de menu?');
+          console.log('Open jij even de menu?', that.$.drawer);
           that.$.drawer.togglePanel();
         });
 

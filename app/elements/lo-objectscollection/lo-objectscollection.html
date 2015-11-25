@@ -12,8 +12,8 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
 
-<!-- <link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
- -->
+<link rel="import" href="../../bower_components/paper-toolbar/paper-toolbar.html">
+
 <link rel="import" href="../../bower_components/iron-media-query/iron-media-query.html">
 
 <script src="../../scripts/sha256.js"></script>
@@ -60,7 +60,7 @@ See authors.md for a list of all members.
 
 
     #toolbar {
-      height: 100px;
+      height: 90px;
       width: 100vw;
       padding: 15px;
       box-sizing:border-box;
@@ -535,6 +535,10 @@ See authors.md for a list of all members.
 
       }
        this.updateStyles(); 
+    },
+
+    _menuToggle:function(){
+      this.fire('menu-toggle');
     }
 
 
