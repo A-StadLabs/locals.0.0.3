@@ -45,6 +45,11 @@ See authors.md for a list of all members.
     text-align: center;
   }
 
+  lo-objectdetail {
+    height: 100vh;
+    box-sizing:border-box;
+  }
+
   .godfcanvas {
     background-color: transparent; 
     width: 100vw;
@@ -154,7 +159,6 @@ See authors.md for a list of all members.
 
   <lo-objectdetail>
   <!-- Stage 1: De geopende state van het object -->
-  <div class="canvas workmode">
     <lo-renderer 
       objectname="{{activename}}" 
       objectdata="{{activedata}}" 
@@ -168,7 +172,6 @@ See authors.md for a list of all members.
       preview="false"
       locked="{{activelocked}}">
     </lo-renderer> 
-  </div>
 </lo-objectdetail>
 
   <!-- Stage 2: QR code lezer -->
@@ -527,7 +530,7 @@ See authors.md for a list of all members.
      
 
       msgreceived: function(e){
-        console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
+        // console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
 
         var commandarray = e.detail.msg.split("|");
 

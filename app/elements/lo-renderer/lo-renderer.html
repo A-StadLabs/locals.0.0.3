@@ -22,44 +22,109 @@ See authors.md for a list of all members.
     :host {
       display: block;
       width: 100vw;
-      height: 100vh; 
-      overflow: hidden;
-      background-color: white;
-    }
-
-    .container {
-      width: 100vw;
       height: 100vh;
-      @apply(--layout-vertical);
-      background-color: red;
+      overflow-y: scroll;
+
+      --bg-kleur:#a4e5f9;
+      background-color: #fafafa;
     }
 
 
     neon-animated-pages {
       height: 100%;
-      width: 100%;
     }
 
 
     #rendercanvas {
       width: 100%;
-      height: 75vh;
-      /*  DIT BEPAALT HET CANVAS WAAROP HET OBJECT GERENDERD WORDT,
-          DUS VOOR VB BABBELS ZEGGEN WE: WIDTH EN HEIGHT 100% EN GEEN BTNS  */
+      padding: 0px;
       margin: 0px;
-     padding: 0px;
-
+      height: 100vw;
+      max-height: 400px;
      }
 
+    .container {
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+    }
+
+
+
+
+
+
+    .valuesbox {
+      background-color: #fafafa;
+      width: 90%;
+      max-width: 500px;
+      padding: 30px;
+      margin: -10px 0px 20px 0px;
+      box-sizing:border-box;
+      @apply(--layout-horizontal);
+      @apply(--layout-start); 
+      box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+    }
+
+
+    .values {
+      width: 60%;
+      padding: 0px;
+      text-align: left;
+    }
+
+
+    .values p {
+      text-align: left;
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: 16px;
+      color: #666666;
+    }
+
+
+
+
+
+    .validsbox {
+/*      background-color: red;*/
+      @apply(--layout-vertical);
+      @apply(--layout-end); 
+      width: 40%;
+    }
+
+    .valids {
+      margin: 0px 0px 0px 0px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center); 
+    }
+
+    .valids img {
+      height: 15px;
+      width: 15px;
+    }
+
+
+    .valids p {
+      padding: 0px;
+      margin: 0px 5px 0px 0px;
+      font-size: var(--p-valids);
+      font-family: OpensansBold;
+      color: #333333;
+    }
+
+
+
+
+/*
+
+
     .renderbtns {
-      border-top: 1px solid rgba(0,0,0,0.1);
       width: 100%;
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
-      padding: 0px;
+      padding: 20px 0px 0px 0px;
       margin: 0px;
-      background-color: green;
-
     }
 
     .renderbtns button {
@@ -141,7 +206,7 @@ See authors.md for a list of all members.
       padding: 0px;
     }
 
-
+*/
 
 
     .backbtn {
@@ -156,7 +221,7 @@ See authors.md for a list of all members.
       padding: 10px;
     }
 
-    .backbtn img {
+    .backbtn svg {
       height: 100%;
       width: 100%;
     }
@@ -166,14 +231,41 @@ See authors.md for a list of all members.
       height: 10vh;
       width: 100vw;
       padding: 0px;
-      background-color: rgba(0,0,0,0.0);
+      background-color: var(--bg-kleur);
       color: black;
       @apply(--layout-horizontal);
       @apply(--layout-end-justified);
-      position: absolute;
-      z-index: 99999999;
+
     }
 
+
+    .topbtn {
+      background-color: rgba(0,0,0,0.05);
+
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      border: none;
+      outline: 0; 
+      margin: 0px;
+      padding: 0px;
+
+    }
+    .topbtn img {
+      margin: 0px;
+      padding: 0px;
+      width: 80%;
+      height: 80%;
+    }
+
+
+
+
+    .whitespace {
+      background-color: white;
+      height: 100px;
+      width: 100%;
+    }
 
 
 </style>
@@ -186,7 +278,11 @@ See authors.md for a list of all members.
 
       <div id="toolbar"> 
         <button class="backbtn" on-tap="back">
-          <img src="../../images/quit-white.svg">
+          <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+          <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="7.834,15.231 20.083,27.375 32.75,15.129 
+            "/>
+          </svg>
         </button>
       </div>
 
@@ -194,7 +290,33 @@ See authors.md for a list of all members.
           <div id="rendercanvas">
           </div>
 
-        <template is="dom-if" if="{{activ}}">
+          <div class="whitespace">
+          </div>
+
+          <div class="valuesbox">
+            <div class="values">
+            <p>{{objectdata.firstval}}</p>
+            <p>{{objectdata.firstname}}</p>
+            <p>{{objectdata.lastname}}</p>
+            <p>{{objectdata.birthdate}}</p>          
+            <p>{{objectdata.birthplace}}</p>          
+  
+          </div>
+
+          <div class="validsbox">
+            
+            <div class="valids">
+              <p>{{objectpeers.length}}</p>
+              <img src="../../images/accept-small.svg">
+            </div>
+
+          </div>
+
+          </div>
+
+
+
+<!--         <template is="dom-if" if="{{activ}}">
           <div class="renderbtns">
 
           <template is="dom-if" if="{{!opened}}">
@@ -217,6 +339,8 @@ See authors.md for a list of all members.
           </div>
         </template>
 
+
+
         <template is="dom-if" if="{{opened}}">
           <div class="confirmbtns">
             
@@ -229,16 +353,15 @@ See authors.md for a list of all members.
             </button>
 
           </div>
-        </template>
+        </template> -->
 
-      </div>
+  </div>
 
     </neon-animatable>
     <neon-animatable>
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack"></lo-peers>
     </neon-animatable>
 
-  </neon-animated-pages>
 </template>
 </dom-module>
 <script>
@@ -421,12 +544,14 @@ See authors.md for a list of all members.
         //var newelem = document.querySelector("labs002-avatar");
         // e.target.import is the import document.
         //console.log(elem, "config: ", that.objectconfig);
-        //console.log(elem, "data: ", that.objectdata);
+        console.log(elem, "data: ", that.objectdata);
         elem.objectconfig = that.objectconfig;
         elem.objectdata = that.objectdata;
         elem.objectname = that.objectname;
         elem.locked = that.locked;
         elem.objecthash = that.hash;
+        elem.edit = false;
+
         elem.active = false;
         elem.opened = false;
         elem.selected = 0;
@@ -458,6 +583,14 @@ See authors.md for a list of all members.
       object.selected = 1;
       this.opened = true;
       // this.selected = 1;
+      object.edit = true;
+
+        this.customStyle['--bg-kleur'] = 'white'; 
+       this.updateStyles(); 
+
+
+
+
     },
 
     toVisual: function(){
@@ -499,20 +632,30 @@ See authors.md for a list of all members.
       object.edit = false;
       this._dataset();
 
+        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+       this.updateStyles(); 
+
     },
 
     confirm: function(){
       var object = document.getElementById(this.objectname);
+      console.log('test', object.edit);
 
         this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
-        console.log("KLEUR! ", JSON.stringify(this.objectconfig));
+        // console.log("KLEUR! ", JSON.stringify(this.objectconfig));
         // Hier moet nog een check komen; als de hash van de nieuwe set data niet dezelfde is als de vorige hash moeten alle peers gedelete worden.
 
       object.opened = false;
       this.opened = false;
       this.activ = true;
-      object.selected = 0;
       object.edit = false;
+      console.log('test2', object.edit);
+
+      object.selected = 0;
+
+        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+       this.updateStyles(); 
+
     },
 
 

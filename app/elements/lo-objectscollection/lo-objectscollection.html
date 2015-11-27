@@ -8,6 +8,7 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
 
+<link rel="import" href="../../bower_components/neon-animation/animations/fade-out-animation.html">
 
 <link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
@@ -40,7 +41,7 @@ See authors.md for a list of all members.
       --obj-kleur: var(--primary-gray);
 
       --p-size: 14px;
-      --p-valids: 10px;
+      --p-valids: 12px;
       overflow-x: scroll;
       overflow-y: none;
 
@@ -71,7 +72,7 @@ See authors.md for a list of all members.
     }
 
 
-    .addbtn {
+    .topbtn {
       background-color: rgba(255,255,255,0.0);
 
       height: 60px;
@@ -83,31 +84,14 @@ See authors.md for a list of all members.
       padding: 0px;
 
     }
-    .addbtn img {
+    .topbtn img {
       margin: 0px;
       padding: 0px;
       width: 100%;
       height: 100%;
     }
 
-    .QR {
-      height: 60px;
-      width: 60px;
-            border-radius: 50%;
 
-      background-color: rgba(255,255,255,0.0);
-      border: none;
-      outline: 0;
-      margin: 8px;
-      padding: 0px;
-    }
-
-    .QR img {
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-      padding: 0px;
-    }
 
 
     .menubtn {
@@ -147,11 +131,13 @@ See authors.md for a list of all members.
 
     .object {
       width: var(--obj-calc);
-      background-color: white;
+      background-color: transparent;
       @apply(--layout-vertical);
       @apply(--layout-center-center);
 
-      box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+      padding: 8px;
+      box-sizing:border-box;
+
 
     }
 
@@ -159,26 +145,34 @@ See authors.md for a list of all members.
 
     #Avatar {
       width: var(--avatar-calc);
-            max-width: 400px;
+      max-width: 400px;
 
     }
 
     #labs002-avatar {
       height: var(--avatar-calc);
-            max-height: 400px;
-
+      max-height: 400px;
+      border-radius: 2px 2px 0px 0px;
     }
 
 
     .objectvaluesbar {
-        width: var(--obj-calc);
 
-/*      background-color: white;*/
-      height: 110px;
-      @apply(--layout-vertical);
+      z-index: 2000;
+      width: 100%;
+      margin: -2px 0px 0px 0px;
+      padding: 15px 15px 15px 20px;
+
+      background-color: #fafafa;
+      height: 60px;
+      @apply(--layout-horizontal);
       @apply(--layout-center-center);
       box-sizing:border-box;
-      padding: 0px 20px 10px 20px;
+      box-shadow: 0px 2px 2px rgba(0,0,0,1);
+
+      border-radius: 0px 0px 2px 2px;
+
+
     }
 
 
@@ -186,20 +180,27 @@ See authors.md for a list of all members.
 
     .valids {
       @apply(--layout-horizontal);
-      @apply(--layout-center-center);
+      @apply(--layout-end-justified);
 
+      @apply(--layout-center);
+      width: 20%;
+      min-width: 40px;
+      height: 100%;
     }
 
     .valids img {
-      height: 70%;
-      width: 70%;
+      height: 15px;
+      width: 15px;
     }
 
     .valids p {
-      margin-right: 5px;
+      padding: 0px;
+
+      margin: 0px 5px 0px 0px;
+
       font-size: var(--p-valids);
-      font-family: OpensansSemibold;
-      color: var(--primary-blue);
+      font-family: OpensansBold;
+      color: #333333;
     }
 
 
@@ -207,6 +208,8 @@ See authors.md for a list of all members.
     lo-previewnext {
       width: 100%;
       height: var(--obj-calc);
+      box-shadow: 0px 2px 2px rgba(0,0,0,1);
+      border-radius: 2px 2px 0px 0px;
       }
 
 
@@ -215,17 +218,27 @@ See authors.md for a list of all members.
       width: 100%;
       @apply(--layout-horizontal);
       @apply(--layout-center);
+      width: 80%;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+
     }
 
     .objectfirstvalue p {
       width: 100%;
-      text-align: center;
+      text-align: left;
 
       margin: 0px;
       padding: 0px;
       font-family: Opensans;
       font-size: var(--p-size);
-      color: #333333;
+      color: #666666;
+
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
 
     }
 
@@ -258,8 +271,8 @@ See authors.md for a list of all members.
         <button class="menubtn" on-tap="_menuToggle"><img src="../../images/menu-white.svg"></button>
         <span class="flex"></span>
 
-        <button class="QR" on-tap="_toQR"><img src="../../images/godfather2-blue.svg"></button>
-        <button class="addbtn" on-tap="FireAddData"><img src="../../images/add-blue.svg"></button>
+        <button class="topbtn" on-tap="_toQR"><img src="../../images/godfather2-blue.svg"></button>
+        <button class="topbtn" on-tap="FireAddData"><img src="../../images/add-blue.svg"></button>
         <!--  <button class="addbtn QR" on-tap="_toQR"><img src="../../images/QR.svg"></button> -->
     </div>
 
@@ -271,6 +284,7 @@ See authors.md for a list of all members.
 <!--       <div class="square" id="vierkantje" on-tap="vierkantje"></div>
  -->
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
+
 
         <div class="object" id="{{item.array.objectname}}">
 
@@ -287,24 +301,23 @@ See authors.md for a list of all members.
             locked="{{item.array.locked}}"
             >
           </lo-previewnext>
-        <span class="flex"></span>
 
           <div class="objectvaluesbar">
             
             <div class="objectfirstvalue">
               <p>{{item.array.objectdata.firstval}}</p>
+
             </div>
             
             <div class="valids">
               <p>{{item.array.objectpeers.length}}</p>
-              <img src="../../images/accept-blue.svg">
+              <img src="../../images/accept-small.svg">
 
             </div>
           </div>
 
 
         </div>
-
 
 
 
@@ -400,11 +413,14 @@ See authors.md for a list of all members.
                 id: 'hero',
                 toPage: this
               }],
-              'exit': {
+              'exit': [{
                 name: 'hero-animation',
                 id: 'hero',
                 fromPage: this
-              }
+              }, {
+                name: 'fade-out-animation',
+                node: this
+              }],
             }
           }
         },
@@ -517,14 +533,18 @@ See authors.md for a list of all members.
         this.customStyle['--avatar-calc'] = 'calc(92vw/3)';
 
         this.customStyle['--val-size'] = '40px'; 
-        this.customStyle['--p-valids'] = '14px'; 
+        this.customStyle['--p-valids'] = '12px'; 
+        this.customStyle['--p-size'] = '14px'; 
+
 
       } else if(this.isMore900px){
         this.customStyle['--obj-calc'] = 'calc(92vw/5)';
         this.customStyle['--avatar-calc'] = 'calc(92vw/5)';
 
         this.customStyle['--val-size'] = '60px'; 
-        this.customStyle['--p-valids'] = '16px'; 
+        this.customStyle['--p-valids'] = '12px'; 
+        this.customStyle['--p-size'] = '14px'; 
+
         
       } else if(!this.isBetween600_900px && !this.isMore900px) {
         this.customStyle['--obj-calc'] = 'calc(92vw/2)';
@@ -532,6 +552,8 @@ See authors.md for a list of all members.
 
         this.customStyle['--val-size'] = '35px'; 
         this.customStyle['--p-valids'] = '12px'; 
+        this.customStyle['--p-size'] = '14px'; 
+
 
       }
        this.updateStyles(); 
