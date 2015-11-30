@@ -300,45 +300,18 @@ See authors.md for a list of all members.
             id="{{item.array.objectcomponent}}"
             height="{{item.array.height}}"
             locked="{{item.array.locked}}"
+            firstvalue="{{item.array.firstvalue}}"
             >
           </lo-previewnext>
 
-          <div class="objectvaluesbar">
-            
-            <div class="objectfirstvalue">
-              <p>{{item.array.objectdata.firstval}}</p>
-
-            </div>
-            
-            <div class="valids">
-              <p>{{item.array.objectpeers.length}}</p>
-              <img src="../../images/accept-small.svg">
-
-            </div>
-          </div>
-
-
+  
         </div>
 
 
 
       </template>
 
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-      <div class="square"></div>
-
+     
 
     </div>
      
@@ -471,14 +444,17 @@ See authors.md for a list of all members.
     },
 
     _objectChanged: function(){
-      //console.log('updated: ',this.objectsdata.collection);
       this.objectsdata_new = [];
       var objectsdata_new = this.objectsdata_new;
       var p = this.objectsdata.collection;
       for (var key in p) {
         if (p.hasOwnProperty(key)) {
-          //console.log(key + " -> " + p[key]);
+
+                    //console.log(key + " -> " + p[key]);
           //console.log(p[key].name);
+          var firstval = this.objectsdata.collection[p[key].name].config.firstvalue;
+          var firstvalue = this.objectsdata.collection[p[key].name].data[firstval]; 
+
           this.push('objectsdata_new', { 
             array: {objectname: p[key].name, 
             objectconfig: p[key].config,
@@ -486,10 +462,14 @@ See authors.md for a list of all members.
             objectpeers: p[key].peers,
             objectcomponent: p[key].component,
             objecthash: hasher(p[key].data),
-            objectlocked: p[key].locked }
+            objectlocked: p[key].locked,
+            //console.log('updated: ',this.objectsdata.collection);
+            firstvalue: firstvalue
+            }
           });
+
           
-          //console.log('New objectsdata: ', objectsdata_new);
+          console.log('New objectsdata: ', objectsdata_new);
         }
       };
       this.customStyle['--objectscollection-width'] = 280*this.objectsdata_new.length.toString()+"px";

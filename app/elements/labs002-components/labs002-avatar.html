@@ -153,6 +153,19 @@ See authors.md for a list of all members.
   <neon-animatable>
   <div class="canvas">
 
+  <div class="objectvaluesbar">
+        
+        <div class="objectfirstvalue">
+          <p>{{firstvalue}}</p>
+        </div>
+        
+        <div class="valids">
+          <p>{{objectpeers.length}}</p>
+          <img src="../../images/accept-small.svg">
+
+  </div>
+  </div>
+
     <template is="dom-if" if="{{edit}}">
       <div class="leftbtns">
         <lo-configbtns context="snit" on-btn-tapped="previous"></lo-configbtns>
@@ -245,6 +258,8 @@ See authors.md for a list of all members.
     </template>
 
   </div>
+
+  
   </neon-animatable>
 
 

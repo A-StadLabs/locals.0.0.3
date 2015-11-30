@@ -53,6 +53,9 @@
         objectdata: {
           type: Object,
           observer: "attached"
+        },
+        firstvalue: {
+          type: String
         }
         
       },
@@ -73,6 +76,8 @@
         elem.objectconfig = that.objectconfig;
         elem.objectname = that.objectname;
         elem.objectdata = that.objectdata;
+        elem.objectpeers = that.objectpeers;
+        elem.firstvalue = that.firstvalue;
         elem.hash = that.hash;
         rendercanvas.appendChild(elem);
       }, function(e) {
