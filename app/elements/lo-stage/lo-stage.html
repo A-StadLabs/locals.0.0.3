@@ -189,18 +189,17 @@ See authors.md for a list of all members.
 
 
   <!-- Stage 3: QR code / Identificatie weergeven -->
-  <neon-animatable style="background-color: white">
+<!--   <neon-animatable style="background-color: white">
     <div class="godfcanvas">
       <div id="toolbar"> 
         <button class="backbtn" on-tap="_toWhere">
           <img src="../../images/back.svg">
         </button>
-      </div>
-      <lo-qrrender qrcode="{{qrcode}}"></lo-qrrender>
-      <lo-godfather id="godf" children="{{localapi.godfather}}"></lo-godfather>
-    </div>
-  </neon-animatable>
-  
+      </div> -->
+      <lo-godfather id="godf" children="{{localapi.godfather}}" qrcode="{{qrcode}}"></lo-godfather>
+<!--     </div>
+  </neon-animatable> -->
+
 
   <!-- Stage 4: Dialog: actie goedkeuren of weigeren. -->
   <lo-dialog 
@@ -213,11 +212,8 @@ See authors.md for a list of all members.
   </lo-dialog>
    
   <!-- Stage 5: Plusmenu om objecten toe te voegen. -->
-  <neon-animatable>
-    <div class="canvas">
-      <lo-objectpicker userobjects="{{localapi}}"></lo-objectpicker>
-    </div>
-  </neon-animatable>
+  <lo-objectpicker userobjects="{{localapi}}">
+  </lo-objectpicker>
 
     <!-- Stage 6: Godfather: ik ben godfather van volgende datasets/users: -->
   <neon-animatable>
@@ -306,13 +302,13 @@ See authors.md for a list of all members.
     ready: function(){
       this.loggedin = false;
       this.selected = 0;
-      this.entryAnimation = 'slide-from-right-animation';
-      this.exitAnimation = 'slide-left-animation';
+      // this.entryAnimation = 'slide-from-right-animation';
+      // this.exitAnimation = 'slide-left-animation';
       var that = this;
  
       this.addEventListener('change-stage', function(e){
-        that.entryAnimation = e.detail.entry;
-        that.exitAnimation = e.detail.exit;
+        // that.entryAnimation = e.detail.entry;
+        // that.exitAnimation = e.detail.exit;
         that.selected = e.detail.stage;
         console.log("and we're back");
       }); 
@@ -359,8 +355,8 @@ See authors.md for a list of all members.
       this.addEventListener('object-picker', function(){
         importPage("elements/lo-objectpicker/lo-objectpicker.html").then(function(){
           //that._addDataset();
-          that.entryAnimation = 'slide-from-right-animation';
-          that.exitAnimation = 'slide-left-animation';
+          // that.entryAnimation = 'slide-from-right-animation';
+          // that.exitAnimation = 'slide-left-animation';
           that.selected = 5;
         }, function(err){
           console.log(err, "error");

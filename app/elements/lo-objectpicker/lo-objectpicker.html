@@ -5,6 +5,9 @@
 <link rel="import" href="../../bower_components/neon-animation/animations/slide-from-right-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/slide-left-animation.html">
 
+<link rel="import" href="../../bower_components/neon-animation/neon-animatable-behavior.html">
+
+
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
 <link rel="import" href="../lo-pickitem/lo-pickitem.html">
 <link rel="import" href="../../bower_components/firebase-element/firebase-collection.html">
@@ -15,7 +18,7 @@
       display: block;
       width: 100vw;
       height: 100vh;
-      background-color: var(--primary-darkgray);
+      background-color: blue;
             @apply(--layout-vertical);
 
     }
@@ -195,6 +198,7 @@
 (function() {
   Polymer({
     is: 'lo-objectpicker',
+    behaviors: [Polymer.NeonAnimatableBehavior],
 
     properties: {
 
@@ -238,20 +242,43 @@
           ] },
         notify: true,
         observer: "logObjects"
-      }
+      },
+
+
+
+      // animationConfig: { 
+      //     value: function(){
+      //       return {
+      //         'entry': {
+      //           name: 'slide-from-left-animation',
+      //           node: this
+      //         },
+      //         'exit': {
+      //           name: 'slide-right-animation',
+      //           node: this
+      //         },
+      //       }
+      //     }
+      //   },
+
+
+
+
+
+
     },
 
     logObjects: function(){
     },
 
     back: function(){
-      this.fire('change-stage', { stage: 0, entry: 'slide-from-left-animation', exit: 'slide-right-animation'});
+      this.fire('change-stage', { stage: 0 });
     },
 
 
     backtogrid: function(){
-      this.$.pages.entryAnimation = 'slide-from-left-animation';
-      this.$.pages.exitAnimation = 'slide-right-animation';
+      this.$.pages.entryAnimation = 'slide-from-right-animation';
+      this.$.pages.exitAnimation = 'slide-left-animation';
       this.$.pages.selected = 0;
 
     },    
@@ -277,7 +304,7 @@
     ready: function(){
       this.objectsloaded = false;
       this.entryAnimation = 'slide-from-right-animation';
-      this.exitAnimation = 'slide-left-animation';
+      this.exitAnimation = 'slide-right-animation';
     },
 
     attached: function(){

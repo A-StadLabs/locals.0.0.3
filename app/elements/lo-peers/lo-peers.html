@@ -8,165 +8,50 @@
     :host {
       display: block;
       background-color: white;
-      width: 100vw;
-      height: 100vh;
-    }
-
-
-
-    .peerlist {
-      overflow-y: scroll;
-      height: 350px;
-      width: 100%;
-      @apply(--layout-vertical);
-    }
-
-    .peerlistitem {
-      @apply(--layout-horizontal);
-      @apply(--layout-start);
-      padding: 20px;
-      border-bottom: 1px solid rgba(0,0,0,0.05);
-    }
-
-    .peerlistitem h3 {
-      color: var(--primary-darkgrey);
-      font-family: OpensansLight;
-      font-size: 14px;
-      margin: 0px;
-      padding: 0px;
-    }
-
-
-
-
-    #toolbar {
-      height: 10vh;
-      width: 100vw;
-      padding: 10px;
-      box-sizing:border-box;
-      background-color: transparent;
-      color: black;
-      @apply(--layout-horizontal);
-    }
-
-
-    .confirmbtns {
-      margin-top: 50px;
-      background-color: transparent;
-      width: 100vw;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-    }
-
-    .confirmbtn {
-
-      height: 60px;
-      width: 60px;
-      border-radius: 50%;
-
-      margin: 0px 4px 0px 4px;
-      background-color: rgba(0,0,0,0.05);
-      border: none;
-      outline: 0;
-      padding: 0px;
-    }
-
-    .confirmbtn img {
-      width: 100%;
-      height: 100%;
-    }
-
-
-
-    .backbtn {
-      height: 50px;
-      width: 50px;
-      border: none;
-      outline: none;
-      background-color: transparent;
-      color: white;
-      font-size: 20px;
-      font-weight: 100;
-      padding: 10px;
-    }
-
-    .backbtn img {
-      height: 100%;
-      width: 100%;
+      --val-color: 2px solid blue;
     }
 
     .peersnr {
+      height: 100%;
       width: 100%;
-      height: 70vh;
+      background-color: transparent;
       color: black;
       text-align: center;
       @apply(--layout-vertical);
       @apply(--layout-center-center);
-
     }
 
     .nr {
+      height: 100%;
+      width: 100%;
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
-      height: 60vw;
-      width: 60vw;
-
-      max-width: 200px;
-      max-height: 200px;
-
       border-radius: 50%;
-      border: 1px solid rgba(0,0,0,0.1);
+      border: var(--val-color);
     }
 
 
 
     h1 {
-        font-family: OpensansLight;
-        color: #333333;
-        font-size: 22px;
+      font-family: OpensansBold;
+      color: #333333;
+      font-size: 16px;
+      margin-right: 4px;
     }
-
-
-
 
 
   </style>
   <template>
 
-    <div class="peers">
 
-      <div id="toolbar">
-
-
-        <button class="backbtn" on-tap="back">
-          <img src="../../images/back.svg">
-        </button>
-
-        <span class="flex"></span>
-
-
-      </div>
-
-      <div class="peersnr">
+      <div class="peersnr" on-tap="newpeer">
         <div class="nr">
-          <img src="../../images/accept.svg">
           <h1><span>{{peers.length}}</span></h1>
+          <img src="../../images/accept-small.svg">
         </div>
 
-
-          <div class="confirmbtns">
-
-            <button on-tap="newpeer" class="confirmbtn">
-              <img src="../../images/add.svg">
-            </button>
-
-          </div>
-
-
-
       </div>
 
-    </div>
 
   </template>
 </dom-module>
@@ -180,6 +65,12 @@
         type: Array,
         notify: true,
         observer: "_peersLog"
+      },
+
+      valcolor: {
+        type: String,
+        notify: true,
+        observer: "_valcolorChanged"
       }
     },
 
@@ -196,6 +87,12 @@
       //console.log('Nou!');
       this.fire('go-back');
 
+    },
+
+    _valcolorChanged:function(){
+      console.log('Dit is nu de validatiekleur:', this.valcolor);
+       this.customStyle['--val-color'] = '2px solid '+this.valcolor;
+       this.updateStyles(); 
     }
 
   });

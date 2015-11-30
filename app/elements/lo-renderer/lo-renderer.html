@@ -118,7 +118,7 @@ See authors.md for a list of all members.
        border: 1px solid #333333;
     }
 
-    .valids img {
+/*    .valids img {
       height: 15px;
       width: 15px;
     }
@@ -129,7 +129,7 @@ See authors.md for a list of all members.
       font-size: var(--p-valids);
       font-family: OpensansBold;
       color: #333333;
-    }
+    }*/
 
 
     .backbtn {
@@ -200,6 +200,12 @@ See authors.md for a list of all members.
       z-index: 88;   
     }
 
+    lo-peers {
+      width: 75px;
+      height: 75px;
+      background-color: transparent;
+    }
+
 </style>
 <template> 
 
@@ -232,20 +238,17 @@ See authors.md for a list of all members.
             <p>{{objectdata.birthplace}}</p>
           </template>
           </iron-collapse>
-<!--         <div class="valuesillustration"> 
-          <img src="../../images/morevals.svg">
-        </div> -->
-
         </div>
 
       </div>
 
 
       <div class="validsbox">
-        <div class="valids" on-tap="toPeerlist">
+<!--         <div class="valids" on-tap="toPeerlist">
           <p>{{objectpeers.length}}</p>
           <img src="../../images/accept-small.svg">
-        </div>
+        </div> -->
+      <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
 
       </div>
 
@@ -294,7 +297,7 @@ See authors.md for a list of all members.
     <neon-animatable>
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack"></lo-peers>
     </neon-animatable>
-
+</neon-animated-pages>
 </template>
 </dom-module>
 <script>
