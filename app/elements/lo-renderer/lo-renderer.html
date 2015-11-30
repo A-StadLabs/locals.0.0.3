@@ -14,6 +14,7 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animation-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
 
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 
 
 
@@ -26,7 +27,7 @@ See authors.md for a list of all members.
       overflow-y: scroll;
 
       --bg-kleur:#a4e5f9;
-      background-color: #fafafa;
+      background-color: #E6E6E6;
     }
 
 
@@ -54,27 +55,26 @@ See authors.md for a list of all members.
 
 
     .valuesbox {
-      background-color: #fafafa;
-      width: 90%;
-      max-width: 500px;
-      padding: 30px;
-      margin: -10px 0px 20px 0px;
+      background-color: #F4F4F4;
+      width: 100%;
+      padding: 25px 25px 30px 25px;
+      margin: 0px;
       box-sizing:border-box;
-      @apply(--layout-horizontal);
+      @apply(--layout-vertical);
       @apply(--layout-start); 
-      box-shadow: 0px 1px 1px rgba(0,0,0,0.2);
+/*      box-shadow: 0px 1px 1px rgba(0,0,0,0.2);*/
     }
 
 
     .values {
-      width: 60%;
+      width: 100%;
       padding: 0px;
-      text-align: left;
+      text-align: center;
     }
 
 
     .values p {
-      text-align: left;
+      text-align: center;
       margin: 0px;
       padding: 0px;
       font-family: Opensans;
@@ -84,26 +84,44 @@ See authors.md for a list of all members.
 
 
 
+    .valuesillustration {
+      width: 100%;
+      text-align: center;
+      padding-bottom: 20px;
+      box-sizing:border-box;
+      @apply(--layout-fit);
+    }
+
 
 
     .validsbox {
-/*      background-color: red;*/
-      @apply(--layout-vertical);
-      @apply(--layout-end); 
-      width: 40%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center); 
+      
+      width: 100%;
+      height: 135px;
+      background-color: transparent;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      box-sizing:border-box;
+
     }
 
     .valids {
       margin: 0px 0px 0px 0px;
       @apply(--layout-horizontal);
       @apply(--layout-center-center); 
+       width: 75px;
+       height: 75px;
+
+       border-radius: 50%;
+       border: 1px solid #333333;
     }
 
     .valids img {
       height: 15px;
       width: 15px;
     }
-
 
     .valids p {
       padding: 0px;
@@ -112,101 +130,6 @@ See authors.md for a list of all members.
       font-family: OpensansBold;
       color: #333333;
     }
-
-
-
-
-/*
-
-
-    .renderbtns {
-      width: 100%;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-      padding: 20px 0px 0px 0px;
-      margin: 0px;
-    }
-
-    .renderbtns button {
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-      border: none;
-      outline: 0;
-      background-color: rgba(0,0,0,0.05);
-      padding: 0px;
-      margin: 0px 2px 0px 2px;
-
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-
-      padding: 0px;
-    }
-
-    .renderbtns img {
-      width: 100%;
-      height: 100%;
-    }
-
-
-    .accepter img {
-      width: 30px;
-      height: 30px;
-      margin-right: -6px;      
-    }
-
-
-    p {
-      color: black;
-      font-family: Opensans;
-      font-size: 12px;
-      margin: 0px 0px 0px 2px;
-      padding: 0px;
-    }
-
-    .confirmbtns {
-      background-color: transparent;
-      width: 100vw;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-    }
-
-    .confirmbtn {
-
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-
-      margin: 0px 4px 0px 4px;
-      background-color: rgba(0,0,0,0.05);
-      border: none;
-      outline: 0;
-      padding: 0px;
-    }
-
-    .confirmbtn img {
-      width: 80%;
-      height: 80%;
-    }
-
-
-
-
-
-    .neg {
-      height: 40px;
-      width: 40px;
-
-    }
-
-    .neg img {
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-      padding: 0px;
-    }
-
-*/
 
 
     .backbtn {
@@ -228,45 +151,54 @@ See authors.md for a list of all members.
 
 
     #toolbar {
-      height: 10vh;
-      width: 100vw;
-      padding: 0px;
+      height: 40px;
+      width: 100%;
+/*      padding: 15px;
+      box-sizing:border-box;*/
       background-color: var(--bg-kleur);
       color: black;
       @apply(--layout-horizontal);
       @apply(--layout-end-justified);
-
     }
 
 
     .topbtn {
       background-color: rgba(0,0,0,0.05);
 
-      height: 60px;
-      width: 60px;
+      height: 40px;
+      width: 40px;
       border-radius: 50%;
       border: none;
       outline: 0; 
-      margin: 0px;
+      margin: 4px;
       padding: 0px;
 
     }
     .topbtn img {
       margin: 0px;
       padding: 0px;
-      width: 80%;
-      height: 80%;
-    }
-
-
-
-
-    .whitespace {
-      background-color: white;
-      height: 100px;
       width: 100%;
+      height: 100%;
     }
 
+
+    .white {
+            background-color: white;
+
+    }
+
+    .space {
+      width: 100%;
+      max-width: 600px;
+      padding: 25px;
+      margin: -80px 0px 0px 0px;
+      box-sizing:border-box;
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified); 
+    }
+    .space button {
+      z-index: 88;   
+    }
 
 </style>
 <template> 
@@ -274,7 +206,6 @@ See authors.md for a list of all members.
   <neon-animated-pages selected="{{selected}}" id="vierkantje">
     <neon-animatable>
       <div class="container">
-
 
       <div id="toolbar"> 
         <button class="backbtn" on-tap="back">
@@ -287,34 +218,36 @@ See authors.md for a list of all members.
       </div>
 
 
-          <div id="rendercanvas">
-          </div>
+      <div id="rendercanvas">
+      </div>
 
-          <div class="whitespace">
-          </div>
-
-          <div class="valuesbox">
-            <div class="values">
-            <p>{{objectdata.firstval}}</p>
+      <div class="valuesbox" on-tap="toggleCollapse">
+        <div class="values">
+          <p>{{objectdata.firstval}}</p>        
+          <iron-collapse id="collapse">
+          <template is="dom-repeat" items="{{objectdata}}">
             <p>{{objectdata.firstname}}</p>
             <p>{{objectdata.lastname}}</p>
             <p>{{objectdata.birthdate}}</p>          
-            <p>{{objectdata.birthplace}}</p>          
-  
-          </div>
+            <p>{{objectdata.birthplace}}</p>
+          </template>
+          </iron-collapse>
+<!--         <div class="valuesillustration"> 
+          <img src="../../images/morevals.svg">
+        </div> -->
 
-          <div class="validsbox">
-            
-            <div class="valids">
-              <p>{{objectpeers.length}}</p>
-              <img src="../../images/accept-small.svg">
-            </div>
+        </div>
 
-          </div>
-
-          </div>
+      </div>
 
 
+      <div class="validsbox">
+        <div class="valids" on-tap="toPeerlist">
+          <p>{{objectpeers.length}}</p>
+          <img src="../../images/accept-small.svg">
+        </div>
+
+      </div>
 
 <!--         <template is="dom-if" if="{{activ}}">
           <div class="renderbtns">
@@ -675,6 +608,15 @@ See authors.md for a list of all members.
         var object = document.getElementById(this.objectname);
         object.mode = 0;
       }
+    },
+
+    _tester:function(){
+      console.log('Zo!');
+    },
+
+    toggleCollapse:function(){
+  this.$.collapse.toggle();
+
     }
 
 
