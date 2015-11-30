@@ -14,204 +14,294 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animation-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
 
+<link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
+
 <dom-module id="lo-renderer">
-  <style>
+ <style>
     :host {
       display: block;
-      width: 100vw;
-      height: 100vh; 
-      overflow: hidden;
-      background-color: white;
-    }
-
-    .container {
-      width: 100vw;
       height: 100vh;
-      @apply(--layout-vertical);
-      background-color: red;
-    }
-
-    neon-animated-pages {
-      height: 100%;
-      width: 100%;
-    }
-
-    #rendercanvas {
-      width: 100%;
-      height: 75vh;
-      /*  DIT BEPAALT HET CANVAS WAAROP HET OBJECT GERENDERD WORDT,
-          DUS VOOR VB BABBELS ZEGGEN WE: WIDTH EN HEIGHT 100% EN GEEN BTNS  */
+      overflow: none;
       margin: 0px;
       padding: 0px;
-     }
 
-    .renderbtns {
-      border-top: 1px solid rgba(0,0,0,0.1);
-      width: 100%;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-      padding: 0px;
-      margin: 0px;
-      background-color: green;
-    }
-
-    .renderbtns button {
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-      border: none;
-      outline: 0;
-      background-color: rgba(0,0,0,0.05);
-      padding: 0px;
-      margin: 0px 2px 0px 2px;
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      padding: 0px;
-    }
-
-    .renderbtns img {
-      width: 100%;
-      height: 100%;
-    }
-
-    .accepter img {
-      width: 30px;
-      height: 30px;
-      margin-right: -6px;      
-    }
-
-    p {
-      color: black;
-      font-family: Opensans;
-      font-size: 12px;
-      margin: 0px 0px 0px 2px;
-      padding: 0px;
-    }
-
-    .confirmbtns {
       background-color: transparent;
+
+      --obj-calc: calc(92vw/2);
+      --avatar-calc: 92vw;
+
+      --val-size: 90px;
+
+      --obj-kleur: var(--primary-gray);
+
+      --p-size: 14px;
+      --p-valids: 12px;
+      overflow-x: scroll;
+      overflow-y: none;
+
+    }
+
+    .scrollstage {
       width: 100vw;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
+      @apply(--layout-vertical);
+      @apply(--layout-center);
     }
 
-    .confirmbtn {
-      height: 50px;
-      width: 50px;
-      border-radius: 50%;
-      margin: 0px 4px 0px 4px;
-      background-color: rgba(0,0,0,0.05);
-      border: none;
-      outline: 0;
-      padding: 0px;
-    }
-
-    .confirmbtn img {
-      width: 80%;
-      height: 80%;
-    }
-
-    .neg {
-      height: 40px;
-      width: 40px;
-    }
-
-    .neg img {
-      width: 100%;
-      height: 100%;
+    .objectscanvas {
+      height: 100vh;
       margin: 0px;
       padding: 0px;
     }
 
-    .backbtn {
-      height: 50px;
-      width: 50px;
-      border: none;
-      outline: none;
-      background-color: transparent;
-      color: white;
-      font-size: 20px;
-      font-weight: 100;
-      padding: 10px;
-    }
-
-    .backbtn img {
-      height: 100%;
-      width: 100%;
-    }
 
     #toolbar {
-      height: 10vh;
+      height: 90px;
       width: 100vw;
-      padding: 0px;
-      background-color: rgba(0,0,0,0.0);
+      padding: 15px;
+      box-sizing:border-box;
       color: black;
       @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
-      position: absolute;
-      z-index: 99999999;
+      @apply(--layout-center-center);
+      background-color: transparent;
     }
 
-</style>
-<template> 
 
+    .topbtn {
+      background-color: rgba(255,255,255,0.0);
+
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      border: none;
+      outline: 0; 
+      margin: 0px;
+      padding: 0px;
+
+    }
+    .topbtn img {
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
+      height: 100%;
+    }
+
+
+
+
+    .menubtn {
+      height: 60px;
+      width: 60px;
+      border: none;
+      outline: 0;
+      margin: 8px;
+      padding: 0px;
+      background-color: transparent;
+    }
+
+    .menubtn img {
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+
+
+
+
+
+    .objectscollection2 {
+      width: 92vw;
+      @apply(--layout-horizontal);
+            @apply(--layout-start);
+
+      @apply(--layout-wrap);
+      margin: 0px;
+      padding: 0px;
+    }
+
+
+
+
+    .object {
+      width: var(--obj-calc);
+      background-color: transparent;
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+
+      padding: 8px;
+      box-sizing:border-box;
+
+
+    }
+
+
+
+    #Avatar {
+      width: var(--avatar-calc);
+      max-width: 400px;
+
+    }
+
+    #labs002-avatar {
+      height: var(--avatar-calc);
+      max-height: 400px;
+      border-radius: 2px 2px 0px 0px;
+    }
+
+
+    .objectvaluesbar {
+      width: 100%;
+      margin: -2px 0px 0px 0px;
+      padding: 15px 15px 15px 20px;
+
+      background-color: #fafafa;
+      height: 60px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      box-sizing:border-box;
+      box-shadow: 0px 2px 2px rgba(0,0,0,1);
+
+      border-radius: 0px 0px 2px 2px;
+    }
+
+
+
+
+    .valids {
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+
+      @apply(--layout-center);
+      width: 20%;
+      min-width: 40px;
+      height: 100%;
+    }
+
+    .valids img {
+      height: 15px;
+      width: 15px;
+    }
+
+    .valids p {
+      padding: 0px;
+
+      margin: 0px 5px 0px 0px;
+
+      font-size: var(--p-valids);
+      font-family: OpensansBold;
+      color: #333333;
+    }
+
+    lo-previewnext {
+      width: 100%;
+      height: var(--obj-calc);
+      box-shadow: 0px 2px 2px rgba(0,0,0,1);
+      border-radius: 2px 2px 0px 0px;
+      }
+
+    .objectfirstvalue {
+      width: 100%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      width: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    }
+
+    .objectfirstvalue p {
+      width: 100%;
+      text-align: left;
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: var(--p-size);
+      color: #666666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    }
+
+    .square {
+      width: 100px;
+      height: 100px;
+      background-color: transparent;
+    }
+</style>
+
+<template> 
   <neon-animated-pages selected="{{selected}}" id="vierkantje">
     <neon-animatable>
       <div class="container">
-        <div id="toolbar"> 
-          <button class="backbtn" on-tap="back">
-            <img src="../../images/quit-white.svg">
-          </button>
+      <div id="toolbar"> 
+        <button class="backbtn" on-tap="back">
+          <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+           width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">
+          <polyline fill="none" stroke="#000000" stroke-width="2" stroke-miterlimit="10" points="7.834,15.231 20.083,27.375 32.75,15.129 
+            "/>
+          </svg>
+        </button>
+      </div>
+      <div id="rendercanvas">
+      </div>
+      <div class="valuesbox" on-tap="toggleCollapse">
+        <div class="values">
+          <p>{{objectdata.firstval}}</p>        
+          <iron-collapse id="collapse">
+          <template is="dom-repeat" items="{{objectdata}}">
+            <p>{{objectdata.firstname}}</p>
+            <p>{{objectdata.lastname}}</p>
+            <p>{{objectdata.birthdate}}</p>          
+            <p>{{objectdata.birthplace}}</p>
+          </template>
+          </iron-collapse>
+<!--         <div class="valuesillustration"> 
+          <img src="../../images/morevals.svg">
+        </div> -->
         </div>
-        <div id="rendercanvas"></div>
-
-        <template is="dom-if" if="{{activ}}">
+      </div>
+      <div class="validsbox">
+        <div class="valids" on-tap="toPeerlist">
+          <p>{{objectpeers.length}}</p>
+          <img src="../../images/accept-small.svg">
+        </div>
+      </div>
+<!--         <template is="dom-if" if="{{activ}}">
           <div class="renderbtns">
-
-            <template is="dom-if" if="{{!opened}}">
-
-              <button on-tap="toVisual">
-                <img src="../../images/visualbtn.svg">
-              </button>
-
-              <button on-tap="toValues" class="values">
-                <img src="../../images/values.svg">
-              </button>
-
-              <button class="accepter"  on-tap="toPeerlist">
-                <img src="../../images/accept.svg">
-                <p><span>{{objectpeers.length}}</span></p>
-              </button>
-
-            </template>
-
+          <template is="dom-if" if="{{!opened}}">
+            <button on-tap="toVisual">
+              <img src="../../images/visualbtn.svg">
+            </button>
+            <button on-tap="toValues" class="values">
+              <img src="../../images/values.svg">
+            </button>
+            <button class="accepter"  on-tap="toPeerlist">
+              <img src="../../images/accept.svg">
+              <p><span>{{objectpeers.length}}</span></p>
+            </button>
+          </template>
           </div>
         </template>
-
         <template is="dom-if" if="{{opened}}">
           <div class="confirmbtns">
             
             <button on-tap="cancel" class="confirmbtn neg">
               <img src="../../images/decline.svg">
             </button>
-
             <button on-tap="confirm" class="confirmbtn">
               <img src="../../images/accept.svg">
             </button>
-
           </div>
-        </template>
-
-      </div>
-
+        </template> -->
+  </div>
     </neon-animatable>
-    
     <neon-animatable>
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack"></lo-peers>
     </neon-animatable>
-
-  </neon-animated-pages>
+</neon-animated-pages>
 </template>
+
 </dom-module>
 <script>
 (function() {
@@ -393,12 +483,14 @@ See authors.md for a list of all members.
         //var newelem = document.querySelector("labs002-avatar");
         // e.target.import is the import document.
         //console.log(elem, "config: ", that.objectconfig);
-        //console.log(elem, "data: ", that.objectdata);
+        console.log(elem, "data: ", that.objectdata);
         elem.objectconfig = that.objectconfig;
         elem.objectdata = that.objectdata;
         elem.objectname = that.objectname;
         elem.locked = that.locked;
         elem.objecthash = that.hash;
+        elem.edit = false;
+
         elem.active = false;
         elem.opened = false;
         elem.selected = 0;
@@ -430,6 +522,14 @@ See authors.md for a list of all members.
       object.selected = 1;
       this.opened = true;
       // this.selected = 1;
+      object.edit = true;
+
+        this.customStyle['--bg-kleur'] = 'white'; 
+       this.updateStyles(); 
+
+
+
+
     },
 
     toVisual: function(){
@@ -471,20 +571,30 @@ See authors.md for a list of all members.
       object.edit = false;
       this._dataset();
 
+        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+       this.updateStyles(); 
+
     },
 
     confirm: function(){
       var object = document.getElementById(this.objectname);
+      console.log('test', object.edit);
 
         this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
-        console.log("KLEUR! ", JSON.stringify(this.objectconfig));
+        // console.log("KLEUR! ", JSON.stringify(this.objectconfig));
         // Hier moet nog een check komen; als de hash van de nieuwe set data niet dezelfde is als de vorige hash moeten alle peers gedelete worden.
 
       object.opened = false;
       this.opened = false;
       this.activ = true;
-      object.selected = 0;
       object.edit = false;
+      console.log('test2', object.edit);
+
+      object.selected = 0;
+
+        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+       this.updateStyles(); 
+
     },
 
 
@@ -504,6 +614,15 @@ See authors.md for a list of all members.
         var object = document.getElementById(this.objectname);
         object.mode = 0;
       }
+    },
+
+    _tester:function(){
+      console.log('Zo!');
+    },
+
+    toggleCollapse:function(){
+  this.$.collapse.toggle();
+
     }
 
 

@@ -91,15 +91,18 @@ See authors.md for a list of all members.
 <link rel="import" href="../lo-configbtns/lo-configbtns.html">
 
 <dom-module id="labs002-avatar">
+
+
   <style>
-    :host {
+   :host {
       display: block;
       height: 100%;
       width: 100%;
-/*      background: linear-gradient(to bottom, red 50%, blue 50% ); */
 
-      background-image: url("../../images/bg-blue3.png");
-      background-size: auto 110%;
+      background: linear-gradient(to bottom, #a4e5f9 65%, white 35% ); 
+
+
+
     }
 
     neon-animated-pages {
@@ -119,12 +122,7 @@ See authors.md for a list of all members.
       background-color: white;
     }
 
-    .righttbtns {
-      height: 100%;
-      max-height: 400px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-    }
+
 
 
     .pagecontainer {
@@ -134,6 +132,7 @@ See authors.md for a list of all members.
       max-height: 400px;
       position: relative;
 
+
     }
 
     .absolutepos {
@@ -142,6 +141,7 @@ See authors.md for a list of all members.
       height: 100%;
 
     }
+
 
 
   </style>
@@ -333,7 +333,9 @@ See authors.md for a list of all members.
 
         edit: {
           type: Boolean,
-          value: false
+          value: false,
+          observer: "_editChanged"
+
         },
 
         opened: {
@@ -453,6 +455,10 @@ See authors.md for a list of all members.
 
       unlock: function(){
         this.locked = false;
+      },
+
+      _editChanged: function(){
+        console.log('Jamaar wa IS die edit nu eigenlijk?', this.edit);
       },
 
 
