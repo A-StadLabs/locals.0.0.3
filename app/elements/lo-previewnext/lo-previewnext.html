@@ -70,21 +70,20 @@
         if(this.objectcomponent){
         //this.importHref("../elements/labs002-components/"+this.objectcomponent+".html", function(e) {
           importPage("elements/labs002-components/"+this.objectcomponent+".html").then(function(){
-        
-        rendercanvas.innerHTML = '';
-        elem = document.createElement(that.objectcomponent);
-        elem.objectconfig = that.objectconfig;
-        elem.objectname = that.objectname;
-        elem.objectdata = that.objectdata;
-        elem.objectpeers = that.objectpeers;
-        elem.firstvalue = that.firstvalue;
-        elem.hash = that.hash;
-        rendercanvas.appendChild(elem);
-      }, function(e) {
-         //console.log('import',e);
-        // loading error
-      });
-      };
+            rendercanvas.innerHTML = '';
+            elem = document.createElement(that.objectcomponent);
+            elem.objectconfig = that.objectconfig;
+            elem.objectname = that.objectname;
+            elem.objectdata = that.objectdata;
+            elem.objectpeers = that.objectpeers;
+            elem.firstvalue = that.firstvalue;
+            elem.hash = that.hash;
+            rendercanvas.appendChild(elem);
+          }, function(e) {
+             //console.log('import',e);
+            // loading error
+          });
+        };
       },
 
       open: function(){
