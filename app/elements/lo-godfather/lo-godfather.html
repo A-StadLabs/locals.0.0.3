@@ -8,8 +8,65 @@
       :host {
         display: block;
         color: black;
+        background-color: blue;
+        width: 100vw;
+        height: 100vh;
       }
+
+
+    .canvas {
+      width: 100%;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+
+    }
+
+    .backbtn {
+      height: 50px;
+      width: 50px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: white;
+      font-size: 20px;
+      font-weight: 100;
+      padding: 10px;
+    }
+
+    .backbtn img {
+      height: 100%;
+      width: 100%;
+    }
+
+
+    #toolbar {
+      height: 10vh;
+      width: 100vw;
+      padding: 0px;
+      background-color: transparent;
+      color: black;
+      @apply(--layout-horizontal);
+      @apply(--layout-start-justified);
+    }
+
+
+
+
+
+
     </style>
+
+
+      <div id="toolbar"> 
+        <button class="backbtn" on-tap="back">
+          <img src="../../images/back-white.svg">
+        </button>
+      </div>
+
+
+      <lo-qrrender qrcode="{{qrcode}}"></lo-qrrender>
+
+
     <h1>Godfather of: </h1>
     <template is="dom-repeat" items="{{children}}">
       <div>USERID Child: <span>{{item.child}}</span>
@@ -32,6 +89,7 @@
 
     Polymer({
       is: 'lo-godfather',
+    behaviors: [Polymer.NeonAnimatableBehavior],
 
       properties: {
         children: {
@@ -45,6 +103,18 @@
         
         stage = document.querySelector("lo-stage");
       },
+
+
+    back: function(){
+      this.fire('change-stage', { stage: 0 });
+    },
+
+    ready: function(){
+      this.entryAnimation = 'slide-from-right-animation';
+      this.exitAnimation = 'slide-right-animation';
+    },
+
+
       
       _children: function(){
         lomqtt = document.querySelector("lo-mqtt");
