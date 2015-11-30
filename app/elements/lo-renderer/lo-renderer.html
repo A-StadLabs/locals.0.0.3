@@ -16,161 +16,65 @@ See authors.md for a list of all members.
 
 <link rel="import" href="../../bower_components/iron-collapse/iron-collapse.html">
 
-
-
 <dom-module id="lo-renderer">
-  <style>
+ <style>
     :host {
       display: block;
-      width: 100vw;
       height: 100vh;
-      overflow-y: scroll;
-
-      --bg-kleur:#a4e5f9;
-      background-color: #E6E6E6;
-    }
-
-
-    neon-animated-pages {
-      height: 100%;
-    }
-
-
-    #rendercanvas {
-      width: 100%;
-      padding: 0px;
+      overflow: none;
       margin: 0px;
-      height: 100vw;
-      max-height: 400px;
-     }
+      padding: 0px;
 
-    .container {
+      background-color: transparent;
+
+      --obj-calc: calc(92vw/2);
+      --avatar-calc: 92vw;
+
+      --val-size: 90px;
+
+      --obj-kleur: var(--primary-gray);
+
+      --p-size: 14px;
+      --p-valids: 12px;
+      overflow-x: scroll;
+      overflow-y: none;
+
+    }
+
+    .scrollstage {
+      width: 100vw;
       @apply(--layout-vertical);
       @apply(--layout-center);
     }
 
-
-
-
-
-
-    .valuesbox {
-      background-color: #F4F4F4;
-      width: 100%;
-      padding: 25px 25px 30px 25px;
-      margin: 0px;
-      box-sizing:border-box;
-      @apply(--layout-vertical);
-      @apply(--layout-start); 
-/*      box-shadow: 0px 1px 1px rgba(0,0,0,0.2);*/
-    }
-
-
-    .values {
-      width: 100%;
-      padding: 0px;
-      text-align: center;
-    }
-
-
-    .values p {
-      text-align: center;
+    .objectscanvas {
+      height: 100vh;
       margin: 0px;
       padding: 0px;
-      font-family: Opensans;
-      font-size: 16px;
-      color: #666666;
-    }
-
-
-
-    .valuesillustration {
-      width: 100%;
-      text-align: center;
-      padding-bottom: 20px;
-      box-sizing:border-box;
-      @apply(--layout-fit);
-    }
-
-
-
-    .validsbox {
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center); 
-      
-      width: 100%;
-      height: 135px;
-      background-color: transparent;
-      padding-top: 30px;
-      padding-bottom: 30px;
-      box-sizing:border-box;
-
-    }
-
-    .valids {
-      margin: 0px 0px 0px 0px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center); 
-       width: 75px;
-       height: 75px;
-
-       border-radius: 50%;
-       border: 1px solid #333333;
-    }
-
-/*    .valids img {
-      height: 15px;
-      width: 15px;
-    }
-
-    .valids p {
-      padding: 0px;
-      margin: 0px 5px 0px 0px;
-      font-size: var(--p-valids);
-      font-family: OpensansBold;
-      color: #333333;
-    }*/
-
-
-    .backbtn {
-      height: 50px;
-      width: 50px;
-      border: none;
-      outline: none;
-      background-color: transparent;
-      color: white;
-      font-size: 20px;
-      font-weight: 100;
-      padding: 10px;
-    }
-
-    .backbtn svg {
-      height: 100%;
-      width: 100%;
     }
 
 
     #toolbar {
-      height: 40px;
-      width: 100%;
-/*      padding: 15px;
-      box-sizing:border-box;*/
-      background-color: var(--bg-kleur);
+      height: 90px;
+      width: 100vw;
+      padding: 15px;
+      box-sizing:border-box;
       color: black;
       @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
+      @apply(--layout-center-center);
+      background-color: transparent;
     }
 
 
     .topbtn {
-      background-color: rgba(0,0,0,0.05);
+      background-color: rgba(255,255,255,0.0);
 
-      height: 40px;
-      width: 40px;
+      height: 60px;
+      width: 60px;
       border-radius: 50%;
       border: none;
       outline: 0; 
-      margin: 4px;
+      margin: 0px;
       padding: 0px;
 
     }
@@ -182,22 +86,147 @@ See authors.md for a list of all members.
     }
 
 
-    .white {
-            background-color: white;
 
+
+    .menubtn {
+      height: 60px;
+      width: 60px;
+      border: none;
+      outline: 0;
+      margin: 8px;
+      padding: 0px;
+      background-color: transparent;
     }
 
-    .space {
+    .menubtn img {
       width: 100%;
-      max-width: 600px;
-      padding: 25px;
-      margin: -80px 0px 0px 0px;
-      box-sizing:border-box;
-      @apply(--layout-horizontal);
-      @apply(--layout-end-justified); 
+      height: 100%;
+      margin: 0px;
+      padding: 0px;
     }
-    .space button {
-      z-index: 88;   
+
+
+
+
+
+
+    .objectscollection2 {
+      width: 92vw;
+      @apply(--layout-horizontal);
+            @apply(--layout-start);
+
+      @apply(--layout-wrap);
+      margin: 0px;
+      padding: 0px;
+    }
+
+
+
+
+    .object {
+      width: var(--obj-calc);
+      background-color: transparent;
+      @apply(--layout-vertical);
+      @apply(--layout-center-center);
+
+      padding: 8px;
+      box-sizing:border-box;
+
+
+    }
+
+
+
+    #Avatar {
+      width: var(--avatar-calc);
+      max-width: 400px;
+
+    }
+
+    #labs002-avatar {
+      height: var(--avatar-calc);
+      max-height: 400px;
+      border-radius: 2px 2px 0px 0px;
+    }
+
+
+    .objectvaluesbar {
+      width: 100%;
+      margin: -2px 0px 0px 0px;
+      padding: 15px 15px 15px 20px;
+
+      background-color: #fafafa;
+      height: 60px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      box-sizing:border-box;
+      box-shadow: 0px 2px 2px rgba(0,0,0,1);
+
+      border-radius: 0px 0px 2px 2px;
+    }
+
+
+
+
+    .valids {
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+
+      @apply(--layout-center);
+      width: 20%;
+      min-width: 40px;
+      height: 100%;
+    }
+
+/*    .valids img {
+      height: 15px;
+      width: 15px;
+    }
+
+    .valids p {
+      padding: 0px;
+
+      margin: 0px 5px 0px 0px;
+
+      font-size: var(--p-valids);
+      font-family: OpensansBold;
+      color: #333333;
+    }*/
+
+    lo-previewnext {
+      width: 100%;
+      height: var(--obj-calc);
+      box-shadow: 0px 2px 2px rgba(0,0,0,1);
+      border-radius: 2px 2px 0px 0px;
+      }
+
+    .objectfirstvalue {
+      width: 100%;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      width: 80%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    }
+
+    .objectfirstvalue p {
+      width: 100%;
+      text-align: left;
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: var(--p-size);
+      color: #666666;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow:ellipsis;
+    }
+
+    .square {
+      width: 100px;
+      height: 100px;
+      background-color: transparent;
     }
 
     lo-peers {
@@ -206,13 +235,13 @@ See authors.md for a list of all members.
       background-color: transparent;
     }
 
-</style>
-<template> 
 
+</style>
+
+<template> 
   <neon-animated-pages selected="{{selected}}" id="vierkantje">
     <neon-animatable>
       <div class="container">
-
       <div id="toolbar"> 
         <button class="backbtn" on-tap="back">
           <svg version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -222,11 +251,8 @@ See authors.md for a list of all members.
           </svg>
         </button>
       </div>
-
-
       <div id="rendercanvas">
       </div>
-
       <div class="valuesbox" on-tap="toggleCollapse">
         <div class="values">
           <p>{{objectdata.firstval}}</p>        
@@ -238,11 +264,12 @@ See authors.md for a list of all members.
             <p>{{objectdata.birthplace}}</p>
           </template>
           </iron-collapse>
+
+<!--         <div class="valuesillustration"> 
+          <img src="../../images/morevals.svg">
+        </div> -->
         </div>
-
       </div>
-
-
       <div class="validsbox">
 <!--         <div class="valids" on-tap="toPeerlist">
           <p>{{objectpeers.length}}</p>
@@ -250,61 +277,22 @@ See authors.md for a list of all members.
         </div> -->
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
 
+        </div>
       </div>
 
-<!--         <template is="dom-if" if="{{activ}}">
-          <div class="renderbtns">
-
-          <template is="dom-if" if="{{!opened}}">
-
-            <button on-tap="toVisual">
-              <img src="../../images/visualbtn.svg">
-            </button>
-
-            <button on-tap="toValues" class="values">
-              <img src="../../images/values.svg">
-            </button>
-
-            <button class="accepter"  on-tap="toPeerlist">
-              <img src="../../images/accept.svg">
-              <p><span>{{objectpeers.length}}</span></p>
-            </button>
-
-          </template>
-
-          </div>
-        </template>
-
-
-
-        <template is="dom-if" if="{{opened}}">
-          <div class="confirmbtns">
-            
-            <button on-tap="cancel" class="confirmbtn neg">
-              <img src="../../images/decline.svg">
-            </button>
-
-            <button on-tap="confirm" class="confirmbtn">
-              <img src="../../images/accept.svg">
-            </button>
-
-          </div>
-        </template> -->
-
   </div>
-
     </neon-animatable>
     <neon-animatable>
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack"></lo-peers>
     </neon-animatable>
 </neon-animated-pages>
 </template>
+
 </dom-module>
 <script>
 (function() {
 
-
-    function importPage(url){
+  function importPage(url){
     return new Promise(function(resolve, reject){
       Polymer.Base.importHref(url, function(e){
         resolve(e.target.import);
@@ -313,14 +301,12 @@ See authors.md for a list of all members.
   };
 
   var elem; 
-
   var object;
 
   Polymer({
     is: 'lo-renderer',
 
-      behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
-
+    behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
 
     properties: {
       objectname: {
@@ -329,8 +315,7 @@ See authors.md for a list of all members.
 
       objectconfig: {
         type: Object,
-        notify: true,
-        //observer: "_config"
+        notify: true
       },
 
       objectdata: {
@@ -369,42 +354,38 @@ See authors.md for a list of all members.
         value: 0,
         observer: '_swipy',
         notify: true
-    },
+      },
 
-    locked: {
-      type: Boolean,
-      value: false,
-      notify: true
-    },
-
+      locked: {
+        type: Boolean,
+        value: false,
+        notify: true
+      },
 
       animationConfig: { 
-          value: function(){
-            return {
-              'entry': {
-                name: 'hero-animation',
-                id: 'hero',
-                toPage: this
-              },
-              'exit': {
-                name: 'hero-animation',
+        value: function(){
+          return {
+            'entry': {
+              name: 'hero-animation',
+              id: 'hero',
+              toPage: this
+            },
+            'exit': {
+              name: 'hero-animation',
                 id: 'hero',
                 fromPage: this
-              }
-            }
-          }
-        },
-
-        sharedElements: {
-          value: function(){
-            return {
-              'hero': this.$.vierkantje
             }
           }
         }
+      },
 
-
-
+      sharedElements: {
+        value: function(){
+          return {
+            'hero': this.$.vierkantje
+          }
+        }
+      }    
     },
 
     listeners: {
@@ -428,7 +409,6 @@ See authors.md for a list of all members.
 
     mouseTrack: function(){
       this.swiper = this.downmouse - this.upmouse;
-
     },
 
     _swipy: function(){
@@ -446,18 +426,13 @@ See authors.md for a list of all members.
 
     ready: function(){
       this.selected = 0;
-
       this.oldconfig = this.objectconfig;
       this.newconfig = this.objectconfig;
-
       this.entryAnimation = 'slide-from-right-animation';
       this.exitAnimation = 'slide-left-animation';
-
       this.addEventListener('new-peer', function(){
-
         this.validate();
       });
-
     },
 
     back: function(){
@@ -487,12 +462,13 @@ See authors.md for a list of all members.
         elem.locked = that.locked;
         elem.objecthash = that.hash;
         elem.edit = false;
-
         elem.active = false;
         elem.opened = false;
         elem.selected = 0;
         elem.mode = 0;
         elem.id = that.objectname;
+        that.dataarray = that.object2array(that.objectdata);
+        console.log("Data array: ",that.dataarray);
         rendercanvas.appendChild(elem);
       }, function(e) {
          //console.log('import',e);
@@ -520,13 +496,8 @@ See authors.md for a list of all members.
       this.opened = true;
       // this.selected = 1;
       object.edit = true;
-
-        this.customStyle['--bg-kleur'] = 'white'; 
-       this.updateStyles(); 
-
-
-
-
+      this.customStyle['--bg-kleur'] = 'white'; 
+      this.updateStyles();
     },
 
     toVisual: function(){
@@ -555,7 +526,6 @@ See authors.md for a list of all members.
       var object = document.getElementById(this.objectname);
       object.opened = true;
       this.opened = true;
-
       this.activ = false;
     },
 
@@ -567,33 +537,25 @@ See authors.md for a list of all members.
       this.activ = true;
       object.edit = false;
       this._dataset();
-
-        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
-       this.updateStyles(); 
-
+      this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+      this.updateStyles(); 
     },
 
     confirm: function(){
       var object = document.getElementById(this.objectname);
       console.log('test', object.edit);
-
-        this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
-        // console.log("KLEUR! ", JSON.stringify(this.objectconfig));
-        // Hier moet nog een check komen; als de hash van de nieuwe set data niet dezelfde is als de vorige hash moeten alle peers gedelete worden.
-
+      this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
+      // console.log("KLEUR! ", JSON.stringify(this.objectconfig));
+      // Hier moet nog een check komen; als de hash van de nieuwe set data niet dezelfde is als de vorige hash moeten alle peers gedelete worden.
       object.opened = false;
       this.opened = false;
       this.activ = true;
       object.edit = false;
       console.log('test2', object.edit);
-
       object.selected = 0;
-
-        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
-       this.updateStyles(); 
-
+      this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+      this.updateStyles(); 
     },
-
 
     _toBack: function(){
       this.entryAnimation = 'slide-from-left-animation';
@@ -618,9 +580,13 @@ See authors.md for a list of all members.
     },
 
     toggleCollapse:function(){
-  this.$.collapse.toggle();
+      this.$.collapse.toggle();
+    },
 
+    object2array: function(input){
+      
     }
+
 
 
   });
