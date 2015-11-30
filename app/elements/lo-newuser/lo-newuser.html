@@ -23,13 +23,10 @@
         display: block;
         width: 100%;
         height: 100%;
-
-          background-image: url("../../images/bg-blue-structure.png");
-  background-size: 100vh;
-  background-repeat: repeat-x;
+        background-image: url("../../images/bg-blue-structure.png");
+        background-size: 100vh;
+        background-repeat: repeat-x;
       }
-
-
 
       .canvas {
         @apply(--layout-vertical);
@@ -39,7 +36,6 @@
         margin: 0px;
         padding: 0px;
       }
-
 
       .intro {
         background-color: transparent;
@@ -57,7 +53,6 @@
         margin: 0 auto;
       }
 
-
       neon-animated-pages {
         height: 100%;
       }
@@ -66,7 +61,6 @@
         margin: 0px;
         height: 100vh;
       }
-
 
       .normalbutton {
         font-family: 'Open Sans', sans-serif;
@@ -84,7 +78,6 @@
         width: 200px;
       }
 
-
       .normalbutton:hover {
         box-shadow: 2px 2px 0px rgba(0,0,0,0.2);
       }
@@ -92,7 +85,6 @@
       .normalbutton:active {
         box-shadow: 0px 0px 0px rgba(0,0,0,0.2);
       }
-
 
       .smallbutton {
         font-family: 'Open Sans', sans-serif;
@@ -131,46 +123,37 @@
     on-iron-localstorage-load-empty="createDeviceID">
     </iron-localstorage>
 
-    <!-- <lo-mqtt connected="{{mqttconnected}}"
-      deviceid="{{deviceid}}"
-      on-message-received="msgreceived"
-      on-mqtt-connected="mqttconnectedfire"
-      id="lomqtt" subs="false"></lo-mqtt> -->
+    <mqtt-connection auto url="ws://opantwerpen.be:15674" on-mqtt-message="msgreceived" connected="{{connected}}" id="mqtt">
 
-      <mqtt-connection auto url="ws://opantwerpen.be:15674" on-mqtt-message="msgreceived" connected="{{connected}}" id="mqtt">
+      <mqtt-publish id="pub" on-mqtt-publication-published="_published"></mqtt-publish>
 
-      <mqtt-publish id="pub" on-mqtt-publication-published="_published">
-  </mqtt-publish>
+    </mqtt-connection>
 
-  </mqtt-connection>
-
-       <lo-localstorageapi 
+    <lo-localstorageapi 
     id="localapielem" 
     publickey="{{publickey}}" 
     privatekey="{{privatekey}}" 
     data="{{localapi}}" 
     encdata="{{localenc}}"
     deviceid="{{deviceid}}">
-  </lo-localstorageapi>
+    </lo-localstorageapi>
 
     <neon-animated-pages id="pages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
 
       <neon-animatable>
         <div class="canvas">
-<!--        <h2>Locals</h2>
-         <p>We gaan dan nu een nieuwe user aanmaken is dat goed?</p> -->
-        <div class="intro"><img src="../../images/bg-intro.png"></div> 
-        <button class="normalbutton" on-tap="createUser">Ik ben nieuw</button>
-        <button class="smallbutton" on-tap="syncUser">Ik heb al een user</button>
-      </div>
+          <div class="intro"><img src="../../images/bg-intro.png"></div> 
+          <button class="normalbutton" on-tap="createUser">Ik ben nieuw</button>
+          <button class="smallbutton" on-tap="syncUser">Ik heb al een user</button>
+        </div>
       </neon-animatable>
 
       <neon-animatable>
         <div class="canvas layout vertical center-center color">
-        <h2>Registratie voltooid.</h2>
-        <p>Je hebt een nieuwe gebruiker aangemaakt op dit toestel.</p>
-        <button on-tap="reload">Ga verder</button>
-      </div>
+          <h2>Registratie voltooid.</h2>
+          <p>Je hebt een nieuwe gebruiker aangemaakt op dit toestel.</p>
+          <button on-tap="reload">Ga verder</button>
+        </div>
       </neon-animatable>
 
       <neon-animatable>
@@ -249,7 +232,6 @@
       },
 
       scanQRcode: function(){
-
         var self = this;
         cordova.plugins.barcodeScanner.scan(
               function (result) {
@@ -261,83 +243,71 @@
            );
       },
 
-    createUser: function(){
-      var localapi = this.$.localapielem;
-      var publickey = uuid.v4();
-      this.publickey = publickey;
-      var privatekey = uuid.v4();
-      this.privatekey = privatekey;
-      console.log('--- Created UUID ---');
-      console.log('--- publickey: ', this.publickey, ' - privatekey: ', this.privatekey, ' - deviceid: ', this.deviceid, ' ---');
+      createUser: function(){
+        var localapi = this.$.localapielem;
+        var publickey = uuid.v4();
+        this.publickey = publickey;
+        var privatekey = uuid.v4();
+        this.privatekey = privatekey;
+        console.log('--- Created UUID ---');
+        console.log('--- publickey: ', this.publickey, ' - privatekey: ', this.privatekey, ' - deviceid: ', this.deviceid, ' ---');
 
-      var data = {
-  "collection":
-  {
-    "Avatar":
-      {
-      "component":"labs002-avatar",
-      "conditions":[{"objectname":""}],
-      "config":
+        var data = {
+        "collection":
         {
-        "beard":[0,"var(--primary-red)"],
-        "bottom":[1,"var(--primary-darkblue)"],
-        "face":[0,"var(--primary-lightblue)"],
-        "glasses":[0,"var(--primary-darkblue)"],
-        "head":[0,"var(--primary-green)"],
-        "lijf":[0,"var(--primary-green)"],
-        "shoes":[0,"var(--primary-darkblue)"],
-        "snit":[1,"var(--primary-lightblue)"],
-        "top":[1,"var(--primary-white)"]
-        },
-      "data":
-        {
-        "birthdate":"01/01/1970",
-        "birthplace":"Geboorteplaats",
-        "firstname":"Voornaam",
-        "lastname":"Achternaam"},
-        "description":"Lorem ipsum",
-        "enabled":true,
-        "hash":"none",
-        "height":100,
-        "icon":"../../../images/ADDER_icons-01.svg",
-        "locked":false,"name":"Avatar",
-        "version":"0.0.1",
-        "width":100,
-        "peers":[]
-        }
+          "Avatar":
+            {
+            "component":"labs002-avatar",
+            "conditions":[{"objectname":""}],
+            "config":
+              {
+              "beard":[0,"var(--primary-red)"],
+              "bottom":[1,"var(--primary-darkblue)"],
+              "face":[0,"var(--primary-lightblue)"],
+              "glasses":[0,"var(--primary-darkblue)"],
+              "head":[0,"var(--primary-green)"],
+              "lijf":[0,"var(--primary-green)"],
+              "shoes":[0,"var(--primary-darkblue)"],
+              "snit":[1,"var(--primary-lightblue)"],
+              "top":[1,"var(--primary-white)"]
+              },
+            "data":
+              {
+              "birthdate":"01/01/1970",
+              "birthplace":"Geboorteplaats",
+              "firstname":"Voornaam",
+              "lastname":"Achternaam"},
+              "description":"Lorem ipsum",
+              "enabled":true,
+              "hash":"none",
+              "height":100,
+              "icon":"../../../images/ADDER_icons-01.svg",
+              "locked":false,"name":"Avatar",
+              "version":"0.0.1",
+              "width":100,
+              "peers":[]
+              }
+            },
+            "peers":[],
+            "godfather":[],
+            "lastupdate":Date.now()
+        };
+
+        localapi.data = data;
+        this.fire('init-data');
+        localapi.writeData();
+        this.reload();
       },
-      "peers":[],
-      "godfather":[],
-      "lastupdate":Date.now()
-};
 
-      //var data = { collection: {}, peers: [], godfather: [], lastupdate: Date.now() };
-      localapi.data = data;
-      this.fire('init-data');
-      localapi.writeData();
-      //data written
-      window.location = "/";
-    },
+      syncUser: function(){
+        this.selected = 2;
+        var that = this;
+        this.$.mqtt.subscribe("sync/"+this.deviceid, 2);
+        this.promise = "SYNC";
+        this.scanQRcode();
+      },
 
-    syncUser: function(){
-      this.selected = 2;
-      var that = this;
-       this.$.mqtt.subscribe("sync/"+this.deviceid, 2);
-      
-      this.promise = "SYNC";
-      // importPage("elements/lo-qrreader/lo-qrreader.html").then(function(){
-      //   //var element = document.createElement("labs002-stage");
-      //   //body.appendChild(element)
-        
-      this.scanQRcode();
-
-      // }, function(err){
-      //   console.log(err, "error");
-      // });
-
-    },
-
-    send: function(topic, data, qos){
+      send: function(topic, data, qos){
         this.$.pub.topic = topic; 
         this.$.pub.payload=data;
         this.$.pub.qos=qos;
@@ -346,66 +316,55 @@
         console.log('sending msg to ', topic, 'data: ', data);
       },
 
-    processQRCode: function(e){
-      console.log("Processing QR code: ", e, " Promise: ", this.promise);
-      var pol = document.querySelector("#newuser");
-      //publish topic e.detail.partner body SYNC
-      switch(this.promise){
-        case "SYNC":
-          console.log("Sync scanning");
-          syncdevice = e;
-          pol.topic = e;
-          var mytopic = pol.deviceid;
-          pol.$.pub.topic = "sync/"+e; 
-          pol.$.pub.payload="SYNC1|"+mytopic;
-          pol.$.pub.qos=2;
-          pol.$.pub.retained=false;
-          pol.$.pub.publish();
-          pol.$.lomqtt.subscribe(mytopic);
-          pol.send("sync/"+e, "SYNC1|"+mytopic, 2);
-        break;
-        case "SYNC2":
-          console.log("ready to dispatch OK event");
-          pol.publickey = e;
-          pol.send("sync/"+syncdevice, "SYNC3|"+pol.deviceid, 2);
-        break;
-        case "SYNC4":
-          console.log("ready to dispatch OK event");
-            pol.privatekey = e;
+      processQRCode: function(e){
+        console.log("Processing QR code: ", e, " Promise: ", this.promise);
+        var pol = document.querySelector("#newuser");
+        switch(this.promise){
+          case "SYNC":
+            console.log("Sync scanning");
+            syncdevice = e;
+            pol.topic = e;
+            var mytopic = pol.deviceid;
+            pol.$.pub.topic = "sync/"+e; 
+            pol.$.pub.payload="SYNC1|"+mytopic;
+            pol.$.pub.qos=2;
+            pol.$.pub.retained=false;
+            pol.$.pub.publish();
+            pol.$.lomqtt.subscribe(mytopic);
+            pol.send("sync/"+e, "SYNC1|"+mytopic, 2);
+          break;
+          case "SYNC2":
+            console.log("ready to dispatch OK event");
+            // We get the code, which is an array of pub and private key.
+            var codearray = e.split("|");
+            pol.publickey = codearray[0];
+            pol.privatekey = codearray[1];
+            //pol.send("sync/"+syncdevice, "SYNC3|"+pol.deviceid, 2);
             pol.send("sync/"+syncdevice, "SYNCOK|"+pol.deviceid, 2);
-            document.location.href = 'file:///android_asset/www/index.html'; 
-        break;
-      }
-      
-      //this.$.loxmpp.sendMessage(partner, "SYNC", null, null, null);
-    },
+          break;
+        }        
+      },
 
-    msgreceived: function(e){
-      var topic = e.detail.topic;
+      msgreceived: function(e){
+        var topic = e.detail.topic;
         var message = String.fromCharCode.apply(null, e.detail.message);
-
-      var commandarray = message.split("|");
-
-      var partner = commandarray[1];
-      var command = commandarray[0];
-      //var partner = e.detail.partner;
-      console.log(e.detail.msg);
-      switch(command){
-        case "SYNC2":
-          console.log("Receiving public key");
-          //this.publickey = e.detail.msg[1];
-          this.scanQRcode();
-          this.promise = "SYNC2";
-          //this.$.lomqtt.send("sync/"+partner, "SYNC3|"+this.deviceid);
-        break;
-        case "SYNC4":
-          console.log("Sync4 request");
-          this.scanQRcode();
-          this.promise = "SYNC4";
-        break;
-      };
-    }
-
+        var commandarray = message.split("|");
+        var partner = commandarray[1];
+        var command = commandarray[0];
+        console.log(e.detail.msg);
+        switch(command){
+          case "SYNC2":
+            console.log("Receiving public key");
+            this.scanQRcode();
+            this.promise = "SYNC2";
+          break;
+          case "SYNC4":
+            console.log("Sync4 request");
+            this.scanQRcode();
+            this.promise = "SYNC4";
+          break;
+        };
+      }
 
     });
   })();

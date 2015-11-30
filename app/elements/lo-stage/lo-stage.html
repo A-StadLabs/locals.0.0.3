@@ -440,12 +440,6 @@ See authors.md for a list of all members.
             this.selected = 4;
           break;
 
-          case "SYNC3":
-            //console.log("Showing my private key");
-            lomqtt.send("sync/"+partner, "SYNC4|"+this.deviceid, 2);
-            this.qrcode = this.privatekey;          
-          break;
-
           case "SYNCOK":
             //console.log("Sync OK!");
             this.selected = 0;
@@ -546,7 +540,7 @@ See authors.md for a list of all members.
           var data = this.$.localapielem.encdata;
           var encruserid = this.encruserid;            
           this.$.localapielem.readData();
-          this.qrcode = this.publickey;
+          this.qrcode = this.publickey+'|'+this.privatekey;
           this.selected = 3;
           lomqtt.send("sync/"+partner, "SYNC2|"+this.deviceid, 2);
         break;

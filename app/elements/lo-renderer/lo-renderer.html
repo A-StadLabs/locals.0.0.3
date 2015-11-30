@@ -14,9 +14,6 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animation-behavior.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/hero-animation.html">
 
-
-
-
 <dom-module id="lo-renderer">
   <style>
     :host {
@@ -34,12 +31,10 @@ See authors.md for a list of all members.
       background-color: red;
     }
 
-
     neon-animated-pages {
       height: 100%;
       width: 100%;
     }
-
 
     #rendercanvas {
       width: 100%;
@@ -47,8 +42,7 @@ See authors.md for a list of all members.
       /*  DIT BEPAALT HET CANVAS WAAROP HET OBJECT GERENDERD WORDT,
           DUS VOOR VB BABBELS ZEGGEN WE: WIDTH EN HEIGHT 100% EN GEEN BTNS  */
       margin: 0px;
-     padding: 0px;
-
+      padding: 0px;
      }
 
     .renderbtns {
@@ -59,7 +53,6 @@ See authors.md for a list of all members.
       padding: 0px;
       margin: 0px;
       background-color: green;
-
     }
 
     .renderbtns button {
@@ -70,11 +63,9 @@ See authors.md for a list of all members.
       background-color: rgba(0,0,0,0.05);
       padding: 0px;
       margin: 0px 2px 0px 2px;
-
       height: 50px;
       width: 50px;
       border-radius: 50%;
-
       padding: 0px;
     }
 
@@ -83,13 +74,11 @@ See authors.md for a list of all members.
       height: 100%;
     }
 
-
     .accepter img {
       width: 30px;
       height: 30px;
       margin-right: -6px;      
     }
-
 
     p {
       color: black;
@@ -107,11 +96,9 @@ See authors.md for a list of all members.
     }
 
     .confirmbtn {
-
       height: 50px;
       width: 50px;
       border-radius: 50%;
-
       margin: 0px 4px 0px 4px;
       background-color: rgba(0,0,0,0.05);
       border: none;
@@ -124,14 +111,9 @@ See authors.md for a list of all members.
       height: 80%;
     }
 
-
-
-
-
     .neg {
       height: 40px;
       width: 40px;
-
     }
 
     .neg img {
@@ -140,9 +122,6 @@ See authors.md for a list of all members.
       margin: 0px;
       padding: 0px;
     }
-
-
-
 
     .backbtn {
       height: 50px;
@@ -161,7 +140,6 @@ See authors.md for a list of all members.
       width: 100%;
     }
 
-
     #toolbar {
       height: 10vh;
       width: 100vw;
@@ -174,45 +152,38 @@ See authors.md for a list of all members.
       z-index: 99999999;
     }
 
-
-
 </style>
 <template> 
 
   <neon-animated-pages selected="{{selected}}" id="vierkantje">
     <neon-animatable>
       <div class="container">
-
-
-      <div id="toolbar"> 
-        <button class="backbtn" on-tap="back">
-          <img src="../../images/quit-white.svg">
-        </button>
-      </div>
-
-
-          <div id="rendercanvas">
-          </div>
+        <div id="toolbar"> 
+          <button class="backbtn" on-tap="back">
+            <img src="../../images/quit-white.svg">
+          </button>
+        </div>
+        <div id="rendercanvas"></div>
 
         <template is="dom-if" if="{{activ}}">
           <div class="renderbtns">
 
-          <template is="dom-if" if="{{!opened}}">
+            <template is="dom-if" if="{{!opened}}">
 
-            <button on-tap="toVisual">
-              <img src="../../images/visualbtn.svg">
-            </button>
+              <button on-tap="toVisual">
+                <img src="../../images/visualbtn.svg">
+              </button>
 
-            <button on-tap="toValues" class="values">
-              <img src="../../images/values.svg">
-            </button>
+              <button on-tap="toValues" class="values">
+                <img src="../../images/values.svg">
+              </button>
 
-            <button class="accepter"  on-tap="toPeerlist">
-              <img src="../../images/accept.svg">
-              <p><span>{{objectpeers.length}}</span></p>
-            </button>
+              <button class="accepter"  on-tap="toPeerlist">
+                <img src="../../images/accept.svg">
+                <p><span>{{objectpeers.length}}</span></p>
+              </button>
 
-          </template>
+            </template>
 
           </div>
         </template>
@@ -234,6 +205,7 @@ See authors.md for a list of all members.
       </div>
 
     </neon-animatable>
+    
     <neon-animatable>
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack"></lo-peers>
     </neon-animatable>
