@@ -80,9 +80,9 @@
     initEmpty: function(){
       lomqtt = document.querySelector("lo-mqtt");
       console.log("Init activated");
-      //lomqtt.subscribe(topic, 2, function(e){
-      //  console.log("Init data: ",e);
-      //});
+      // lomqtt.subscribe('userobject/'+this.publickey, 2, function(e){
+      //   console.log("Init data: ",e);
+      // });
       //var data = { collection: {}, peers: [], godfather: [], lastupdate: Date.now() };
       //this.data = data;
       //this.fire('init-data');
@@ -126,7 +126,7 @@
           return v;       // return the unchanged property value.
         });
         this.data = data;
-        //console.log(JSON.stringify(data));
+        console.log(JSON.stringify(data));
       };
     },
 

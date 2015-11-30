@@ -306,8 +306,7 @@ See authors.md for a list of all members.
 <script>
 (function() {
 
-
-    function importPage(url){
+  function importPage(url){
     return new Promise(function(resolve, reject){
       Polymer.Base.importHref(url, function(e){
         resolve(e.target.import);
@@ -316,14 +315,12 @@ See authors.md for a list of all members.
   };
 
   var elem; 
-
   var object;
 
   Polymer({
     is: 'lo-renderer',
 
-      behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
-
+    behaviors: [Polymer.NeonSharedElementAnimatableBehavior],
 
     properties: {
       objectname: {
@@ -332,8 +329,7 @@ See authors.md for a list of all members.
 
       objectconfig: {
         type: Object,
-        notify: true,
-        //observer: "_config"
+        notify: true
       },
 
       objectdata: {
@@ -372,42 +368,38 @@ See authors.md for a list of all members.
         value: 0,
         observer: '_swipy',
         notify: true
-    },
+      },
 
-    locked: {
-      type: Boolean,
-      value: false,
-      notify: true
-    },
-
+      locked: {
+        type: Boolean,
+        value: false,
+        notify: true
+      },
 
       animationConfig: { 
-          value: function(){
-            return {
-              'entry': {
-                name: 'hero-animation',
-                id: 'hero',
-                toPage: this
-              },
-              'exit': {
-                name: 'hero-animation',
+        value: function(){
+          return {
+            'entry': {
+              name: 'hero-animation',
+              id: 'hero',
+              toPage: this
+            },
+            'exit': {
+              name: 'hero-animation',
                 id: 'hero',
                 fromPage: this
-              }
-            }
-          }
-        },
-
-        sharedElements: {
-          value: function(){
-            return {
-              'hero': this.$.vierkantje
             }
           }
         }
+      },
 
-
-
+      sharedElements: {
+        value: function(){
+          return {
+            'hero': this.$.vierkantje
+          }
+        }
+      }    
     },
 
     listeners: {
@@ -431,7 +423,6 @@ See authors.md for a list of all members.
 
     mouseTrack: function(){
       this.swiper = this.downmouse - this.upmouse;
-
     },
 
     _swipy: function(){
@@ -449,18 +440,13 @@ See authors.md for a list of all members.
 
     ready: function(){
       this.selected = 0;
-
       this.oldconfig = this.objectconfig;
       this.newconfig = this.objectconfig;
-
       this.entryAnimation = 'slide-from-right-animation';
       this.exitAnimation = 'slide-left-animation';
-
       this.addEventListener('new-peer', function(){
-
         this.validate();
       });
-
     },
 
     back: function(){
@@ -490,12 +476,13 @@ See authors.md for a list of all members.
         elem.locked = that.locked;
         elem.objecthash = that.hash;
         elem.edit = false;
-
         elem.active = false;
         elem.opened = false;
         elem.selected = 0;
         elem.mode = 0;
         elem.id = that.objectname;
+        that.dataarray = that.object2array(that.objectdata);
+        console.log("Data array: ",that.dataarray);
         rendercanvas.appendChild(elem);
       }, function(e) {
          //console.log('import',e);
@@ -523,13 +510,8 @@ See authors.md for a list of all members.
       this.opened = true;
       // this.selected = 1;
       object.edit = true;
-
-        this.customStyle['--bg-kleur'] = 'white'; 
-       this.updateStyles(); 
-
-
-
-
+      this.customStyle['--bg-kleur'] = 'white'; 
+      this.updateStyles();
     },
 
     toVisual: function(){
@@ -558,7 +540,6 @@ See authors.md for a list of all members.
       var object = document.getElementById(this.objectname);
       object.opened = true;
       this.opened = true;
-
       this.activ = false;
     },
 
@@ -570,33 +551,25 @@ See authors.md for a list of all members.
       this.activ = true;
       object.edit = false;
       this._dataset();
-
-        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
-       this.updateStyles(); 
-
+      this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+      this.updateStyles(); 
     },
 
     confirm: function(){
       var object = document.getElementById(this.objectname);
       console.log('test', object.edit);
-
-        this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
-        // console.log("KLEUR! ", JSON.stringify(this.objectconfig));
-        // Hier moet nog een check komen; als de hash van de nieuwe set data niet dezelfde is als de vorige hash moeten alle peers gedelete worden.
-
+      this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
+      // console.log("KLEUR! ", JSON.stringify(this.objectconfig));
+      // Hier moet nog een check komen; als de hash van de nieuwe set data niet dezelfde is als de vorige hash moeten alle peers gedelete worden.
       object.opened = false;
       this.opened = false;
       this.activ = true;
       object.edit = false;
       console.log('test2', object.edit);
-
       object.selected = 0;
-
-        this.customStyle['--bg-kleur'] = '#a4e5f9'; 
-       this.updateStyles(); 
-
+      this.customStyle['--bg-kleur'] = '#a4e5f9'; 
+      this.updateStyles(); 
     },
-
 
     _toBack: function(){
       this.entryAnimation = 'slide-from-left-animation';
@@ -621,9 +594,13 @@ See authors.md for a list of all members.
     },
 
     toggleCollapse:function(){
-  this.$.collapse.toggle();
+      this.$.collapse.toggle();
+    },
 
+    object2array: function(input){
+      
     }
+
 
 
   });
