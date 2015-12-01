@@ -40,8 +40,8 @@ See authors.md for a list of all members.
       width: 100%;
       padding: 0px;
       margin: 0px;
-      height: 100vw;
-      max-height: 400px;
+      height: 90vh;
+/*      border: 2px solid blue; */
      }
 
     .container {
@@ -52,6 +52,46 @@ See authors.md for a list of all members.
 
 
 
+    #toolbar {
+      height: 10vh;
+      width: 100%;
+      background-color: var(--bg-kleur);
+      color: black;
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+
+/*      padding: 15px;
+      box-sizing:border-box;*/
+    }
+
+    lo-peers {
+      width: 75px;
+      height: 75px;
+      background-color: transparent;
+    }
+
+    .backbtn {
+      height: 50px;
+      width: 50px;
+      border: none;
+      outline: none;
+      background-color: transparent;
+      color: white;
+      font-size: 20px;
+      font-weight: 100;
+      padding: 10px;
+    }
+
+    .backbtn svg {
+      height: 100%;
+      width: 100%;
+    }
+
+
+
+
+
+/*
 
 
     .valuesbox {
@@ -62,7 +102,6 @@ See authors.md for a list of all members.
       box-sizing:border-box;
       @apply(--layout-vertical);
       @apply(--layout-start); 
-/*      box-shadow: 0px 1px 1px rgba(0,0,0,0.2);*/
     }
 
 
@@ -117,7 +156,7 @@ See authors.md for a list of all members.
        border-radius: 50%;
        border: 1px solid #333333;
     }
-
+*/
 /*    .valids img {
       height: 15px;
       width: 15px;
@@ -132,37 +171,9 @@ See authors.md for a list of all members.
     }*/
 
 
-    .backbtn {
-      height: 50px;
-      width: 50px;
-      border: none;
-      outline: none;
-      background-color: transparent;
-      color: white;
-      font-size: 20px;
-      font-weight: 100;
-      padding: 10px;
-    }
-
-    .backbtn svg {
-      height: 100%;
-      width: 100%;
-    }
 
 
-    #toolbar {
-      height: 40px;
-      width: 100%;
-/*      padding: 15px;
-      box-sizing:border-box;*/
-      background-color: var(--bg-kleur);
-      color: black;
-      @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
-    }
-
-
-    .topbtn {
+/*    .topbtn {
       background-color: rgba(0,0,0,0.05);
 
       height: 40px;
@@ -199,12 +210,10 @@ See authors.md for a list of all members.
     .space button {
       z-index: 88;   
     }
+*/
 
-    lo-peers {
-      width: 75px;
-      height: 75px;
-      background-color: transparent;
-    }
+
+
 
 </style>
 <template> 
@@ -330,6 +339,10 @@ See authors.md for a list of all members.
         notify: true
       },
 
+      modus: {
+        type: Number
+      },
+
       animationConfig: { 
           value: function(){
             return {
@@ -427,6 +440,7 @@ See authors.md for a list of all members.
         this.previewdata = this.object2array(this.objectdata);
         var firstval = this.objectconfig.firstvalue;
         this.firstvalue = this.objectdata[firstval];
+        console.log('De modus in RENDERER', this.modus);
         
         importPage("elements/labs002-components/"+this.objectcomponent+".html").then(function(){
         var rendercanvas = that.$.rendercanvas;
@@ -445,7 +459,7 @@ See authors.md for a list of all members.
         elem.active = false;
         elem.opened = false;
         elem.selected = 0;
-        elem.mode = 0;
+        elem.modus = that.modus;
         elem.id = that.objectname;
         rendercanvas.appendChild(elem);
       }, function(e) {
