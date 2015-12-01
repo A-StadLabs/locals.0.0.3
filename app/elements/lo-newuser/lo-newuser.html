@@ -331,7 +331,6 @@
             pol.$.pub.qos=2;
             pol.$.pub.retained=false;
             pol.$.pub.publish();
-            pol.$.lomqtt.subscribe(mytopic);
             pol.send("sync/"+e, "SYNC1|"+mytopic, 2);
           break;
           case "SYNC2":
@@ -342,6 +341,7 @@
             pol.privatekey = codearray[1];
             //pol.send("sync/"+syncdevice, "SYNC3|"+pol.deviceid, 2);
             pol.send("sync/"+syncdevice, "SYNCOK|"+pol.deviceid, 2);
+            this.$.mqtt.subscribe("userobject/"+pol.publickey, 0);
           break;
         }        
       },
@@ -363,6 +363,12 @@
             console.log("Sync4 request");
             this.scanQRcode();
             this.promise = "SYNC4";
+          break;
+          case "USERUPDATE":
+            console.log("Userupdate", message);
+            this.$.localapielem.encdata = partner;
+            this.localapi.lastupdate = Date.now();
+            location.reload();
           break;
         };
       }
