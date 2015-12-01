@@ -36,20 +36,22 @@ See authors.md for a list of all members.
       margin: 0px;
       padding: 0px;
 
-      background-color: transparent;
+      background-color: #F4F4F4;
 
-      --obj-calc: calc(92vw/2);
-      --avatar-calc: 92vw;
+      --obj-w: calc(92vw/2);
+      --obj-h: calc(92vw/2 + 38px);
+
+      --avatar-w: 92vw;
+      --avatar-h: calc(92vw + 38px);
+
 
       --val-size: 90px;
-
       --obj-kleur: var(--primary-gray);
-
       --p-size: 14px;
       --p-valids: 12px;
+
       overflow-x: scroll;
       overflow-y: none;
-
     }
 
     .scrollstage {
@@ -119,130 +121,42 @@ See authors.md for a list of all members.
 
 
 
-
-
     .objectscollection2 {
       width: 92vw;
       @apply(--layout-horizontal);
-            @apply(--layout-start);
-
+      @apply(--layout-start);
       @apply(--layout-wrap);
       margin: 0px;
       padding: 0px;
     }
 
 
-
-
     .object {
-      width: var(--obj-calc);
-      background-color: transparent;
-      @apply(--layout-vertical);
-      @apply(--layout-center-center);
-
+      width: var(--obj-w);
       padding: 8px;
       box-sizing:border-box;
-
-
     }
-
 
 
     #Avatar {
-      width: var(--avatar-calc);
-      max-width: 400px;
-
+      width: var(--avatar-w);
     }
 
+
     #labs002-avatar {
-      height: var(--avatar-calc);
-      max-height: 400px;
+      height: var(--avatar-h);
       border-radius: 2px 2px 0px 0px;
     }
 
-
-    .objectvaluesbar {
-      width: 100%;
-      margin: -2px 0px 0px 0px;
-      padding: 15px 15px 15px 20px;
-
-      background-color: #fafafa;
-      height: 60px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
-      box-sizing:border-box;
-      box-shadow: 0px 2px 2px rgba(0,0,0,1);
-
-      border-radius: 0px 0px 2px 2px;
-    }
-
-
-
-
-    .valids {
-      @apply(--layout-horizontal);
-      @apply(--layout-end-justified);
-
-      @apply(--layout-center);
-      width: 20%;
-      min-width: 40px;
-      height: 100%;
-    }
-
-    .valids img {
-      height: 15px;
-      width: 15px;
-    }
-
-    .valids p {
-      padding: 0px;
-
-      margin: 0px 5px 0px 0px;
-
-      font-size: var(--p-valids);
-      font-family: OpensansBold;
-      color: #333333;
-    }
 
 
 
     lo-previewnext {
       width: 100%;
-      height: var(--obj-calc);
-      box-shadow: 0px 2px 2px rgba(0,0,0,1);
+      height: var(--obj-h);
+      box-shadow: 0px 2px 2px rgba(0,0,0,0.1);
       border-radius: 2px 2px 0px 0px;
       }
-
-
-
-    .objectfirstvalue {
-      width: 100%;
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-      width: 80%;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-
-    }
-
-    .objectfirstvalue p {
-      width: 100%;
-      text-align: left;
-
-      margin: 0px;
-      padding: 0px;
-      font-family: Opensans;
-      font-size: var(--p-size);
-      color: #666666;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-
-    }
-
 
 
     .square {
@@ -281,14 +195,8 @@ See authors.md for a list of all members.
 
       <!-- TEST START -->
     <div class="objectscollection2">
-
-<!--       <div class="square" id="vierkantje" on-tap="vierkantje"></div>
- -->
       <template is="dom-repeat" items="{{objectsdata_new}}" id="collrepeat">
-
-
         <div class="object" id="{{item.array.objectname}}">
-
           <lo-previewnext 
             objectcomponent="{{item.array.objectcomponent}}" 
             objectname="{{item.array.objectname}}" 
@@ -303,16 +211,8 @@ See authors.md for a list of all members.
             firstvalue="{{item.array.firstvalue}}"
             >
           </lo-previewnext>
-
-  
         </div>
-
-
-
       </template>
-
-     
-
     </div>
      
     
@@ -520,8 +420,13 @@ See authors.md for a list of all members.
       console.log('MediaQuery ==', this.isBetween600_900px);
 
       if(this.isBetween600_900px){
-        this.customStyle['--obj-calc'] = 'calc(92vw/3)';
-        this.customStyle['--avatar-calc'] = 'calc(92vw/3)';
+        this.customStyle['--obj-w'] = 'calc(92vw/3)';
+        this.customStyle['--obj-h'] = 'calc(92vw/3 + 38px)';
+        this.customStyle['--avatar-w'] = 'calc(92vw/3)';
+        this.customStyle['--avatar-h'] = 'calc(92vw/3 + 38px)';
+
+
+
 
         this.customStyle['--val-size'] = '40px'; 
         this.customStyle['--p-valids'] = '12px'; 
@@ -529,8 +434,11 @@ See authors.md for a list of all members.
 
 
       } else if(this.isMore900px){
-        this.customStyle['--obj-calc'] = 'calc(92vw/5)';
-        this.customStyle['--avatar-calc'] = 'calc(92vw/5)';
+        this.customStyle['--obj-w'] = 'calc(92vw/5)';
+        this.customStyle['--obj-h'] = 'calc(92vw/5 + 38px)';
+
+        this.customStyle['--avatar-w'] = 'calc(92vw/5)';
+        this.customStyle['--avatar-h'] = 'calc(92vw/5 + 38px)';
 
         this.customStyle['--val-size'] = '60px'; 
         this.customStyle['--p-valids'] = '12px'; 
@@ -538,8 +446,11 @@ See authors.md for a list of all members.
 
         
       } else if(!this.isBetween600_900px && !this.isMore900px) {
-        this.customStyle['--obj-calc'] = 'calc(92vw/2)';
-        this.customStyle['--avatar-calc'] = 'calc(92vw)';
+        this.customStyle['--obj-w'] = 'calc(92vw/2)';
+        this.customStyle['--obj-h'] = 'calc(92vw/2 + 38px)';
+
+        this.customStyle['--avatar-w'] = 'calc(92vw)';
+        this.customStyle['--avatar-h'] = 'calc(92vw + 38px)';
 
         this.customStyle['--val-size'] = '35px'; 
         this.customStyle['--p-valids'] = '12px'; 
