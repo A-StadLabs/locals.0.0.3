@@ -237,6 +237,7 @@ See authors.md for a list of all members.
       width: 75px;
       height: 75px;
       background-color: transparent;
+      margin: 30px 0px 30px 0px;
     }
 
 
@@ -246,9 +247,9 @@ See authors.md for a list of all members.
     .valuesbox {
       background-color: #F4F4F4;
       width: 100%;
-      padding: 25px 25px 30px 25px;
+
+
       margin: 0px;
-      box-sizing:border-box;
       @apply(--layout-vertical);
       @apply(--layout-start); 
     }
@@ -256,7 +257,9 @@ See authors.md for a list of all members.
 
     .values {
       width: 100%;
-      padding: 0px;
+      height: 100%;
+      padding: 20px 25px 25px 25px;
+      box-sizing:border-box;
       text-align: center;
     }
 
@@ -270,6 +273,35 @@ See authors.md for a list of all members.
       color: #666666;
     }
 
+/*    .validsbox {
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center); 
+      
+      width: 100%;
+      height: 235px;
+      background-color: red;
+      padding-top: 30px;
+      padding-bottom: 30px;
+      box-sizing:border-box;
+
+    }*/
+
+
+
+    .lockedbtn {
+      background-color: rgba(0,0,0,0.025);
+      height: 60px;
+      width: 60px;
+      border-radius: 50%;
+      border: none;
+      outline: 0; 
+      margin: 15px 0px 0px 0px;
+    }
+
+    .lockedbtn img {
+      height: 100%;
+      width: 100%;
+    }
 
 
 
@@ -470,12 +502,26 @@ See authors.md for a list of all members.
 
       <div class="valuesbox" on-tap="toggleCollapse">
         <div class="values">
-          <p>??????????<span>{{firstvalue}}</span></p>    
+          <p><span>{{firstvalue}}</span></p>    
 
           <iron-collapse id="collapse">
           <template is="dom-repeat" items="{{previewdata}}">
-            <p>???? ///<span>{{index}}</span><span>{{item}}</span><span>{{item.value}}</span></p>
+            <p><span>{{item}}</span><span>{{item.value}}</span></p>
           </template>
+
+<!--           <template is="dom-if" if="{{this.locked}}">
+ -->            <button class="lockedbtn" on-tap="toEdit">
+              <img src="../../images/locked.svg">
+            </button>
+<!--           </template>
+
+          <template is="dom-if" if="{{!this.locked}}">
+            <button class="lockedbtn">
+             <img src="../../images/accept.svg">
+            </button>
+          </template> -->
+
+
           </iron-collapse>
         </div>
 
@@ -491,9 +537,7 @@ See authors.md for a list of all members.
      <button on-tap="toEdit">Naar de edit</button>
      <button on-tap="toEdit">Naar de edit</button> -->
 
-      <div class="validsbox">
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
-      </div> 
 
     </div>
 
@@ -501,10 +545,157 @@ See authors.md for a list of all members.
 
 
 
+
+
+
+
+
+
+
+
+
+
+<neon-animatable>
+    <div class="canvas layout vertical center">
+      <div class="avatarcanvas">
+
+       <div class="thumbcontainer">
+
+          <div class="absolutepos">
+            <labs002-avatar-bodypages 
+              selected="{{bodyselected}}"
+              color="{{bodycolor}}">
+            </labs002-avatar-bodypages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-shoespages 
+              selected="{{shoesselected}}"
+              color="{{shoescolor}}"
+              nrofitems="{{nrofshoes}}">
+            </labs002-avatar-shoespages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-bottompages 
+              selected="{{bottomselected}}"
+              color="{{bottomcolor}}"
+              nrofitems="{{nrofbottom}}">
+            </labs002-avatar-bottompages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-toppages 
+              selected="{{topselected}}"
+              color="{{topcolor}}"
+              nrofitems="{{nroftop}}">
+            </labs002-avatar-toppages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-headpages 
+              selected="{{headselected}}"
+              color="{{bodycolor}}"
+              nrofitems="{{nrofhead}}">
+            </labs002-avatar-headpages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-facepages 
+              selected="{{faceselected}}"
+              color="{{facecolor}}">
+            </labs002-avatar-facepages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-glassespages 
+              selected="{{glassesselected}}"
+              color="{{glassescolor}}"
+              nrofitems="{{nrofglasses}}">
+            </labs002-avatar-glassespages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-beardpages 
+              selected="{{beardselected}}"
+              color="{{beardcolor}}"
+              nrofitems="{{nrofbeard}}">
+            </labs002-avatar-beardpages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-snitpages
+              selected="{{snitselected}}"
+              color="{{snitcolor}}"
+            nrofitems="{{nrofglasses}}">
+            </labs002-avatar-snitpages>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="valuesbox">
+        <div class="values">
+    <paper-input-container>
+          <label>Voornaam</label>
+          <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstname}}">
+        </paper-input-container>
+        <paper-input-container>
+          <label>Naam</label>
+          <input type="text" is="iron-input" bind-value="{{objectdata.lastname}}">
+        </paper-input-container>
+        <paper-input-container>
+          <label>Geboortedatum</label>
+          <input type="text" is="iron-input" bind-value="{{objectdata.birthdate}}" >
+        </paper-input-container>
+        <paper-input-container>
+          <label>Geboorteplaats</label>
+          <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
+        </paper-input-container>
+
+      <button on-tap="save">SAVE VALUES</button>
+        </div>
+
+      </div>
+    </div>
+
+ </neon-animatable>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <!--   VALUES EDIT -->
 
   <neon-animatable>
-    <div class="canvas layout vertical center-center">
+    <div class="whitecanvas">
     
     <paper-input-container>
           <label>Voornaam</label>
