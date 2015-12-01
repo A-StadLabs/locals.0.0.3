@@ -23,11 +23,12 @@ See authors.md for a list of all members.
     :host {
       display: block;
       width: 100vw;
-      height: 100vh;
+      height: 100%;
       overflow-y: scroll;
 
       --bg-kleur:#a4e5f9;
       background-color: #E6E6E6;
+
     }
 
 
@@ -40,8 +41,7 @@ See authors.md for a list of all members.
       width: 100%;
       padding: 0px;
       margin: 0px;
-      height: 90vh;
-/*      border: 2px solid blue; */
+/*      height: 70vh;*/
      }
 
     .container {
@@ -64,11 +64,6 @@ See authors.md for a list of all members.
       box-sizing:border-box;*/
     }
 
-    lo-peers {
-      width: 75px;
-      height: 75px;
-      background-color: transparent;
-    }
 
     .backbtn {
       height: 50px;
@@ -453,6 +448,7 @@ See authors.md for a list of all members.
         elem.objectconfig = that.objectconfig;
         elem.objectdata = that.objectdata;
         elem.objectname = that.objectname;
+        elem.objectpeers = that.objectpeers;
         elem.locked = that.locked;
         elem.objecthash = that.hash;
         elem.edit = false;
@@ -460,6 +456,7 @@ See authors.md for a list of all members.
         elem.opened = false;
         elem.selected = 0;
         elem.modus = that.modus;
+        elem.firstvalue = that.firstvalue;
         elem.id = that.objectname;
         rendercanvas.appendChild(elem);
       }, function(e) {
@@ -580,9 +577,7 @@ See authors.md for a list of all members.
       console.log('Zo!');
     },
 
-    toggleCollapse:function(){
-      this.$.collapse.toggle();
-    },
+
 
     object2array: function(input){
       var newarray = [];

@@ -85,6 +85,8 @@ See authors.md for a list of all members.
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
 
+<link rel="import" href="../lo-peers/lo-peers.html">
+
 
 <link rel="import" href="labs002-colorpicker.html">
 
@@ -203,9 +205,9 @@ See authors.md for a list of all members.
       font-size: var(--p-size);
       color: #666666;
 
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow:ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
 
     }
 
@@ -217,9 +219,57 @@ See authors.md for a list of all members.
 
     .whitecanvas {
       background-color: white;
-            width: 100%;
-            height: 100%;
+      width: 100%;
+      height: 100%;
     }
+
+    .avatarcanvas {
+      background: linear-gradient(to bottom, #a4e5f9 50%, white 50% ); 
+      width: 100%;
+      height: 100vw;
+      max-height: 400px;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+    }
+
+
+    lo-peers {
+      width: 75px;
+      height: 75px;
+      background-color: transparent;
+    }
+
+
+
+
+
+    .valuesbox {
+      background-color: #F4F4F4;
+      width: 100%;
+      padding: 25px 25px 30px 25px;
+      margin: 0px;
+      box-sizing:border-box;
+      @apply(--layout-vertical);
+      @apply(--layout-start); 
+    }
+
+
+    .values {
+      width: 100%;
+      padding: 0px;
+      text-align: center;
+    }
+
+
+    .values p {
+      text-align: center;
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: 16px;
+      color: #666666;
+    }
+
 
 
 
@@ -240,61 +290,70 @@ See authors.md for a list of all members.
 
       <div class="absolutepos">
         <labs002-avatar-bodypages 
-          id="lijf">
+          selected="{{bodyselected}}"
+          color="{{bodycolor}}">
         </labs002-avatar-bodypages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-shoespages 
-          id="shoes"
+          selected="{{shoesselected}}"
+          color="{{shoescolor}}"
           nrofitems="{{nrofshoes}}">
         </labs002-avatar-shoespages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-bottompages 
-          id="bottom"
+          selected="{{bottomselected}}"
+          color="{{bottomcolor}}"
           nrofitems="{{nrofbottom}}">
         </labs002-avatar-bottompages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-toppages 
-          id="top"
+          selected="{{topselected}}"
+          color="{{topcolor}}"
           nrofitems="{{nroftop}}">
         </labs002-avatar-toppages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-headpages 
-          id="head"
+          selected="{{headselected}}"
+          color="{{bodycolor}}"
           nrofitems="{{nrofhead}}">
         </labs002-avatar-headpages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-facepages 
-          id="face">
+          selected="{{faceselected}}"
+          color="{{facecolor}}">
         </labs002-avatar-facepages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-glassespages 
-          id="glasses"
+          selected="{{glassesselected}}"
+          color="{{glassescolor}}"
           nrofitems="{{nrofglasses}}">
         </labs002-avatar-glassespages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-beardpages 
-          id="beard"
+          selected="{{beardselected}}"
+          color="{{beardcolor}}"
           nrofitems="{{nrofbeard}}">
         </labs002-avatar-beardpages>
       </div>
 
       <div class="absolutepos">
         <labs002-avatar-snitpages
-        id="snit"
+          selected="{{snitselected}}"
+          color="{{snitcolor}}"
         nrofitems="{{nrofglasses}}">
         </labs002-avatar-snitpages>
       </div>
@@ -331,8 +390,113 @@ See authors.md for a list of all members.
 
 <!--   VALUES READ -->
  <neon-animatable>
- <h1>VALUES READ modus</h1>
- <button on-tap="toEdit">Naar de edit</button>
+    <div class="canvas layout vertical center">
+      <div class="avatarcanvas">
+
+       <div class="thumbcontainer">
+
+          <div class="absolutepos">
+            <labs002-avatar-bodypages 
+              selected="{{bodyselected}}"
+              color="{{bodycolor}}">
+            </labs002-avatar-bodypages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-shoespages 
+              selected="{{shoesselected}}"
+              color="{{shoescolor}}"
+              nrofitems="{{nrofshoes}}">
+            </labs002-avatar-shoespages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-bottompages 
+              selected="{{bottomselected}}"
+              color="{{bottomcolor}}"
+              nrofitems="{{nrofbottom}}">
+            </labs002-avatar-bottompages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-toppages 
+              selected="{{topselected}}"
+              color="{{topcolor}}"
+              nrofitems="{{nroftop}}">
+            </labs002-avatar-toppages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-headpages 
+              selected="{{headselected}}"
+              color="{{bodycolor}}"
+              nrofitems="{{nrofhead}}">
+            </labs002-avatar-headpages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-facepages 
+              selected="{{faceselected}}"
+              color="{{facecolor}}">
+            </labs002-avatar-facepages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-glassespages 
+              selected="{{glassesselected}}"
+              color="{{glassescolor}}"
+              nrofitems="{{nrofglasses}}">
+            </labs002-avatar-glassespages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-beardpages 
+              selected="{{beardselected}}"
+              color="{{beardcolor}}"
+              nrofitems="{{nrofbeard}}">
+            </labs002-avatar-beardpages>
+          </div>
+
+          <div class="absolutepos">
+            <labs002-avatar-snitpages
+              selected="{{snitselected}}"
+              color="{{snitcolor}}"
+            nrofitems="{{nrofglasses}}">
+            </labs002-avatar-snitpages>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="valuesbox" on-tap="toggleCollapse">
+        <div class="values">
+          <p>??????????<span>{{firstvalue}}</span></p>    
+
+          <iron-collapse id="collapse">
+          <template is="dom-repeat" items="{{previewdata}}">
+            <p>???? ///<span>{{index}}</span><span>{{item}}</span><span>{{item.value}}</span></p>
+          </template>
+          </iron-collapse>
+        </div>
+
+      </div>
+
+
+<!--      <h1>VALUES READ modus</h1>
+     <button on-tap="toEdit">Naar de edit</button>
+     <button on-tap="toEdit">Naar de edit</button>
+     <button on-tap="toEdit">Naar de edit</button>
+     <button on-tap="toEdit">Naar de edit</button>
+     <button on-tap="toEdit">Naar de edit</button>
+     <button on-tap="toEdit">Naar de edit</button>
+     <button on-tap="toEdit">Naar de edit</button> -->
+
+      <div class="validsbox">
+      <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
+      </div> 
+
+    </div>
+
  </neon-animatable>
 
 
@@ -340,9 +504,9 @@ See authors.md for a list of all members.
 <!--   VALUES EDIT -->
 
   <neon-animatable>
-    <div class="canvas whitebg">
-
-<paper-input-container>
+    <div class="canvas layout vertical center-center">
+    
+    <paper-input-container>
           <label>Voornaam</label>
           <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstname}}">
         </paper-input-container>
@@ -552,32 +716,32 @@ See authors.md for a list of all members.
       _configChanged: function(){
         console.log('avatar conf changed: ', JSON.stringify(this.objectconfig));
 
-        this.$.snit.selected = this.objectconfig.snit[0];
-        this.$.snit.color = this.objectconfig.snit[1];
+        this.snitselected = this.objectconfig.snit[0];
+        this.snitcolor = this.objectconfig.snit[1];
 
-        this.$.glasses.selected = this.objectconfig.glasses[0];
-        this.$.glasses.color = this.objectconfig.glasses[1];
+        this.glassesselected = this.objectconfig.glasses[0];
+        this.glassescolor = this.objectconfig.glasses[1];
 
-        this.$.beard.selected = this.objectconfig.beard[0];
-        this.$.beard.color = this.objectconfig.beard[1];
+        this.beardselected = this.objectconfig.beard[0];
+        this.beardcolor = this.objectconfig.beard[1];
 
-        this.$.face.selected = this.objectconfig.face[0];
-        this.$.face.color = this.objectconfig.face[1];
+        this.faceselected = this.objectconfig.face[0];
+        this.facecolor = this.objectconfig.face[1];
 
-         this.$.head.selected = this.objectconfig.head[0];
-        this.$.head.color = this.objectconfig.lijf[1];
+         this.headselected = this.objectconfig.head[0];
+        this.headcolor = this.objectconfig.lijf[1];
 
-        this.$.top.selected = this.objectconfig.top[0];
-        this.$.top.color = this.objectconfig.top[1];
+        this.topselected = this.objectconfig.top[0];
+        this.topcolor = this.objectconfig.top[1];
 
-        this.$.bottom.selected = this.objectconfig.bottom[0];
-        this.$.bottom.color = this.objectconfig.bottom[1];
+        this.bottomselected = this.objectconfig.bottom[0];
+        this.bottomcolor = this.objectconfig.bottom[1];
 
-        this.$.shoes.selected = this.objectconfig.shoes[0];
-        this.$.shoes.color = this.objectconfig.shoes[1];
+        this.shoesselected = this.objectconfig.shoes[0];
+        this.shoescolor = this.objectconfig.shoes[1];
 
-        this.$.lijf.selected = this.objectconfig.lijf[0];
-        this.$.lijf.color = this.objectconfig.lijf[1];
+        this.lijfselected = this.objectconfig.lijf[0];
+        this.lijfcolor = this.objectconfig.lijf[1];
 
         // this.$.head.color = this.objectconfig.lijf[1];
 
@@ -653,14 +817,15 @@ See authors.md for a list of all members.
         this.modus = 2;
       },
 
+
+    toggleCollapse:function(){
+      this.$.collapse.toggle();
+    },
+
       save:function(){
-                this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
-                this.modus = 1;
-              }
-
-
-
-
+        this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
+        this.modus = 1;
+      }
 
     });
   })();
