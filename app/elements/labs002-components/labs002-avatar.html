@@ -66,41 +66,28 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
-
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-
-
 <link rel="import" href="labs002-avatar-snitpages.html">
 <link rel="import" href="labs002-avatar-glassespages.html">
 <link rel="import" href="labs002-avatar-beardpages.html">
 <link rel="import" href="labs002-avatar-facepages.html">
-
 <link rel="import" href="labs002-avatar-headpages.html">
 <link rel="import" href="labs002-avatar-toppages.html">
 <link rel="import" href="labs002-avatar-bottompages.html">
 <link rel="import" href="labs002-avatar-shoespages.html">
 <link rel="import" href="labs002-avatar-bodypages.html">
-
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
-
 <link rel="import" href="../lo-peers/lo-peers.html">
-
-
 <link rel="import" href="labs002-colorpicker.html">
-
 <link rel="import" href="../lo-configbtns/lo-configbtns.html">
-
 <dom-module id="labs002-avatar">
-
-
   <style>
    :host {
       display: block;
       height: 100%;
       width: 100%;
-
     }
 
     neon-animated-pages {
@@ -116,46 +103,36 @@ See authors.md for a list of all members.
       background-color: white;
     }
 
-
     .thumbcontainer {
       width: 100%;
       max-width: 400px;
       height: 100%;
-/*      max-height: 400px;*/
       position: relative;
       background: linear-gradient(to bottom, #a4e5f9 50%, white 50% ); 
-/*       background-color: red;*/
     }
 
     .absolutepos {
       position: absolute;
       width: 100%;
       height: 100%;
-/*      background-color: rgba(0,0,0,0.025);*/
     }
-
 
     .objectvaluesbar {
       width: 100%;
       margin: 0px;
       padding: 15px 15px 15px 20px;
       box-sizing:border-box;
-
       background-color: #fafafa;
       height: 60px;
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
       box-sizing:border-box;
-
       border-radius: 0px 0px 2px 2px;
     }
-
-
 
     .valids {
       @apply(--layout-horizontal);
       @apply(--layout-end-justified);
-
       @apply(--layout-center);
       width: 20%;
       min-width: 40px;
@@ -169,45 +146,34 @@ See authors.md for a list of all members.
 
     .valids p {
       padding: 0px;
-
       margin: 0px 5px 0px 0px;
-
       font-size: var(--p-valids);
       font-family: OpensansBold;
       color: #333333;
     }
-
-
 
     .objectfirstvalue {
       width: 100%;
       @apply(--layout-horizontal);
       @apply(--layout-center);
       width: 80%;
-
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow:ellipsis;
-
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
     }
 
     .objectfirstvalue p {
       width: 100%;
       text-align: left;
-
       margin: 0px;
       padding: 0px;
       font-family: Opensans;
       font-size: var(--p-size);
       color: #666666;
-
       overflow: hidden;
       white-space: nowrap;
       text-overflow:ellipsis;
-
     }
-
-
 
     .whitecanvas {
       background-color: white;
@@ -224,7 +190,6 @@ See authors.md for a list of all members.
       @apply(--layout-center);
     }
 
-
     lo-peers {
       width: 75px;
       height: 75px;
@@ -232,18 +197,13 @@ See authors.md for a list of all members.
       margin: 30px 0px 30px 0px;
     }
 
-
-
     .valuesbox {
       background-color: #F4F4F4;
       width: 100%;
-
-
       margin: 0px;
       @apply(--layout-vertical);
       @apply(--layout-start); 
     }
-
 
     .values {
       width: 100%;
@@ -253,7 +213,6 @@ See authors.md for a list of all members.
       text-align: center;
     }
 
-
     .values p {
       text-align: center;
       margin: 0px;
@@ -262,7 +221,6 @@ See authors.md for a list of all members.
       font-size: 16px;
       color: #666666;
     }
-
 
     .lockedbtn {
       background-color: rgba(0,0,0,0.025);
@@ -279,38 +237,28 @@ See authors.md for a list of all members.
       width: 100%;
     }
 
-
-
-
     .avataredit {
       width: 100%;
       background-color: white;
-
     }
-
 
     iron-collapse {
       width: 100%;
       @apply(--layout-vertical);
       @apply(--layout-center); 
-
     }
-
 
     iron-selector {
       width: 240px;
-
       @apply(--layout-horizontal);
       @apply(--layout-wrap); 
     }
-
 
     .item {
       width: 60px;
       height: 60px;
       margin: 0px;
       padding: 0px;
-
       @apply(--layout-horizontal);
       @apply(--layout-center-center); 
     }
@@ -318,312 +266,103 @@ See authors.md for a list of all members.
     .item p {
       margin: 0px;
       padding: 0px;
-
     }
 
     .iron-selected {
       background: #eee;
     }
-
-
   </style>
-  <template>
-
-
+<template>
 <neon-animated-pages id="avatarmainpages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
-
-
-
 <!--   0 //   THUMB PERVIEW -->
   <neon-animatable>
-  <div class="canvas layout vertical center-center">
-
-    <div class="thumbcontainer">
-
-      <div class="absolutepos">
-        <labs002-avatar-bodypages 
-          selected="{{bodyselected}}"
-          color="{{bodycolor}}">
-        </labs002-avatar-bodypages>
-      </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-shoespages 
-          selected="{{shoesselected}}"
-          color="{{shoescolor}}"
-          nrofitems="{{nrofshoes}}">
-        </labs002-avatar-shoespages>
-      </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-bottompages 
-          selected="{{bottomselected}}"
-          color="{{bottomcolor}}"
-          nrofitems="{{nrofbottom}}">
-        </labs002-avatar-bottompages>
-      </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-toppages 
-          selected="{{topselected}}"
-          color="{{topcolor}}"
-          nrofitems="{{nroftop}}">
-        </labs002-avatar-toppages>
-      </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-headpages 
-          selected="{{headselected}}"
-          color="{{bodycolor}}"
-          nrofitems="{{nrofhead}}">
-        </labs002-avatar-headpages>
-      </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-facepages 
-          selected="{{faceselected}}"
-          color="{{facecolor}}">
-        </labs002-avatar-facepages>
-      </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-glassespages 
-          selected="{{glassesselected}}"
-          color="{{glassescolor}}"
+    <div class="canvas layout vertical center-center">
+      <div class="thumbcontainer">
+        <div class="absolutepos">
+          <labs002-avatar-bodypages 
+            selected="{{bodyselected}}"
+            color="{{bodycolor}}">
+          </labs002-avatar-bodypages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-shoespages 
+            selected="{{shoesselected}}"
+            color="{{shoescolor}}"
+            nrofitems="{{nrofshoes}}">
+          </labs002-avatar-shoespages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-bottompages 
+            selected="{{bottomselected}}"
+            color="{{bottomcolor}}"
+            nrofitems="{{nrofbottom}}">
+          </labs002-avatar-bottompages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-toppages 
+            selected="{{topselected}}"
+            color="{{topcolor}}"
+            nrofitems="{{nroftop}}">
+          </labs002-avatar-toppages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-headpages 
+            selected="{{headselected}}"
+            color="{{bodycolor}}"
+            nrofitems="{{nrofhead}}">
+          </labs002-avatar-headpages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-facepages 
+            selected="{{faceselected}}"
+            color="{{facecolor}}">
+          </labs002-avatar-facepages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-glassespages 
+            selected="{{glassesselected}}"
+            color="{{glassescolor}}"
+            nrofitems="{{nrofglasses}}">
+          </labs002-avatar-glassespages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-beardpages 
+            selected="{{beardselected}}"
+            color="{{beardcolor}}"
+            nrofitems="{{nrofbeard}}">
+          </labs002-avatar-beardpages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-snitpages
+            selected="{{snitselected}}"
+            color="{{snitcolor}}"
           nrofitems="{{nrofglasses}}">
-        </labs002-avatar-glassespages>
+          </labs002-avatar-snitpages>
+        </div>
       </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-beardpages 
-          selected="{{beardselected}}"
-          color="{{beardcolor}}"
-          nrofitems="{{nrofbeard}}">
-        </labs002-avatar-beardpages>
-      </div>
-
-      <div class="absolutepos">
-        <labs002-avatar-snitpages
-          selected="{{snitselected}}"
-          color="{{snitcolor}}"
-        nrofitems="{{nrofglasses}}">
-        </labs002-avatar-snitpages>
+      <div class="objectvaluesbar">
+        <div class="objectfirstvalue">
+          <small>{{firstvalue}}</small>
+        </div>
+        <div class="valids">
+          <p>{{objectpeers.length}}</p>
+          <img src="../../images/accept-small.svg">
+        </div>
       </div>
     </div>
-
-    <!--     <template is="dom-if" if="{{edit}}">
-      <div class="righttbtns">
-
-        <lo-configbtns context="snit" on-btn-tapped="next" next></lo-configbtns>
-        <lo-configbtns context="glasses" on-btn-tapped="next" next></lo-configbtns>
-        <lo-configbtns context="beard" on-btn-tapped="next" next></lo-configbtns>
-        <lo-configbtns context="top" on-btn-tapped="next" next></lo-configbtns>
-        <lo-configbtns context="bottom" on-btn-tapped="next" next></lo-configbtns>
-        <lo-configbtns context="shoes" on-btn-tapped="next" next></lo-configbtns>
-
-      </div>                
-    </template> -->
-
-    <div class="objectvaluesbar">
-      <div class="objectfirstvalue">
-        <small>{{firstvalue}}</small>
-      </div>
-      <div class="valids">
-        <p>{{objectpeers.length}}</p>
-        <img src="../../images/accept-small.svg">
-      </div>
-    </div>
-
-  </div>
   </neon-animatable>
 
-
-
-<!--   1 //   VALUES READ -->
+  <!--   1 //   VALUES READ -->
   <neon-animatable>
     <div class="canvas layout vertical center">
-
       <div class="avatarcanvas" on-tap="toggleAvataredit">
         <div class="thumbcontainer">
-
-            <div class="absolutepos">
-              <labs002-avatar-bodypages 
-                selected="{{bodyselected}}"
-                color="{{bodycolor}}">
-              </labs002-avatar-bodypages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-shoespages 
-                selected="{{shoesselected}}"
-                color="{{shoescolor}}"
-                nrofitems="{{nrofshoes}}">
-              </labs002-avatar-shoespages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-bottompages 
-                selected="{{bottomselected}}"
-                color="{{bottomcolor}}"
-                nrofitems="{{nrofbottom}}">
-              </labs002-avatar-bottompages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-toppages 
-                selected="{{topselected}}"
-                color="{{topcolor}}"
-                nrofitems="{{nroftop}}">
-              </labs002-avatar-toppages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-headpages 
-                selected="{{headselected}}"
-                color="{{bodycolor}}"
-                nrofitems="{{nrofhead}}">
-              </labs002-avatar-headpages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-facepages 
-                selected="{{faceselected}}"
-                color="{{facecolor}}">
-              </labs002-avatar-facepages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-glassespages 
-                selected="{{glassesselected}}"
-                color="{{glassescolor}}"
-                nrofitems="{{nrofglasses}}">
-              </labs002-avatar-glassespages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-beardpages 
-                selected="{{beardselected}}"
-                color="{{beardcolor}}"
-                nrofitems="{{nrofbeard}}">
-              </labs002-avatar-beardpages>
-            </div>
-
-            <div class="absolutepos">
-              <labs002-avatar-snitpages
-                selected="{{snitselected}}"
-                color="{{snitcolor}}"
-              nrofitems="{{nrofglasses}}">
-              </labs002-avatar-snitpages>
-            </div>
-        </div>
-      </div>
-
-        <div class="avataredit">
-          <iron-collapse id="avataredit">
-
-
-
-            <div>
-
-              <labs002-colorpicker
-                colorselected="{{selectedcolor}}">
-              </labs002-colorpicker>
-
-              <iron-selector id="itemselector" attr-for-selected="context" selected="body" on-iron-select="passItem">
-
-              <div class="item" context="body">
-                <p>body</p>
-                <img src="">
-              </div>
-
-              <div class="item" context="beard">
-                <p>beard</p>
-                <img src="">
-              </div>
-
-              
-              <div class="item" context="glasses">
-                <p>glasses</p>
-                <img src="">
-              </div>
-
-              <div class="item" context="snit">
-                <p>snit</p>
-                <img src="">
-              </div>
-              
-              <div class="item" context="top">
-                <p>top</p>
-                <img src="">
-              </div>
-
-              <div class="item" context="bottom">
-                <p>bottom</p>
-                <img src="">
-              </div>
-              
-              <div class="item" context="shoes">
-                <p>shoes</p>
-                <img src="">
-              </div>
-
-
-              </iron-selector>
-              <br>
-            </div>
-
-          </iron-collapse>
-        </div>
-
-      <div class="valuesbox" on-tap="toggleValuesedit">
-        <div class="values">
-          <p><span>{{firstvalue}}</span></p>    
-
-          <iron-collapse id="valuesedit">
-
-            <template is="dom-repeat" items="{{previewdata}}">
-              <p><span>{{item}}</span><span>{{item.value}}</span></p>
-            </template>
-
-            <!--   <template is="dom-if" if="{{this.locked}}">   --> 
-           <button class="lockedbtn" on-tap="toEdit">
-                <img src="../../images/locked.svg">
-              </button>
-            <!--   </template> -->
-
-            <!--   <template is="dom-if" if="{{!this.locked}}">
-              <button class="lockedbtn">
-               <img src="../../images/accept.svg">
-              </button>
-            </template> -->
-
-          </iron-collapse>
-        </div>
-
-      </div>
-
-      <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
-
-    </div>
-
- </neon-animatable>
-
-
-
-
- <neon-animatable>
-    <div class="canvas layout vertical center">
-      <div class="avatarcanvas">
-
-       <div class="thumbcontainer">
-
           <div class="absolutepos">
             <labs002-avatar-bodypages 
               selected="{{bodyselected}}"
               color="{{bodycolor}}">
             </labs002-avatar-bodypages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-shoespages 
               selected="{{shoesselected}}"
@@ -631,7 +370,6 @@ See authors.md for a list of all members.
               nrofitems="{{nrofshoes}}">
             </labs002-avatar-shoespages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-bottompages 
               selected="{{bottomselected}}"
@@ -639,7 +377,6 @@ See authors.md for a list of all members.
               nrofitems="{{nrofbottom}}">
             </labs002-avatar-bottompages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-toppages 
               selected="{{topselected}}"
@@ -647,7 +384,6 @@ See authors.md for a list of all members.
               nrofitems="{{nroftop}}">
             </labs002-avatar-toppages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-headpages 
               selected="{{headselected}}"
@@ -655,14 +391,12 @@ See authors.md for a list of all members.
               nrofitems="{{nrofhead}}">
             </labs002-avatar-headpages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-facepages 
               selected="{{faceselected}}"
               color="{{facecolor}}">
             </labs002-avatar-facepages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-glassespages 
               selected="{{glassesselected}}"
@@ -670,7 +404,6 @@ See authors.md for a list of all members.
               nrofitems="{{nrofglasses}}">
             </labs002-avatar-glassespages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-beardpages 
               selected="{{beardselected}}"
@@ -678,7 +411,6 @@ See authors.md for a list of all members.
               nrofitems="{{nrofbeard}}">
             </labs002-avatar-beardpages>
           </div>
-
           <div class="absolutepos">
             <labs002-avatar-snitpages
               selected="{{snitselected}}"
@@ -688,10 +420,130 @@ See authors.md for a list of all members.
           </div>
         </div>
       </div>
-
-
+      <div class="avataredit">
+        <iron-collapse id="avataredit">
+          <div>
+            <labs002-colorpicker
+               colorselected="{{selectedcolor}}">
+            </labs002-colorpicker>
+            <lo-configbtns next on-tap="next" id="next"></lo-configbtns><lo-configbtns on-tap="previous" id="previous"></lo-configbtns>
+            <iron-selector id="itemselector" attr-for-selected="context" selected="body" on-iron-select="passItem">
+              <div class="item" context="body">
+                <p>body</p>
+                <img src="">
+              </div>
+              <div class="item" context="beard">
+                <p>beard</p>
+                <img src="">
+              </div>         
+              <div class="item" context="glasses">
+                <p>glasses</p>
+                <img src="">
+              </div>
+              <div class="item" context="snit">
+                <p>snit</p>
+                <img src="">
+              </div>            
+              <div class="item" context="top">
+                <p>top</p>
+                <img src="">
+              </div>
+              <div class="item" context="bottom">
+                <p>bottom</p>
+                <img src="">
+              </div>      
+              <div class="item" context="shoes">
+                <p>shoes</p>
+                <img src="">
+              </div>
+            </iron-selector>
+          </div>
+        </iron-collapse>
+      </div>
+      <div class="valuesbox" on-tap="toggleValuesedit">
+        <div class="values">
+          <p><span>{{firstvalue}}</span></p>    
+          <iron-collapse id="valuesedit">
+            <template is="dom-repeat" items="{{previewdata}}">
+              <p><span>{{item}}</span><span>{{item.value}}</span></p>
+            </template>
+            <button class="lockedbtn" on-tap="toEdit">
+              <img src="../../images/locked.svg">
+            </button>
+          </iron-collapse>
+        </div>
+      </div>
+      <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
+    </div>
+  </neon-animatable>
+  <neon-animatable>
+    <div class="canvas layout vertical center">
+      <div class="avatarcanvas">
+        <div class="thumbcontainer">
+          <div class="absolutepos">
+            <labs002-avatar-bodypages 
+              selected="{{bodyselected}}"
+              color="{{bodycolor}}">
+            </labs002-avatar-bodypages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-shoespages 
+              selected="{{shoesselected}}"
+              color="{{shoescolor}}"
+              nrofitems="{{nrofshoes}}">
+            </labs002-avatar-shoespages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-bottompages 
+              selected="{{bottomselected}}"
+              color="{{bottomcolor}}"
+              nrofitems="{{nrofbottom}}">
+            </labs002-avatar-bottompages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-toppages 
+              selected="{{topselected}}"
+              color="{{topcolor}}"
+              nrofitems="{{nroftop}}">
+            </labs002-avatar-toppages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-headpages 
+              selected="{{headselected}}"
+              color="{{bodycolor}}"
+              nrofitems="{{nrofhead}}">
+            </labs002-avatar-headpages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-facepages 
+              selected="{{faceselected}}"
+              color="{{facecolor}}">
+            </labs002-avatar-facepages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-glassespages 
+              selected="{{glassesselected}}"
+              color="{{glassescolor}}"
+              nrofitems="{{nrofglasses}}">
+            </labs002-avatar-glassespages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-beardpages 
+              selected="{{beardselected}}"
+              color="{{beardcolor}}"
+              nrofitems="{{nrofbeard}}">
+            </labs002-avatar-beardpages>
+          </div>
+          <div class="absolutepos">
+            <labs002-avatar-snitpages
+              selected="{{snitselected}}"
+              color="{{snitcolor}}"
+            nrofitems="{{nrofglasses}}">
+            </labs002-avatar-snitpages>
+          </div>
+        </div>
+      </div>
       <div class="valuesbox">
-
         <div class="values">
           <paper-input-container>
             <label>Voornaam</label>
@@ -709,95 +561,37 @@ See authors.md for a list of all members.
             <label>Geboorteplaats</label>
             <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
           </paper-input-container>
-
           <button on-tap="save">SAVE VALUES</button>
         </div>
-
       </div>
-    </div>
-
- </neon-animatable>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!--   VALUES EDIT -->
-
-  <neon-animatable>
-    <div class="whitecanvas">
-    
-    <paper-input-container>
-          <label>Voornaam</label>
-          <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstname}}">
-        </paper-input-container>
-        <paper-input-container>
-          <label>Naam</label>
-          <input type="text" is="iron-input" bind-value="{{objectdata.lastname}}">
-        </paper-input-container>
-        <paper-input-container>
-          <label>Geboortedatum</label>
-          <input type="text" is="iron-input" bind-value="{{objectdata.birthdate}}" >
-        </paper-input-container>
-        <paper-input-container>
-          <label>Geboorteplaats</label>
-          <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
-        </paper-input-container>
-
-      <button on-tap="save">SAVE VALUES</button>
     </div>
   </neon-animatable>
 
-
-
-
-<!--   AVATAR CONFIG -->
- <neon-animatable>
- </neon-animatable>
-
-
-
-
-
-
-
-
-
-
-
-
-
-  </neon-animated-pages>
-
-  </template>
-  <script>
+<!--   VALUES EDIT -->
+  <neon-animatable>
+    <div class="whitecanvas">
+      <paper-input-container>
+        <label>Voornaam</label>
+        <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstname}}">
+      </paper-input-container>
+      <paper-input-container>
+        <label>Naam</label>
+        <input type="text" is="iron-input" bind-value="{{objectdata.lastname}}">
+      </paper-input-container>
+      <paper-input-container>
+        <label>Geboortedatum</label>
+        <input type="text" is="iron-input" bind-value="{{objectdata.birthdate}}" >
+      </paper-input-container>
+      <paper-input-container>
+        <label>Geboorteplaats</label>
+        <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
+      </paper-input-container>
+      <button on-tap="save">SAVE VALUES</button>
+    </div>
+  </neon-animatable>
+</neon-animated-pages>
+</template>
+<script>
   (function() {
     Polymer({
       is: 'labs002-avatar',
@@ -807,50 +601,6 @@ See authors.md for a list of all members.
       ],
 
       properties: {
-      // objectconfig: {
-      //     type: Object,
-      //     observer: "_configChanged",
-      //     notify: true
-      // },
-
-      // objectdata: {
-      //     type: Object,
-      //     observer: "_dataChanged",
-      //     notify: true
-      // },
-
-
-      // edit: {
-      //   type: Boolean,
-      //   value: false
-      // },
-
-
-      // itemtocolor: {
-      //   type: String,
-      //   value: ''
-      // },
-
-      // opened: {
-      //   type: Boolean,
-      //   value: false,
-      //   observer: "editListener"
-      // },
-
-      // active: {
-      //   type: Boolean,
-      //   value: false
-      // },
-
-      // selecteditem: {
-      //   type: String,
-      //   observer: "_selecteditem",
-      //   value: ""
-      // },
-
-
-
-
         objectconfig: {
           type: Object,
           notify: true,
@@ -867,7 +617,6 @@ See authors.md for a list of all members.
           type: Boolean,
           value: false,
           observer: "_editChanged"
-
         },
 
         opened: {
@@ -879,7 +628,6 @@ See authors.md for a list of all members.
           type: String
         },
 
-
         modus: {     
           type: Number,
           value: 0,
@@ -887,12 +635,10 @@ See authors.md for a list of all members.
           observer: "_modusChanged"        
         },
 
-      selectedcolor: {
-        type: String,
-        observer: "_selectedcolor"
-      }
-
-
+        selectedcolor: {
+          type: String,
+          observer: "_selectedcolor"
+        }
       },
 
         // MODI //
@@ -901,69 +647,75 @@ See authors.md for a list of all members.
         // 2: VALUES WRITE
         // 3: AVATAR CONFIG  
 
-
-
       ready: function(){
         this.$.avatarmainpages.selected = this.modus;
-        this.itemtocolor = "lijf";
+        this.itemtocolor = 'lijf';
+        this.nrof = [];
       },
-
 
       attached: function() {
         this.async(function() {
-        this._configChanged();
-        this._dataChanged();
-      });
-
-      this.entryAnimation = 'fade-in-animation';
-      this.exitAnimation = 'fade-out-animation';
+          this._configChanged();
+          this._dataChanged();
+        });
+        this.entryAnimation = 'fade-in-animation';
+        this.exitAnimation = 'fade-out-animation';
       },
 
       detached: function() {
         this.async(function() {
           //console.log(this.localName + '#' + this.id + ' was detached');
-       });
+        });
       },
 
-
-
-
-    previous: function(e){
-        this.selecteditem = e.target.context;
-        var item = document.getElementById(this.selecteditem);
-        console.log("PREV: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
-         if(this.objectconfig[this.selecteditem][0]>=1){
-          console.log(this.objectconfig[this.selecteditem][0]);
-          this.objectconfig[this.selecteditem][0]--;
-          e.target.active = true;
+      previous: function(e){
+        var selecteditem = this.$.itemselector.selected;
+        console.log(this.nrof);
+        //var item = document.getElementById(this.selecteditem);
+        console.log("current item: ",this.nrof[selecteditem]);
+        if(this.nrof[selecteditem]>=1){
+          console.log(this.objectconfig[selecteditem][0]);
+          this.objectconfig[selecteditem][0]--;
+            this.$.previous.active = true;
         } else {
-          e.target.active = false;
+            this.$.previous.active = false;
         };
         this._configChanged();
-        item.entryAnimation = "slide-to-left-animation";
-        item.exitAnimation = "slide-right-animation";
-      },
+          //item.entryAnimation = "slide-to-left-animation";
+          //item.exitAnimation = "slide-right-animation";
+        },
 
-      next: function(e){
-        this.selecteditem = e.target.context;
-        var item = document.getElementById(this.selecteditem);
-        console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
-        if(this.objectconfig[this.selecteditem][0]<=item.nrofitems-1){
-          console.log(this.objectconfig[this.selecteditem][0]);
-          this.objectconfig[this.selecteditem][0]++;
-          e.target.active = true;
-        } else {
-          e.target.active = false;
-        };
-        this._configChanged();
-        item.entryAnimation = "slide-to-right-animation";
-        item.exitAnimation = "slide-left-animation";
-      },
+        next: function(e){
+          var selecteditem = this.$.itemselector.selected;
+          console.log(this.nrof);
+          //var item = document.getElementById(this.selecteditem);
+          console.log("current item: ",this.nrof[selecteditem]);
+          //console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
+          if(this.nrof[selecteditem]){
+            console.log(this.objectconfig[selecteditem][0]);
+            this.objectconfig[selecteditem][0]++;
+              this.$.next.active = true;
+          } else {
+              this.$.next.active = false;
+          };
+          this._configChanged();
+          //item.entryAnimation = "slide-to-right-animation";
+          //item.exitAnimation = "slide-left-animation";
+        },
 
 
 
       _configChanged: function(){
         console.log('avatar conf changed: ', JSON.stringify(this.objectconfig));
+
+        this.nrof = [];
+
+        this.nrof['top'] = this.nroftop;  
+        this.nrof['snit'] = this.nrofsnit;
+        this.nrof['beard'] = this.nrofbeard;
+        this.nrof['glasses'] = this.nrofglasses;
+        this.nrof['bottom'] = this.nrofbottom;
+        this.nrof['shoes'] = this.nrofshoes;
 
         this.snitselected = this.objectconfig.snit[0];
         this.snitcolor = this.objectconfig.snit[1];
@@ -1060,6 +812,7 @@ See authors.md for a list of all members.
     },
 
     toggleAvataredit:function(){
+      this.save();
       this.$.avataredit.toggle();
     },
 
@@ -1078,7 +831,14 @@ See authors.md for a list of all members.
 
       _selectedcolor: function(){
         console.log('KLEURTJE:', this.selectedcolor);
-
+        if(this.$.itemselector.selected){
+          var item = this.$.itemselector.selected;
+          var color = this.selectedcolor;
+          console.log(this.objectconfig[item]);
+          this.objectconfig[item][1] = color;
+          //var avataritem = document.getElementById(item);
+          this._configChanged();
+        };
         // if(this.objectconfig){
         //   var item = this.selecteditem;
         //   var color = this.selectedcolor;
