@@ -358,8 +358,8 @@ labs002-colorpicker {
       <div class="thumbcontainer">
         <div class="absolutepos">
           <labs002-avatar-bodypages 
-            selected="{{bodyselected}}"
-            color="{{bodycolor}}"
+            selected="{{lijfselected}}"
+            color="{{lijfcolor}}"
             nrofitems="{{nrofbody}}">
           </labs002-avatar-bodypages>
         </div>
@@ -387,7 +387,7 @@ labs002-colorpicker {
         <div class="absolutepos">
           <labs002-avatar-headpages 
             selected="{{headselected}}"
-            color="{{bodycolor}}"
+            color="{{lijfcolor}}"
             nrofitems="{{nrofhead}}">
           </labs002-avatar-headpages>
         </div>
@@ -438,8 +438,8 @@ labs002-colorpicker {
         <div class="thumbcontainer">
           <div class="absolutepos">
             <labs002-avatar-bodypages 
-              selected="{{bodyselected}}"
-              color="{{bodycolor}}">
+              selected="{{lijfselected}}"
+              color="{{lijfcolor}}">
             </labs002-avatar-bodypages>
           </div>
           <div class="absolutepos">
@@ -466,7 +466,7 @@ labs002-colorpicker {
           <div class="absolutepos">
             <labs002-avatar-headpages 
               selected="{{headselected}}"
-              color="{{bodycolor}}"
+              color="{{lijfcolor}}"
               nrofitems="{{nrofhead}}">
             </labs002-avatar-headpages>
           </div>
@@ -507,8 +507,8 @@ labs002-colorpicker {
           <lo-configbtns next on-tap="next" id="next"></lo-configbtns>
           <lo-configbtns on-tap="previous" id="previous"></lo-configbtns>
           <div class="test">
-            <iron-selector id="itemselector" attr-for-selected="context" selected="body" on-iron-select="passItem">
-              <div class="item" context="body">
+            <iron-selector id="itemselector" attr-for-selected="context" selected="lijf" on-iron-select="passItem">
+              <div class="item" context="lijf">
                 <p>body 8888</p>
                 <img src="">
               </div>
@@ -566,8 +566,8 @@ labs002-colorpicker {
         <div class="thumbcontainer">
           <div class="absolutepos">
             <labs002-avatar-bodypages 
-              selected="{{bodyselected}}"
-              color="{{bodycolor}}">
+              selected="{{lijfselected}}"
+              color="{{lijfcolor}}">
             </labs002-avatar-bodypages>
           </div>
           <div class="absolutepos">
@@ -594,7 +594,7 @@ labs002-colorpicker {
           <div class="absolutepos">
             <labs002-avatar-headpages 
               selected="{{headselected}}"
-              color="{{bodycolor}}"
+              color="{{lijfcolor}}"
               nrofitems="{{nrofhead}}">
             </labs002-avatar-headpages>
           </div>
@@ -807,7 +807,7 @@ labs002-colorpicker {
         this.faceselected = this.objectconfig.face[0];
         this.facecolor = this.objectconfig.face[1];
 
-         this.headselected = this.objectconfig.head[0];
+        this.headselected = this.objectconfig.head[0];
         this.headcolor = this.objectconfig.lijf[1];
 
         this.topselected = this.objectconfig.top[0];
