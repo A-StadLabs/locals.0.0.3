@@ -2,23 +2,16 @@
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animated-pages.html">
-
 <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/slide-from-right-animation.html">
 <link rel="import" href="../../bower_components/neon-animation/animations/slide-left-animation.html">
-
 <link rel="import" href="../../bower_components/neon-animation/neon-animatable.html">
-
 <link rel="import" href="../lo-localstorageapi/lo-localstorageapi.html">
-
 <link rel="import" href="../../bower_components/mqtt-elements/mqtt-elements.html">
-
 <script src="../../bower_components/node-uuid/uuid.js"></script>
 <script src="../../scripts/crypto-aes.js"></script>
-
 <dom-module id="lo-newuser">
     <style>
-
       :host {
         display: block;
         width: 100%;
@@ -124,9 +117,7 @@
     </iron-localstorage>
 
     <mqtt-connection auto url="ws://opantwerpen.be:15674" on-mqtt-message="msgreceived" connected="{{connected}}" id="mqtt">
-
       <mqtt-publish id="pub" on-mqtt-publication-published="_published"></mqtt-publish>
-
     </mqtt-connection>
 
     <lo-localstorageapi 
@@ -173,12 +164,12 @@
     };
 
     function importPage(url){
-    return new Promise(function(resolve, reject){
-      Polymer.Base.importHref(url, function(e){
-        resolve(e.target.import);
-      }, reject);
-    });
-  };
+      return new Promise(function(resolve, reject){
+        Polymer.Base.importHref(url, function(e){
+          resolve(e.target.import);
+        }, reject);
+      });
+    };
 
     Polymer({
       is: 'lo-newuser',
@@ -257,42 +248,45 @@
         {
           "Avatar":
             {
-            "component":"labs002-avatar",
-            "conditions":[{"objectname":""}],
-            "config":
-              {
-              "body":[0,"var(--primary-lightblue)"],
-              "beard":[0,"var(--primary-red)"],
-              "bottom":[1,"var(--primary-darkblue)"],
-              "face":[0,"var(--primary-lightblue)"],
-              "glasses":[0,"var(--primary-darkblue)"],
-              "head":[0,"var(--primary-green)"],
-              "lijf":[0,"var(--primary-green)"],
-              "shoes":[0,"var(--primary-darkblue)"],
-              "snit":[1,"var(--primary-lightblue)"],
-              "top":[1,"var(--primary-white)"],
-              "firstvalue": "firstname"
-              },
-            "data":
-              {
-              "firstname":"Voornaam",
-              "lastname":"Achternaam",
-              "birthdate":"01/01/1970",
-              "birthplace":"Geboorteplaats"},
-              "description":"Lorem ipsum",
-              "enabled":true,
-              "hash":"none",
-              "height":100,
-              "icon":"../../../images/ADDER_icons-01.svg",
-              "locked":false,"name":"Avatar",
-              "version":"0.0.1",
-              "width":100,
-              "peers":[]
-              }
-            },
+              "component":"labs002-avatar",
+              "conditions":[{"objectname":""}],
+              "config":
+                {
+                  "lijf":[0,"var(--primary-lightblue)"],
+                  "beard":[0,"var(--primary-red)"],
+                  "bottom":[1,"var(--primary-darkblue)"],
+                  "face":[0,"var(--primary-lightblue)"],
+                  "glasses":[0,"var(--primary-darkblue)"],
+                  "head":[0,"var(--primary-green)"],
+                  "lijf":[0,"var(--primary-green)"],
+                  "shoes":[0,"var(--primary-darkblue)"],
+                  "snit":[1,"var(--primary-lightblue)"],
+                  "top":[1,"var(--primary-white)"],
+                  "firstvalue": "firstname"
+                },
+              "data":
+                {
+                  "firstname":"Voornaam",
+                  "lastname":"Achternaam",
+                  "birthdate":"01/01/1970",
+                  "birthplace":"Geboorteplaats"},
+                  "description":"Lorem ipsum",
+                  "enabled":true,
+                  "hash":"none",
+                  "height":100,
+                  "icon":"../../../images/ADDER_icons-01.svg",
+                  "locked":false,
+                  "name":"Avatar",
+                  "version":"0.0.1",
+                  "width":100,
+                  "peers":[],
+                  "peersneededtovalidate": 3,
+                  "validated": false
+                },
             "peers":[],
             "godfather":[],
             "lastupdate":Date.now()
+          };
         };
 
         localapi.data = data;

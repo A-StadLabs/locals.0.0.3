@@ -352,17 +352,13 @@
       };
 
       this.objecten = collection;
-
       this.objectsloaded = true;
-
       console.log("objecten: ", this.objecten);
-
     },
 
     selectobject: function(e){
       this.$.pages.entryAnimation = 'slide-from-right-animation';
       this.$.pages.exitAnimation = 'slide-left-animation';
-
       this.previewname = e.target.id;
       this.previewicon = this.objects.collection[e.target.index].icon;
       this.previewdescription = this.objects.collection[e.target.index].description;

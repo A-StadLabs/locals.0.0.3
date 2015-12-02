@@ -425,16 +425,10 @@ See authors.md for a list of all members.
     },
 
     msgreceived: function(e){
-      console.log("MSGRECEIVED: ", e.detail.topic, e.detail.msg);
       var commandarray = e.detail.msg.split("|");
       var partner = commandarray[1];
       var command = commandarray[0];
       var lomqtt = this.$.lomqtt;
-      // var objectname = e.detail.detail[2].objectname;
-      // var objectconfig = e.detail.detail[3].objectconfig;
-      // var objectdata = e.detail.detail[4].objectdata;
-      // var userid = e.detail.detail[5].userid;
-      // var hash = e.detail.detail[6].hash;
       var dialog = this.$.lodialog;
       var peerd = this.$.peerval;
 
@@ -473,12 +467,6 @@ See authors.md for a list of all members.
           break;
 
           case "VALIDATE":
-            // Validate the dataset on this device by adding the sender as a peer
-            //console.log("validate request from ", partner);
-            //console.log('localapi: ', this.localapi.collection);
-            //console.log('objectname: ', objectname);
-            //console.log('localapi item: ', this.localapi.collection[objectname]);
-            //console.log('peers id:  ', e.detail.detail[5].userid);
             var objectname = commandarray[2];
             var userid = commandarray[5];
             this.localapi.collection[objectname].peers.push({ peer: userid });
