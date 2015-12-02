@@ -673,6 +673,13 @@ See authors.md for a list of all members.
         // hier dus een nieuwe functie die gaat checken of de prev/next buttons actief zijn of niet.
         var selecteditem = this.$.itemselector.selected;
         console.log("Current state: ", this.objectconfig[selecteditem][0]); 
+        this.setButtonstates(selecteditem);
+      },
+
+      setButtonstates: function(selecteditem){
+        console.log(selecteditem);
+        console.log('current state: ',this.objectconfig[selecteditem][0]);
+        console.log('max state: ',this.nrof[selecteditem]);
         if(this.objectconfig[selecteditem][0]>=0){
           this.$.next.active = true;
         } else {
@@ -693,9 +700,9 @@ See authors.md for a list of all members.
         if(this.objectconfig[selecteditem][0]>=0){
           console.log(this.objectconfig[selecteditem][0]);
           this.objectconfig[selecteditem][0]--;
-            this.$.previous.active = true;
+          this.setButtonstates(selecteditem);
         } else {
-            this.$.previous.active = false;
+          this.setButtonstates(selecteditem);
         };
         this._configChanged();
           //item.entryAnimation = "slide-to-left-animation";
@@ -711,9 +718,9 @@ See authors.md for a list of all members.
           if(this.objectconfig[selecteditem][0]<=this.nrof[selecteditem]){
             console.log(this.objectconfig[selecteditem][0]);
             this.objectconfig[selecteditem][0]++;
-            this.$.next.active = true;
+            this.setButtonstates(selecteditem);
           } else {
-            this.$.next.active = false;
+            this.setButtonstates(selecteditem);
           };
           this._configChanged();
           //item.entryAnimation = "slide-to-right-animation";
