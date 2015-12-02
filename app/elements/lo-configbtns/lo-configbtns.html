@@ -7,31 +7,24 @@
     <style>
       :host {
         display: block;
-        --var-lopacity: 1;
+        --var-lopacity: blue;
       }
 
 
     .selector button {
       outline: 0;
       border: none;
-      background-color: rgba(0,0,0,0.05);
-
       width: 28px;
-
       height: 28px;
-
       border-radius: 50%;
       padding: 0px;
       margin: 0px;
-      opacity: var(--var-lopacity);
+      background-color: var(--var-lopacity);
     }
 
     .selector img {
       width: 100%;
     }
-
-    
-
 
     </style>
     <div class="selector">
@@ -80,9 +73,9 @@
       _active: function(){
         console.log("I'm ", this.active);
         if(this.active){
-          this.customStyle['--var-lopacity'] = '1';
+          this.customStyle['--var-lopacity'] = 'blue';
         } else {
-          this.customStyle['--var-lopacity'] = '0.5';
+          this.customStyle['--var-lopacity'] = 'red';
         }
         this.updateStyles();
       }

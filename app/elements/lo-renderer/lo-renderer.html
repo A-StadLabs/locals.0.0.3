@@ -421,6 +421,7 @@ See authors.md for a list of all members.
     back: function(){
       this.fire('change-stage', { stage: 0 });
       this.selected = 0;
+      this.confirm();
       this.opened = false;
       //console.log("doet dit wel iets");
       var coll = document.querySelector("lo-objectscollection");
