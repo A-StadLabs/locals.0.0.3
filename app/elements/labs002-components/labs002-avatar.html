@@ -520,55 +520,44 @@ See authors.md for a list of all members.
 
         <div class="avataredit">
           <iron-collapse id="avataredit">
-
-
-
             <div>
-
               <labs002-colorpicker
                 colorselected="{{selectedcolor}}">
               </labs002-colorpicker>
-
-              <iron-selector id="itemselector" attr-for-selected="context" selected="body" on-iron-select="passItem">
-
-              <div class="item" context="body">
-                <p>body</p>
-                <img src="">
-              </div>
-
-              <div class="item" context="beard">
-                <p>beard</p>
-                <img src="">
-              </div>
-
-              
-              <div class="item" context="glasses">
-                <p>glasses</p>
-                <img src="">
-              </div>
-
-              <div class="item" context="snit">
-                <p>snit</p>
-                <img src="">
-              </div>
-              
-              <div class="item" context="top">
-                <p>top</p>
-                <img src="">
-              </div>
-
-              <div class="item" context="bottom">
-                <p>bottom</p>
-                <img src="">
-              </div>
-              
-              <div class="item" context="shoes">
-                <p>shoes</p>
-                <img src="">
-              </div>
-
-
-              </iron-selector>
+                <iron-selector
+                id="itemselector"
+                attr-for-selected="context"
+                selected="body"
+                on-iron-select="passItem">
+                  <div class="item" context="body">
+                    <p>body</p>
+                    <img src="">
+                  </div>
+                  <div class="item" context="beard">
+                    <p>beard</p>
+                    <img src="">
+                  </div>
+                  <div class="item" context="glasses">
+                    <p>glasses</p>
+                    <img src="">
+                  </div>
+                  <div class="item" context="snit">
+                    <p>snit</p>
+                    <img src="">
+                  </div>
+                  <div class="item" context="top">
+                    <p>top</p>
+                    <img src="">
+                  </div>
+                  <div class="item" context="bottom">
+                    <p>bottom</p>
+                    <img src="">
+                  </div>
+                  <div class="item" context="shoes">
+                    <p>shoes</p>
+                    <img src="">
+                  </div>
+                </iron-selector>
               <br>
             </div>
 
