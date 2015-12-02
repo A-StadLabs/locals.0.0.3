@@ -668,12 +668,29 @@ See authors.md for a list of all members.
         });
       },
 
+      passItem:function(){
+        console.log('DIT ITEM IS NU GESELECTEERD:', this.$.itemselector.selected);
+        // hier dus een nieuwe functie die gaat checken of de prev/next buttons actief zijn of niet.
+        var selecteditem = this.$.itemselector.selected;
+        console.log("Current state: ", this.objectconfig[selecteditem][0]); 
+        if(this.objectconfig[selecteditem][0]>=0){
+          this.$.next.active = true;
+        } else {
+          this.$.previous.active = false;
+        };
+        if(this.objectconfig[selecteditem][0]==this.nrof[selecteditem]){
+          this.$.next.active = false;
+        } else {
+          this.$.previous.active = true;
+        };
+      },
+
       previous: function(e){
         var selecteditem = this.$.itemselector.selected;
-        console.log(this.nrof);
+        //console.log(this.nrof);
         //var item = document.getElementById(this.selecteditem);
-        console.log("current item: ",this.nrof[selecteditem]);
-        if(this.nrof[selecteditem]>=1){
+        console.log("current item max: ",this.nrof[selecteditem]);
+        if(this.objectconfig[selecteditem][0]>=0){
           console.log(this.objectconfig[selecteditem][0]);
           this.objectconfig[selecteditem][0]--;
             this.$.previous.active = true;
@@ -687,16 +704,16 @@ See authors.md for a list of all members.
 
         next: function(e){
           var selecteditem = this.$.itemselector.selected;
-          console.log(this.nrof);
+          //console.log(this.nrof);
           //var item = document.getElementById(this.selecteditem);
-          console.log("current item: ",this.nrof[selecteditem]);
+          console.log("current item max: ",this.nrof[selecteditem]);
           //console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
-          if(this.nrof[selecteditem]){
+          if(this.objectconfig[selecteditem][0]<=this.nrof[selecteditem]){
             console.log(this.objectconfig[selecteditem][0]);
             this.objectconfig[selecteditem][0]++;
-              this.$.next.active = true;
+            this.$.next.active = true;
           } else {
-              this.$.next.active = false;
+            this.$.next.active = false;
           };
           this._configChanged();
           //item.entryAnimation = "slide-to-right-animation";
@@ -821,13 +838,6 @@ See authors.md for a list of all members.
         this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
         this.modus = 1;
       },
-
-
-
-      passItem:function(){
-        console.log('DIT ITEM IS NU GESELECTEERD:', this.$.itemselector.selected);
-      },
-
 
       _selectedcolor: function(){
         console.log('KLEURTJE:', this.selectedcolor);
