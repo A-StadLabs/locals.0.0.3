@@ -1,10 +1,7 @@
-<!-- A-Labs -->
 
 <link rel="import" href="../../bower_components/polymer/polymer.html">
-<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 
-
-<dom-module id="labs002-colorpicker">
+<dom-module id="lo-colorpicker">
   <style>
     :host {
       display: inline-block;
@@ -65,12 +62,11 @@
       fill: var(--primary-white);
     }
 
-
   </style>
-  <template>
+<template>
 <div class="colorpicker">
 
-       <iron-selector id="colorpicker" selected="{{kleur}}" attr-for-selected="color">
+       <iron-selector id="colorpicker" selected="{{kleurtje}}" attr-for-selected="color">
 
 
           <svg color="var(--primary-green)" version="1.1" id="Laag_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -121,63 +117,36 @@
        </iron-selector>
       </div>
 
-
-  </template>
-  <script>
+</template>
+<script>
   (function() {
     Polymer({
-      is: 'labs002-colorpicker',
+      is: 'lo-colorpicker',
 
       behaviors: [
       Polymer.NeonAnimatableBehavior
       ],
 
       properties: {
-          kleur: {
+        kleurtje: {
           type: String,
-          value: 'primary-blue',
-          notify: true,
-          observer: "_Colorwatcher"
+          value: 'var(--primary-purple)',
+          observer: '_colorChanged'
+
         }
 
+
       },
 
-      ready: function(){
+      attached: function(){
+      	this.kleurtje = 'var(--primary-red)';
       },
 
-
-
-      _Colorwatcher: function(){
-            //console.log('Colorwatcher zegt:' , this.kleur);
-            // this.fire('color-selected');
-      },
-
-      Logmaar: function(){
-        //console.log('Hmmkey UIT PICKER!!!', this.kleur, this.$.colorpicker.selected);
+      _colorChanged:function(){
+      	this.fire('color-changed', { color: this.kleurtje });
       }
-
-
 
     });
   })();
   </script>
 </dom-module>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -80,7 +80,7 @@ See authors.md for a list of all members.
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
 <link rel="import" href="../lo-peers/lo-peers.html">
-<link rel="import" href="labs002-colorpicker.html">
+<link rel="import" href="lo-colorpicker.html">
 <link rel="import" href="../lo-configbtns/lo-configbtns.html">
 <dom-module id="labs002-avatar">
   <style>
@@ -122,7 +122,7 @@ See authors.md for a list of all members.
       margin: 0px;
       padding: 15px 15px 15px 20px;
       box-sizing:border-box;
-      background-color: #fafafa;
+      background-color: red;
       height: 60px;
       @apply(--layout-horizontal);
       @apply(--layout-center-center);
@@ -153,7 +153,6 @@ See authors.md for a list of all members.
     }
 
     .objectfirstvalue {
-      width: 100%;
       @apply(--layout-horizontal);
       @apply(--layout-center);
       width: 80%;
@@ -237,9 +236,12 @@ See authors.md for a list of all members.
       width: 100%;
     }
 
-    .avataredit {
+
+
+
+  /*  .avataredit {
       width: 100%;
-      background-color: white;
+      background-color: green;
     }
 
     iron-collapse {
@@ -248,11 +250,22 @@ See authors.md for a list of all members.
       @apply(--layout-center); 
     }
 
+
+
     iron-selector {
-      width: 240px;
       @apply(--layout-horizontal);
-      @apply(--layout-wrap); 
+
     }
+
+
+    .test {
+      width: 240px;
+      border: 1px solid blue;
+      height: 120px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+    }
+
 
     .item {
       width: 60px;
@@ -270,7 +283,72 @@ See authors.md for a list of all members.
 
     .iron-selected {
       background: #eee;
+    }*/
+
+
+
+    .avataredit {
+      width: 100%;
+      background-color: green;
     }
+
+
+    iron-collapse {
+      width: 100%;
+      @apply(--layout-vertical);
+      @apply(--layout-center); 
+
+    }
+
+
+
+    iron-selector {
+      width: 240px;
+      border: 1px solid blue;
+      height: 120px;
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+    }
+
+
+/*    .test {
+      width: 240px;
+      border: 1px solid blue;
+      height: 120px;
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+    }*/
+
+
+    .item {
+      width: 60px;
+      height: 60px;
+      margin: 0px;
+      padding: 0px;
+
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center); 
+      background-color: rgba(255,255,255,0.5);
+    }
+
+    .item p {
+      margin: 0px;
+      padding: 0px;
+
+    }
+
+    .iron-selected {
+      background: #eee;
+    }
+
+
+labs002-colorpicker {
+  width: 100%;
+  background-color: red;
+}
+
+
+
   </style>
 <template>
 <neon-animated-pages id="avatarmainpages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
@@ -423,14 +501,15 @@ See authors.md for a list of all members.
       </div>
       <div class="avataredit">
         <iron-collapse id="avataredit">
-          <div>
-            <labs002-colorpicker
-               colorselected="{{selectedcolor}}">
-            </labs002-colorpicker>
-            <lo-configbtns next on-tap="next" id="next"></lo-configbtns><lo-configbtns on-tap="previous" id="previous"></lo-configbtns>
+          <lo-colorpicker
+            on-color-changed="_selectedcolor">
+          </lo-colorpicker>
+          <lo-configbtns next on-tap="next" id="next"></lo-configbtns>
+          <lo-configbtns on-tap="previous" id="previous"></lo-configbtns>
+          <div class="test">
             <iron-selector id="itemselector" attr-for-selected="context" selected="body" on-iron-select="passItem">
               <div class="item" context="body">
-                <p>body</p>
+                <p>body 8888</p>
                 <img src="">
               </div>
               <div class="item" context="beard">
@@ -477,6 +556,10 @@ See authors.md for a list of all members.
       <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
     </div>
   </neon-animatable>
+
+
+
+  <!--   2 //   VALUES EDIT -->
   <neon-animatable>
     <div class="canvas layout vertical center">
       <div class="avatarcanvas">
@@ -568,28 +651,6 @@ See authors.md for a list of all members.
     </div>
   </neon-animatable>
 
-<!--   VALUES EDIT -->
-  <neon-animatable>
-    <div class="whitecanvas">
-      <paper-input-container>
-        <label>Voornaam</label>
-        <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstname}}">
-      </paper-input-container>
-      <paper-input-container>
-        <label>Naam</label>
-        <input type="text" is="iron-input" bind-value="{{objectdata.lastname}}">
-      </paper-input-container>
-      <paper-input-container>
-        <label>Geboortedatum</label>
-        <input type="text" is="iron-input" bind-value="{{objectdata.birthdate}}" >
-      </paper-input-container>
-      <paper-input-container>
-        <label>Geboorteplaats</label>
-        <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
-      </paper-input-container>
-      <button on-tap="save">SAVE VALUES</button>
-    </div>
-  </neon-animatable>
 </neon-animated-pages>
 </template>
 <script>
@@ -634,11 +695,6 @@ See authors.md for a list of all members.
           value: 0,
           notify: true,
           observer: "_modusChanged"        
-        },
-
-        selectedcolor: {
-          type: String,
-          observer: "_selectedcolor"
         }
       },
 
@@ -665,23 +721,17 @@ See authors.md for a list of all members.
 
       detached: function() {
         this.async(function() {
-          //console.log(this.localName + '#' + this.id + ' was detached');
         });
       },
 
       passItem:function(){
-        console.log('DIT ITEM IS NU GESELECTEERD:', this.$.itemselector.selected);
         // hier dus een nieuwe functie die gaat checken of de prev/next buttons actief zijn of niet.
         var selecteditem = this.$.itemselector.selected;
-        console.log("Current state: ", this.objectconfig[selecteditem][0]); 
         this.setButtonstates(selecteditem);
       },
 
       setButtonstates: function(selecteditem){
         if(selecteditem){
-          console.log('selected item: ',selecteditem);
-          console.log('current state: ',this.objectconfig[selecteditem][0]);
-          console.log('max state: ',this.nrof[selecteditem]);
           var max = this.nrof[selecteditem];
           var cur = this.objectconfig[selecteditem][0];
 
@@ -704,11 +754,8 @@ See authors.md for a list of all members.
 
       previous: function(e){
         var selecteditem = this.$.itemselector.selected;
-        //console.log(this.nrof);
         //var item = document.getElementById(this.selecteditem);
-        console.log("current item max: ",this.nrof[selecteditem]);
         if(this.objectconfig[selecteditem][0]>=0&&this.$.previous.active){
-          console.log(this.objectconfig[selecteditem][0]);
           this.objectconfig[selecteditem][0]--;
           this.setButtonstates(selecteditem);
         } else {
@@ -721,12 +768,7 @@ See authors.md for a list of all members.
 
         next: function(e){
           var selecteditem = this.$.itemselector.selected;
-          //console.log(this.nrof);
-          //var item = document.getElementById(this.selecteditem);
-          console.log("current item max: ",this.nrof[selecteditem]);
-          //console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
           if(this.objectconfig[selecteditem][0]<=this.nrof[selecteditem]&&this.$.next.active){
-            console.log(this.objectconfig[selecteditem][0]);
             this.objectconfig[selecteditem][0]++;
             this.setButtonstates(selecteditem);
           } else {
@@ -740,7 +782,6 @@ See authors.md for a list of all members.
 
 
       _configChanged: function(){
-        console.log('avatar conf changed: ', JSON.stringify(this.objectconfig));
 
         this.setButtonstates(this.selecteditem);
 
@@ -799,7 +840,6 @@ See authors.md for a list of all members.
       },
 
       _editChanged: function(){
-        console.log('Jamaar wa IS die edit nu eigenlijk?', this.edit);
       },
 
 
@@ -812,26 +852,21 @@ See authors.md for a list of all members.
       },
 
       _modusChanged: function(){
-        console.log('Modus in AVATAR:', this.modus);
         switch(this.modus){
 
           case 0:
-            console.log('de modus is thumb!!!!');
             this.$.avatarmainpages.selected = this.modus;
           break;
 
           case 1:
-            console.log('de modus is values read!!!!');
             this.$.avatarmainpages.selected = this.modus;
           break;
 
           case 2:
-            console.log('de modus is values write!!!!');
             this.$.avatarmainpages.selected = this.modus;
           break;
 
           case 3:
-            console.log('de modus is avatar config!!!!');
             this.$.avatarmainpages.selected = this.modus;
           break;
 
@@ -859,12 +894,11 @@ See authors.md for a list of all members.
         this.modus = 1;
       },
 
-      _selectedcolor: function(){
-        console.log('KLEURTJE:', this.selectedcolor);
-        if(this.$.itemselector.selected){
+      _selectedcolor: function(e){
+        var selectedcolor = e.detail.color;
+        if(this.$.itemselector.selected&&selectedcolor){
           var item = this.$.itemselector.selected;
-          var color = this.selectedcolor;
-          console.log(this.objectconfig[item]);
+          var color = selectedcolor;
           this.objectconfig[item][1] = color;
           //var avataritem = document.getElementById(item);
           this._configChanged();
