@@ -281,7 +281,8 @@ See authors.md for a list of all members.
         <div class="absolutepos">
           <labs002-avatar-bodypages 
             selected="{{bodyselected}}"
-            color="{{bodycolor}}">
+            color="{{bodycolor}}"
+            nrofitems="{{nrofbody}}">
           </labs002-avatar-bodypages>
         </div>
         <div class="absolutepos">
@@ -415,7 +416,7 @@ See authors.md for a list of all members.
             <labs002-avatar-snitpages
               selected="{{snitselected}}"
               color="{{snitcolor}}"
-            nrofitems="{{nrofglasses}}">
+            nrofitems="{{nrofsnit}}">
             </labs002-avatar-snitpages>
           </div>
         </div>
@@ -677,19 +678,28 @@ See authors.md for a list of all members.
       },
 
       setButtonstates: function(selecteditem){
-        console.log(selecteditem);
-        console.log('current state: ',this.objectconfig[selecteditem][0]);
-        console.log('max state: ',this.nrof[selecteditem]);
-        if(this.objectconfig[selecteditem][0]>=0){
-          this.$.next.active = true;
-        } else {
-          this.$.previous.active = false;
-        };
-        if(this.objectconfig[selecteditem][0]==this.nrof[selecteditem]){
-          this.$.next.active = false;
-        } else {
-          this.$.previous.active = true;
-        };
+        if(selecteditem){
+          console.log('selected item: ',selecteditem);
+          console.log('current state: ',this.objectconfig[selecteditem][0]);
+          console.log('max state: ',this.nrof[selecteditem]);
+          var max = this.nrof[selecteditem];
+          var cur = this.objectconfig[selecteditem][0];
+
+          if(cur>=0&&cur<=max){
+            this.$.next.active = true;
+            this.$.previous.active = true;
+          };
+
+          if(cur==max){
+            this.$.next.active = false;
+            this.$.previous.active = true;
+          };
+
+          if(cur<=0){
+            this.$.previous.active = false;
+          };
+
+        }; 
       },
 
       previous: function(e){
@@ -697,7 +707,7 @@ See authors.md for a list of all members.
         //console.log(this.nrof);
         //var item = document.getElementById(this.selecteditem);
         console.log("current item max: ",this.nrof[selecteditem]);
-        if(this.objectconfig[selecteditem][0]>=0){
+        if(this.objectconfig[selecteditem][0]>=0&&this.$.previous.active){
           console.log(this.objectconfig[selecteditem][0]);
           this.objectconfig[selecteditem][0]--;
           this.setButtonstates(selecteditem);
@@ -715,7 +725,7 @@ See authors.md for a list of all members.
           //var item = document.getElementById(this.selecteditem);
           console.log("current item max: ",this.nrof[selecteditem]);
           //console.log("NEXT: nr of items: ",item.nrofitems, " current item: ",this.objectconfig[this.selecteditem][0]);
-          if(this.objectconfig[selecteditem][0]<=this.nrof[selecteditem]){
+          if(this.objectconfig[selecteditem][0]<=this.nrof[selecteditem]&&this.$.next.active){
             console.log(this.objectconfig[selecteditem][0]);
             this.objectconfig[selecteditem][0]++;
             this.setButtonstates(selecteditem);
@@ -732,8 +742,11 @@ See authors.md for a list of all members.
       _configChanged: function(){
         console.log('avatar conf changed: ', JSON.stringify(this.objectconfig));
 
+        this.setButtonstates(this.selecteditem);
+
         this.nrof = [];
 
+        this.nrof['body'] = this.nrofbody; 
         this.nrof['top'] = this.nroftop;  
         this.nrof['snit'] = this.nrofsnit;
         this.nrof['beard'] = this.nrofbeard;
