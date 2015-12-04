@@ -503,7 +503,8 @@ See authors.md for a list of all members.
       <div class="avataredit">
         <iron-collapse id="avataredit" opened="{{avataropen}}">
           <lo-colorpicker
-            on-color-changed="_selectedcolor">
+            on-color-changed="_selectedcolor"
+            kleurtje="{{kleurtje}}">
           </lo-colorpicker>
           <div class="itemselector">
             <iron-selector id="itemselector" attr-for-selected="context" selected="lijf" on-iron-select="passItem">
@@ -658,6 +659,7 @@ See authors.md for a list of all members.
       passItem:function(){
         // hier dus een nieuwe functie die gaat checken of de prev/next buttons actief zijn of niet.
         var selecteditem = this.$.itemselector.selected;
+        this.kleurtje = this.objectconfig[selecteditem][1];
         this.setButtonstates(selecteditem);
       },
 
