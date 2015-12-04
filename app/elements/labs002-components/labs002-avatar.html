@@ -67,6 +67,8 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
 <link rel="import" href="labs002-avatar-snitpages.html">
 <link rel="import" href="labs002-avatar-glassespages.html">
@@ -77,17 +79,20 @@ See authors.md for a list of all members.
 <link rel="import" href="labs002-avatar-bottompages.html">
 <link rel="import" href="labs002-avatar-shoespages.html">
 <link rel="import" href="labs002-avatar-bodypages.html">
+<link rel="import" href="labs002-avatar-backingpages.html">
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
 <link rel="import" href="../lo-peers/lo-peers.html">
 <link rel="import" href="lo-colorpicker.html">
 <link rel="import" href="../lo-configbtns/lo-configbtns.html">
+
 <dom-module id="labs002-avatar">
   <style>
    :host {
       display: block;
       height: 100%;
       width: 100%;
+      --btns-visibility: hidden;
     }
 
     neon-animated-pages {
@@ -108,7 +113,7 @@ See authors.md for a list of all members.
       max-width: 400px;
       height: 100%;
       position: relative;
-      background: linear-gradient(to bottom, #a4e5f9 50%, white 50% ); 
+      background: linear-gradient(to bottom, #a4e5f9 60%, white 40%); 
     }
 
     .absolutepos {
@@ -181,7 +186,7 @@ See authors.md for a list of all members.
     }
 
     .avatarcanvas {
-      background: linear-gradient(to bottom, #a4e5f9 50%, white 50% ); 
+      background: linear-gradient(to bottom, #a4e5f9 60%, white 40% ); 
       width: 100%;
       height: 100vw;
       max-height: 400px;
@@ -203,6 +208,15 @@ See authors.md for a list of all members.
       @apply(--layout-vertical);
       @apply(--layout-start); 
     }
+
+      .valuesfull {
+        background-color: #F4F4F4;
+      width: 100%;
+      height: 100%;
+      margin: 0px;
+      @apply(--layout-vertical);
+      @apply(--layout-start); 
+}
 
     .values {
       width: 100%;
@@ -236,60 +250,10 @@ See authors.md for a list of all members.
       width: 100%;
     }
 
-
-
-
-  /*  .avataredit {
-      width: 100%;
-      background-color: green;
-    }
-
-    iron-collapse {
-      width: 100%;
-      @apply(--layout-vertical);
-      @apply(--layout-center); 
-    }
-
-
-
-    iron-selector {
-      @apply(--layout-horizontal);
-
-    }
-
-
-    .test {
-      width: 240px;
-      border: 1px solid blue;
-      height: 120px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-    }
-
-
-    .item {
-      width: 60px;
-      height: 60px;
-      margin: 0px;
-      padding: 0px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center); 
-    }
-
-    .item p {
-      margin: 0px;
-      padding: 0px;
-    }
-
-    .iron-selected {
-      background: #eee;
-    }*/
-
-
-
     .avataredit {
       width: 100%;
-      background-color: green;
+      background-color: white;
+      padding: 0px 0px 0px 0px;
     }
 
 
@@ -302,51 +266,65 @@ See authors.md for a list of all members.
 
 
 
-    iron-selector {
-      width: 240px;
-      border: 1px solid blue;
-      height: 120px;
-      @apply(--layout-horizontal);
-      @apply(--layout-wrap);
+    .itemselector {
+      width: 100%;
+      background-color: transparent;
+      @apply(--layout-vertical);
+      @apply(--layout-center-center); 
     }
 
-
-/*    .test {
-      width: 240px;
-      border: 1px solid blue;
-      height: 120px;
+    #itemselector {
+      width: 80%;
       @apply(--layout-horizontal);
       @apply(--layout-wrap);
-    }*/
-
+      @apply(--layout-center-center); 
+    }
 
     .item {
       width: 60px;
       height: 60px;
       margin: 0px;
       padding: 0px;
-
       @apply(--layout-horizontal);
       @apply(--layout-center-center); 
-      background-color: rgba(255,255,255,0.5);
+      opacity: 0.5;
     }
 
-    .item p {
+    .item img {
+      width: 90%;
+      height: 90%;
       margin: 0px;
       padding: 0px;
-
     }
 
-    .iron-selected {
-      background: #eee;
+    #itemselector .iron-selected {
+      border: 2px solid var(--primary-lightblue);
+      border-radius: 2px;
+      border-radius: 50%;
+      opacity: 1;
     }
 
+    lo-colorpicker {
+      width: 100%;
+      height: 40px;
+    }
 
-labs002-colorpicker {
-  width: 100%;
-  background-color: red;
-}
+    .navlayer {
+      width: 100%;
+      max-width: 500px;
+      height: 100%;
+      background-color: transparent;
+    }
 
+    .navlayer button {
+      width: 50%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    lo-configbtns {
+      visibility: var(--btns-visibility);
+    }
 
 
   </style>
@@ -356,6 +334,13 @@ labs002-colorpicker {
   <neon-animatable>
     <div class="canvas layout vertical center-center">
       <div class="thumbcontainer">
+        <div class="absolutepos">
+          <labs002-avatar-backingpages 
+            selected="{{backingselected}}"
+            color="{{backingcolor}}"
+            nrofitems="{{nrofbacking}}">
+          </labs002-avatar-backingpages>
+        </div>
         <div class="absolutepos">
           <labs002-avatar-bodypages 
             selected="{{lijfselected}}"
@@ -434,8 +419,15 @@ labs002-colorpicker {
   <!--   1 //   VALUES READ -->
   <neon-animatable>
     <div class="canvas layout vertical center">
-      <div class="avatarcanvas" on-tap="toggleAvataredit">
+      <div class="avatarcanvas">
         <div class="thumbcontainer">
+        <div class="absolutepos">
+          <labs002-avatar-backingpages 
+            selected="{{backingselected}}"
+            color="{{backingcolor}}"
+            nrofitems="{{nrofbacking}}">
+          </labs002-avatar-backingpages>
+        </div>          
           <div class="absolutepos">
             <labs002-avatar-bodypages 
               selected="{{lijfselected}}"
@@ -497,47 +489,50 @@ labs002-colorpicker {
             nrofitems="{{nrofsnit}}">
             </labs002-avatar-snitpages>
           </div>
+          <div class="absolutepos">
+            <div class="navlayer layout horizontal center-center">
+              <lo-configbtns on-tap="previous" id="previous"></lo-configbtns>
+              <button on-tap="toggleAvataredit">hier</button>
+              <lo-configbtns next on-tap="next" id="next"></lo-configbtns>
+           </div>
+          </div>
         </div>
       </div>
       <div class="avataredit">
-        <iron-collapse id="avataredit">
+        <iron-collapse id="avataredit" opened="{{avataropen}}">
           <lo-colorpicker
             on-color-changed="_selectedcolor">
           </lo-colorpicker>
-          <lo-configbtns next on-tap="next" id="next"></lo-configbtns>
-          <lo-configbtns on-tap="previous" id="previous"></lo-configbtns>
-          <div class="test">
-            <iron-selector id="itemselector" attr-for-selected="context" selected="top" on-iron-select="passItem">
+          <div class="itemselector">
+            <iron-selector id="itemselector" attr-for-selected="context" selected="lijf" on-iron-select="passItem">
               <div class="item" context="lijf">
-                <p>body 8888</p>
-                <img src="">
+                <img src="../../images/lijf.svg">
               </div>
               <div class="item" context="beard">
-                <p>beard</p>
-                <img src="">
+                <img src="../../images/beard.svg">
               </div>         
               <div class="item" context="glasses">
-                <p>glasses</p>
-                <img src="">
+                <img src="../../images/glasses.svg">
               </div>
               <div class="item" context="snit">
-                <p>snit</p>
-                <img src="">
+                <img src="../../images/snit.svg">
               </div>            
               <div class="item" context="top">
-                <p>top</p>
-                <img src="">
+                <img src="../../images/top.svg">
               </div>
               <div class="item" context="bottom">
-                <p>bottom</p>
-                <img src="">
+                <img src="../../images/bottom.svg">
               </div>      
               <div class="item" context="shoes">
-                <p>shoes</p>
-                <img src="">
+                <img src="../../images/shoes.svg">
               </div>
+              <div class="item" context="backing">
+                <img src="../../images/avatar-itemselectoricons-07.svg">
+              </div>              
             </iron-selector>
           </div>
+
+
         </iron-collapse>
       </div>
       <div class="valuesbox" on-tap="toggleValuesedit">
@@ -557,77 +552,11 @@ labs002-colorpicker {
     </div>
   </neon-animatable>
 
-
-
   <!--   2 //   VALUES EDIT -->
   <neon-animatable>
     <div class="canvas layout vertical center">
-      <div class="avatarcanvas">
-        <div class="thumbcontainer">
-          <div class="absolutepos">
-            <labs002-avatar-bodypages 
-              selected="{{lijfselected}}"
-              color="{{lijfcolor}}">
-            </labs002-avatar-bodypages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-shoespages 
-              selected="{{shoesselected}}"
-              color="{{shoescolor}}"
-              nrofitems="{{nrofshoes}}">
-            </labs002-avatar-shoespages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-bottompages 
-              selected="{{bottomselected}}"
-              color="{{bottomcolor}}"
-              nrofitems="{{nrofbottom}}">
-            </labs002-avatar-bottompages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-toppages 
-              selected="{{topselected}}"
-              color="{{topcolor}}"
-              nrofitems="{{nroftop}}">
-            </labs002-avatar-toppages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-headpages 
-              selected="{{headselected}}"
-              color="{{lijfcolor}}"
-              nrofitems="{{nrofhead}}">
-            </labs002-avatar-headpages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-facepages 
-              selected="{{faceselected}}"
-              color="{{facecolor}}">
-            </labs002-avatar-facepages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-glassespages 
-              selected="{{glassesselected}}"
-              color="{{glassescolor}}"
-              nrofitems="{{nrofglasses}}">
-            </labs002-avatar-glassespages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-beardpages 
-              selected="{{beardselected}}"
-              color="{{beardcolor}}"
-              nrofitems="{{nrofbeard}}">
-            </labs002-avatar-beardpages>
-          </div>
-          <div class="absolutepos">
-            <labs002-avatar-snitpages
-              selected="{{snitselected}}"
-              color="{{snitcolor}}"
-            nrofitems="{{nrofglasses}}">
-            </labs002-avatar-snitpages>
-          </div>
-        </div>
-      </div>
-      <div class="valuesbox">
+
+      <div class="valuesfull">
         <div class="values">
           <paper-input-container>
             <label>Voornaam</label>
@@ -695,7 +624,8 @@ labs002-colorpicker {
           value: 0,
           notify: true,
           observer: "_modusChanged"        
-        }
+        },
+
       },
 
         // MODI //
@@ -715,8 +645,7 @@ labs002-colorpicker {
           this._configChanged();
           this._dataChanged();
         });
-        this.entryAnimation = 'fade-in-animation';
-        this.exitAnimation = 'fade-out-animation';
+
       },
 
       detached: function() {
@@ -788,6 +717,7 @@ labs002-colorpicker {
         this.nrof = [];
 
         this.nrof['body'] = this.nrofbody; 
+        this.nrof['backing'] = this.nrofbacking; 
         this.nrof['top'] = this.nroftop;  
         this.nrof['snit'] = this.nrofsnit;
         this.nrof['beard'] = this.nrofbeard;
@@ -821,6 +751,9 @@ labs002-colorpicker {
 
         this.lijfselected = this.objectconfig.lijf[0];
         this.lijfcolor = this.objectconfig.lijf[1];
+
+        this.backingselected = this.objectconfig.backing[0];
+        this.backingcolor = this.objectconfig.backing[1];
 
         // this.$.head.color = this.objectconfig.lijf[1];
 
@@ -883,9 +816,17 @@ labs002-colorpicker {
       this.$.valuesedit.toggle();
     },
 
+
     toggleAvataredit:function(){
-      this.save();
       this.$.avataredit.toggle();
+      if (this.avataropen) { 
+        this.customStyle['--btns-visibility'] = 'show';
+        this.updateStyles(); 
+      } else {
+        this.customStyle['--btns-visibility'] = 'hidden';
+        this.updateStyles(); 
+        // this.save();
+      }
     },
 
 
@@ -911,7 +852,9 @@ labs002-colorpicker {
         //   avataritem.color = color;
         //   this._configChanged();
         // };
-      }
+      },
+
+
 
     });
   })();

@@ -34,25 +34,23 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/polymer/polymer.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input.html">
 <link rel="import" href="../../bower_components/paper-input/paper-input-container.html">
-<!-- <link rel="import" href="../../bower_components/neon-animation/neon-animation.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
 
-<link rel="import" href="../../bower_components/neon-animation/neon-animatable.html"> -->
-<link rel="import" href="labs002-avatar-woonstpages.html">
+<link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<link rel="import" href="labs002-avatar-backingpages.html">
+<link rel="import" href="../lo-peers/lo-peers.html">
+<link rel="import" href="lo-colorpicker.html">
 <link rel="import" href="../lo-configbtns/lo-configbtns.html">
-
+<link rel="import" href="labs002-avatar-woonstpages.html">
 
 <dom-module id="labs002-woonst">
   <style>
-     :host {
+   :host {
       display: block;
       height: 100%;
       width: 100%;
-      background: linear-gradient(to bottom, #a4facd 65%, white 35% ); 
-
-/*              background-image: url("../../images/bg-green.jpg");
-
-      background-size: auto 110%;*/
+      --btns-visibility: hidden;
     }
 
     neon-animated-pages {
@@ -60,41 +58,223 @@ See authors.md for a list of all members.
     }
 
     .canvas {
-/*      border: 1px solid green;*/
       height: 100%;
       width: 100%;
-
-      @apply(--layout-horizontal);
-      @apply(--layout-center-center);
     }
 
     .whitebg {
       background-color: white;
     }
 
-    .righttbtns {
-      height: 100%;
-      max-height: 400px;
-      @apply(--layout-horizontal);
-      @apply(--layout-center);
-    }
-
-
-    .pagecontainer {
+    .thumbcontainer {
       width: 100%;
       max-width: 400px;
       height: 100%;
-      max-height: 400px;
       position: relative;
-
+      background: linear-gradient(to bottom, #a4facd 60%, white 40%); 
     }
 
     .absolutepos {
       position: absolute;
       width: 100%;
       height: 100%;
+    }
+
+    .objectvaluesbar {
+      width: 100%;
+      margin: 0px 0px 0px 0px;
+      padding: 15px 15px 15px 20px;
+      box-sizing:border-box;
+      background-color: #F4F4F4;
+      height: 60px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center);
+      box-sizing:border-box;
+      border-radius: 0px 0px 2px 2px;
+    }
+
+    .valids {
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+      @apply(--layout-center);
+      width: 20%;
+      min-width: 40px;
+      height: 100%;
+    }
+
+    .valids img {
+      height: 15px;
+      width: 15px;
+    }
+
+    .valids p {
+      padding: 0px;
+      margin: 0px 5px 0px 0px;
+      font-size: var(--p-valids);
+      font-family: OpensansBold;
+      color: #333333;
+    }
+
+    .objectfirstvalue {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      width: 80%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+    }
+
+    .objectfirstvalue p {
+      width: 100%;
+      text-align: left;
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: var(--p-size);
+      color: #666666;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+    }
+
+    .whitecanvas {
+      background-color: white;
+      width: 100%;
+      height: 100%;
+    }
+
+    .avatarcanvas {
+      background: linear-gradient(to bottom, #a4facd 60%, white 40% ); 
+      width: 100%;
+      height: 100vw;
+      max-height: 400px;
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+    }
+
+    lo-peers {
+      width: 75px;
+      height: 75px;
+      background-color: transparent;
+      margin: 30px 0px 30px 0px;
+    }
+
+    .valuesbox {
+      background-color: #F4F4F4;
+      width: 100%;
+      margin: 0px;
+      @apply(--layout-vertical);
+      @apply(--layout-start); 
+    }
+
+    .values {
+      width: 100%;
+      height: 100%;
+      padding: 20px 25px 25px 25px;
+      box-sizing:border-box;
+      text-align: center;
+    }
+
+    .values p {
+      text-align: center;
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: 16px;
+      color: #666666;
+    }
+
+    .lockedbtn {
+      background-color: rgba(0,0,0,0.025);
+      height: 75px;
+      width: 75px;
+      border-radius: 50%;
+      border: none;
+      outline: 0; 
+      margin: 15px 0px 10px 0px;
+    }
+
+    .lockedbtn img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .visualedit {
+      width: 100%;
+      background-color: white;
+      padding: 0px 0px 0px 0px;
+    }
+
+
+    iron-collapse {
+      width: 100%;
+      @apply(--layout-vertical);
+      @apply(--layout-center); 
 
     }
+
+
+
+    .itemselector {
+      width: 100%;
+      background-color: transparent;
+      @apply(--layout-vertical);
+      @apply(--layout-center-center); 
+    }
+
+    #itemselector {
+      width: 80%;
+      @apply(--layout-horizontal);
+      @apply(--layout-wrap);
+      @apply(--layout-center-center); 
+    }
+
+    .item {
+      width: 60px;
+      height: 60px;
+      margin: 0px;
+      padding: 0px;
+      @apply(--layout-horizontal);
+      @apply(--layout-center-center); 
+      opacity: 0.5;
+    }
+
+    .item img {
+      width: 90%;
+      height: 90%;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    #itemselector .iron-selected {
+      border: 2px solid var(--primary-lightblue);
+      border-radius: 2px;
+      border-radius: 50%;
+      opacity: 1;
+    }
+
+    lo-colorpicker {
+      width: 100%;
+      height: 40px;
+    }
+
+    .navlayer {
+      width: 100%;
+      max-width: 500px;
+      height: 100%;
+      background-color: transparent;
+    }
+
+    .navlayer button {
+      width: 50%;
+      height: 100%;
+      opacity: 0;
+    }
+
+    lo-configbtns {
+      visibility: var(--btns-visibility);
+    }
+
 
 
   </style>
@@ -106,44 +286,124 @@ See authors.md for a list of all members.
   entry-animation="{{entryAnimation}}"
   exit-animation="{{exitAnimation}}">
 
+<!--   0 //   THUMB PERVIEW -->
   <neon-animatable>
-  <div class="canvas">
-
-    <template is="dom-if" if="{{edit}}">
-      <div class="leftbtns">
-        <lo-configbtns context="woonst" on-btn-tapped="previous"></lo-configbtns>
-      </div>                
-    </template>
-
-    <div class="pagecontainer">
-
-      <div class="absolutepos">
-        <labs002-avatar-woonstpages 
-          id="woonst"
-          nrofitems="{{nrofwoonst}}">
-        </labs002-avatar-woonstpages>
+    <div class="canvas layout vertical center-center">
+      <div class="thumbcontainer">
+        <div class="absolutepos">
+          <labs002-avatar-backingpages 
+            selected="{{backingselected}}"
+            color="{{backingcolor}}"
+            nrofitems="{{nrofbacking}}">
+          </labs002-avatar-backingpages>
+        </div>
+        <div class="absolutepos">
+          <labs002-avatar-woonstpages 
+            selected="{{woonstselected}}"
+            color="{{woonstcolor}}"
+            nrofitems="{{nrofwoonst}}">
+          </labs002-avatar-woonstpages>
+        </div>
       </div>
-
+      <div class="objectvaluesbar">
+        <div class="objectfirstvalue">
+          <small>{{firstvalue}}</small>
+        </div>
+        <div class="valids">
+          <p>{{objectpeers.length}}</p>
+          <img src="../../images/accept-small.svg">
+        </div>
+      </div>
     </div>
+  </neon-animatable>
 
-    <template is="dom-if" if="{{edit}}">
-      <div class="righttbtns">
-        <lo-configbtns context="woonst" on-btn-tapped="next" next></lo-configbtns>
-      </div>                
-    </template>
-
-  </div>
+  <neon-animatable>
+    <div class="canvas layout vertical center">
+      <div class="avatarcanvas">
+        <div class="thumbcontainer">
+            <div class="absolutepos">
+              <labs002-avatar-backingpages 
+                selected="{{backingselected}}"
+                color="{{backingcolor}}"
+                nrofitems="{{nrofbacking}}">
+              </labs002-avatar-backingpages>
+            </div>
+            <div class="absolutepos">
+              <labs002-avatar-woonstpages 
+                selected="{{woonstselected}}"
+                color="{{woonstcolor}}"
+                nrofitems="{{nrofwoonst}}">
+              </labs002-avatar-woonstpages>
+            </div>
+            <div class="absolutepos">
+              <div class="navlayer layout horizontal center-center">
+                <lo-configbtns on-tap="previous" id="previous"></lo-configbtns>
+                <button on-tap="toggleVisualedit">hier</button>
+                <lo-configbtns next on-tap="next" id="next"></lo-configbtns>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="visualedit">
+          <iron-collapse id="visualedit" opened="{{visualopen}}">
+            <lo-colorpicker
+              on-color-changed="_selectedcolor">
+            </lo-colorpicker>
+            <div class="itemselector">
+              <iron-selector id="itemselector" attr-for-selected="context" selected="woonst" on-iron-select="passItem">
+                <div class="item" context="woonst">
+                  <img src="../../images/avatar-itemselectoricons-01.svg">
+                </div>
+                <div class="item" context="backing">
+                  <img src="../../images/avatar-itemselectoricons-07.svg">
+                </div>              
+              </iron-selector>
+            </div>
+          </iron-collapse>
+        </div>
+        <div class="valuesbox" on-tap="toggleValuesedit">
+          <div class="values">
+            <p><span>{{firstvalue}}</span></p>    
+            <iron-collapse id="valuesedit">
+              <template is="dom-repeat" items="{{previewdata}}">
+                <p><span>{{item}}</span><span>{{item.value}}</span></p>
+              </template>
+              <button class="lockedbtn" on-tap="toEdit">
+                <img src="../../images/locked.svg">
+              </button>
+            </iron-collapse>
+          </div>
+        </div>
+      <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
+    </div>
   </neon-animatable>
 
 
+
   <neon-animatable>
-    <div class="canvas whitebg">
+    <div class="canvas layout vertical center">
 
-      <paper-input-container>
-        <label>De eerste value?</label>
-        <input autofocus type="text" is="iron-input" bind-value="{{objectdata.firstval}}">
-      </paper-input-container>
-
+      <div class="valuesfull">
+        <div class="values">
+          <paper-input-container>
+            <label>Straat</label>
+            <input autofocus type="text" is="iron-input" bind-value="{{objectdata.straat}}">
+          </paper-input-container>
+          <paper-input-container>
+            <label>Nummer</label>
+            <input type="text" is="iron-input" bind-value="{{objectdata.nummer}}">
+          </paper-input-container>
+          <paper-input-container>
+            <label>Plaats</label>
+            <input type="text" is="iron-input" bind-value="{{objectdata.plaats}}" >
+          </paper-input-container>
+          <paper-input-container>
+            <label>Postcode</label>
+            <input type="text" is="iron-input" bind-value="{{objectdata.postcode}}" >
+          </paper-input-container>
+          <button on-tap="save">SAVE VALUES</button>
+        </div>
+      </div>
     </div>
   </neon-animatable>
 
@@ -163,7 +423,7 @@ See authors.md for a list of all members.
       ],
 
       properties: {
-         objectconfig: {
+        objectconfig: {
           type: Object,
           notify: true,
           observer: "_configChanged"
@@ -177,7 +437,8 @@ See authors.md for a list of all members.
 
         edit: {
           type: Boolean,
-          value: false
+          value: false,
+          observer: "_editChanged"
         },
 
         opened: {
@@ -187,7 +448,14 @@ See authors.md for a list of all members.
 
         objecthash: {
           type: String
-        }
+        },
+
+        modus: {     
+          type: Number,
+          value: 0,
+          notify: true,
+          observer: "_modusChanged"        
+        },
 
 
       },
@@ -252,15 +520,26 @@ See authors.md for a list of all members.
 
 
 
-      _configChanged: function(){
-         console.log('woonst conf changed: ', JSON.stringify(this.objectconfig));
-        this.$.woonst.selected = this.objectconfig.woonst[0];
-        this.straat = this.objectconfig.straat;
-        this.nummer = this.objectconfig.nummer;
-        this.postcode = this.objectconfig.postcode;
-        this.plaats = this.objectconfig.plaats;   
 
+
+
+
+_configChanged: function(){
+
+        this.setButtonstates(this.selecteditem);
+
+        this.nrof = [];
+
+        this.nrof['woonst'] = this.nrofwoonst; 
+        this.nrof['backing'] = this.nrofbacking; 
+
+        this.woonstselected = this.objectconfig.woonst[0];
+        this.woonstcolor = this.objectconfig.woonst[1];
+
+        this.backingselected = this.objectconfig.backing[0];
+        this.backingcolor = this.objectconfig.backing[1];
       },
+
 
       _dataChanged: function(){
         //console.log('Avatar data changed: ', this.objectdata);
@@ -295,6 +574,111 @@ See authors.md for a list of all members.
             this.selected = 0;
           }; 
       },
+
+      _modusChanged: function(){
+        switch(this.modus){
+
+          case 0:
+            this.$.woonstmainpages.selected = this.modus;
+          break;
+
+          case 1:
+            this.$.woonstmainpages.selected = this.modus;
+          break;
+
+          case 2:
+            this.$.woonstmainpages.selected = this.modus;
+          break;
+
+          case 3:
+            this.$.woonstmainpages.selected = this.modus;
+          break;
+
+        };
+      },
+
+
+      toEdit:function(){
+        this.modus = 2;
+      },
+
+
+    toggleValuesedit:function(){
+      this.$.valuesedit.toggle();
+    },
+
+
+    toggleVisualedit:function(){
+      this.$.visualedit.toggle();
+      if (this.visualopen) { 
+        this.customStyle['--btns-visibility'] = 'show';
+        this.updateStyles(); 
+      } else {
+        this.customStyle['--btns-visibility'] = 'hidden';
+        this.updateStyles(); 
+        // this.save();
+      }
+    },
+
+      save:function(){
+        this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
+        this.modus = 1;
+      },
+
+      passItem:function(){
+        // hier dus een nieuwe functie die gaat checken of de prev/next buttons actief zijn of niet.
+        var selecteditem = this.$.itemselector.selected;
+        this.setButtonstates(selecteditem);
+      },
+
+      setButtonstates: function(selecteditem){
+        if(selecteditem){
+          var max = this.nrof[selecteditem];
+          var cur = this.objectconfig[selecteditem][0];
+
+          if(cur>=0&&cur<=max){
+            this.$.next.active = true;
+            this.$.previous.active = true;
+          };
+
+          if(cur==max){
+            this.$.next.active = false;
+            this.$.previous.active = true;
+          };
+
+          if(cur<=0){
+            this.$.previous.active = false;
+          };
+
+        }; 
+      },
+
+      previous: function(e){
+        var selecteditem = this.$.itemselector.selected;
+        //var item = document.getElementById(this.selecteditem);
+        if(this.objectconfig[selecteditem][0]>=0&&this.$.previous.active){
+          this.objectconfig[selecteditem][0]--;
+          this.setButtonstates(selecteditem);
+        } else {
+          this.setButtonstates(selecteditem);
+        };
+        this._configChanged();
+          //item.entryAnimation = "slide-to-left-animation";
+          //item.exitAnimation = "slide-right-animation";
+        },
+
+        next: function(e){
+          var selecteditem = this.$.itemselector.selected;
+          if(this.objectconfig[selecteditem][0]<=this.nrof[selecteditem]&&this.$.next.active){
+            this.objectconfig[selecteditem][0]++;
+            this.setButtonstates(selecteditem);
+          } else {
+            this.setButtonstates(selecteditem);
+          };
+          this._configChanged();
+          //item.entryAnimation = "slide-to-right-animation";
+          //item.exitAnimation = "slide-left-animation";
+        },
 
 
 
