@@ -323,12 +323,6 @@ See authors.md for a list of all members.
         notify: true
       },
 
-      swiper: {
-        type: Number,
-        value: 0,
-        observer: '_swipy',
-        notify: true
-      },
 
       locked: {
         type: Boolean,
@@ -368,34 +362,28 @@ See authors.md for a list of all members.
     },
 
     listeners: {
-
-      down: 'mouseDown',
-      up: 'mouseUp',
-      track: 'mouseTrack'
-      // this event is fired when the animation finishes
-      // 'neon-animation-finish': '_onNeonAnimationFinish'
     },
 
-    mouseDown: function(e, detail) {
-      //console.log("DOWN:", e.detail.y);
-      this.downmouse = e.detail.y;
-    },
+    // mouseDown: function(e, detail) {
+    //   //console.log("DOWN:", e.detail.y);
+    //   this.downmouse = e.detail.y;
+    // },
 
-    mouseUp: function(e, detail) {
-      //console.log("UP:", e.detail.y);
-      this.upmouse = e.detail.y;
-    },
+    // mouseUp: function(e, detail) {
+    //   //console.log("UP:", e.detail.y);
+    //   this.upmouse = e.detail.y;
+    // },
 
-    mouseTrack: function(){
-      this.swiper = this.downmouse - this.upmouse;
+    // mouseTrack: function(){
+    //   this.swiper = this.downmouse - this.upmouse;
 
-    },
+    // },
 
-    _swipy: function(){
-      if(this.swiper>0){
-        this.back();
-      };
-    },
+    // _swipy: function(){
+    //   if(this.swiper>0){
+    //     this.back();
+    //   };
+    // },
 
     attached: function() {
       this.async(function() {
