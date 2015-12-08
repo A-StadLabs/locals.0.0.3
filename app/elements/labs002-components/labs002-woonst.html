@@ -66,13 +66,32 @@ See authors.md for a list of all members.
       background-color: white;
     }
 
-    .thumbcontainer {
+   .thumbcontainer {
       width: 100%;
-      max-width: 400px;
       height: 100%;
+      background-color: rgba(0,0,0,0.1);
+      position: relative;
+      background-color: white;
+      }
+
+    .avatarcontainer {
+      width: 100%;
+      max-width: 400px; 
+      height: 100vw;
+      max-height: 400px; 
       position: relative;
       background: linear-gradient(to bottom, #a4facd 60%, white 40%); 
+      @apply(--layout-vertical);
+      @apply(--layout-center);
+      }
+
+    .avatarcanvas {
+      width: 100%;  
+      background: linear-gradient(to bottom, #a4facd 60%, white 40%); 
+      @apply(--layout-vertical);
+      @apply(--layout-center);
     }
+
 
     .absolutepos {
       position: absolute;
@@ -319,7 +338,9 @@ See authors.md for a list of all members.
 
   <neon-animatable>
     <div class="canvas layout vertical center">
+
       <div class="avatarcanvas">
+        <div class="avatarcontainer">
         <div class="thumbcontainer">
             <div class="absolutepos">
               <labs002-avatar-backingpages 
@@ -344,6 +365,7 @@ See authors.md for a list of all members.
             </div>
           </div>
         </div>
+      </div>
         <div class="visualedit">
           <iron-collapse id="visualedit" opened="{{visualopen}}">
             <lo-colorpicker
@@ -352,10 +374,10 @@ See authors.md for a list of all members.
             <div class="itemselector">
               <iron-selector id="itemselector" attr-for-selected="context" selected="woonst" on-iron-select="passItem">
                 <div class="item" context="woonst">
-                  <img src="../../images/avatar-itemselectoricons-01.svg">
+                  <img src="../../images/woonst.svg">
                 </div>
                 <div class="item" context="backing">
-                  <img src="../../images/avatar-itemselectoricons-07.svg">
+                  <img src="../../images/backing.svg">
                 </div>              
               </iron-selector>
             </div>
