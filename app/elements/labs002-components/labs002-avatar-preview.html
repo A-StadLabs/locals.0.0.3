@@ -1,0 +1,311 @@
+<!-- A-Labs -->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+
+
+<dom-module id="labs002-avatar-preview">
+  <style>
+      :host {
+        display: block;
+      --this-shoescolor: var(--primary-purple);
+        height: 100%;
+        width: 100%;
+
+      }
+
+      neon-animated-pages {
+        height: 100%;
+      }
+
+      .svgcontainer {
+        width: 100%;
+        height: 100%;
+      }
+      .svgcontainer img {
+        width: 100%;
+        height: 100%;
+      }
+      .shoescolor {
+        fill: var(--this-shoescolor);
+      } 
+
+   .absolutepos {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      max-height: 400px;    
+      max-width: 400px;    
+    }
+
+
+  </style>
+  <template>
+    <div class="canvas layout vertical center-center">
+      <div class="thumbcontainer">
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{backing_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{body_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{head_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{beard_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{bottom_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{face_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{glasses_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{snit_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{top_tile}}"/>
+          </div>
+        </div>
+
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{shoe_tile}}"/>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+  <script>
+  (function() {
+    Polymer({
+      is: 'labs002-avatar-preview',
+
+      properties: {
+        config: {
+          type: Object
+        },
+      },
+
+      ready: function() {
+
+        this.backing_tiles = {
+          1: {
+            url: '../../images/avatar/avatarbacking1-02.png'
+          },
+          2: {
+            url: '../../images/avatar/avatarbacking1-02.png'
+          }
+        };
+
+        this.beard_tiles = {
+          1: {
+            url: '../../images/avatar/avatarbeard1-02.png'
+          },
+          2: {
+            url: '../../images/avatar/avatarbeard2-02.png'
+          },
+          3: {
+            url: '../../images/avatar/avatarbeard3-02.png'
+          },
+          4: {
+            url: '../../images/avatar/avatarbeard4-02.png'
+          },
+          5: {
+            url: '../../images/avatar/avatarbeard5-02.png'
+          },
+          6: {
+            url: '../../images/avatar/avatarbeard6-02.png'
+          },
+          7: {
+            url: '../../images/avatar/avatarbeard7-02.png'
+          }
+        };
+
+        this.bottom_tiles = {
+          0: {
+            url: '../../images/avatar/avatarbottom1-03.png'
+          },
+          1: {
+            url: '../../images/avatar/avatarbottom2-03.png'
+          },
+          2: {
+            url: '../../images/avatar/avatarbottom3-03.png'
+          },
+        };
+
+        this.face_tiles = {
+          0: {
+            url: '../../images/avatar/avatarface-01.png'
+          }
+        }
+
+        this.glasses_tiles = {
+          1: {
+            url: '../../images/avatar/avatarglasses1-08.png'
+          }
+        };
+
+        this.head_tiles = {
+          0: {
+            url: '../../images/avatar/avatarhead-01.png'
+          }
+        };
+
+
+        this.body_tiles = {
+          1: {
+            url: '../../images/avatar/avatarlijf-01.png'
+          }
+        }
+
+        this.shoe_tiles = {
+          1: {
+            url: '../../images/avatar/avatarshoes1-04.png'
+          },
+          2: {
+            url: '../../images/avatar/avatarshoes2-04.png'
+          },
+          3: {
+            url: '../../images/avatar/avatarshoes2-04.png'
+          }
+        };
+
+        this.snit_tiles = {
+          1: {
+            url: '../../images/avatar/avatarsnit1-08.png'
+          },
+          2: {
+            url: '../../images/avatar/avatarsnit2-08.png'
+          },
+          3: {
+            url: '../../images/avatar/avatarsnit3-08.png'
+          },
+          4: {
+            url: '../../images/avatar/avatarsnit4-08.png'
+          },
+          5: {
+            url: '../../images/avatar/avatarsnit5-08.png'
+          },
+          6: {
+            url: '../../images/avatar/avatarsnit6-08.png'
+          },
+          7: {
+            url: '../../images/avatar/avatarsnit7-08.png'
+          },
+        };
+
+        this.top_tiles = {
+          1: {
+            url: '../../images/avatar/avatartop1-02.png'
+          },
+          2: {
+            url: '../../images/avatar/avatartop2-02.png'
+          },
+          3: {
+            url: '../../images/avatar/avatartop3-02.png'
+          },
+          4: {
+            url: '../../images/avatar/avatartop4-02.png'
+          },
+        };
+
+
+
+        /*
+
+              "config": {
+                "backing": Math.floor(Math.random()* [0, "var(--primary-lightblue)"],
+                "beard": [3, "var(--primary-red)"],
+                "bottom": [1, "var(--primary-darkblue)"],
+                "face": [0, "var(--primary-lightblue)"],
+                "glasses": [1, "var(--primary-darkblue)"],
+                "head": [0, "var(--primary-green)"],
+                "lijf": [0, "var(--primary-green)"],
+                "shoes": [0, "var(--primary-darkblue)"],
+                "snit": [7, "var(--primary-lightblue)"],
+                "top": [1, "var(--primary-white)"],
+                "firstvalue": "firstname"
+              },
+
+        */
+        var self = this;
+
+        getconfig();
+        setInterval(function() {
+          getconfig();
+        }, 2000);
+
+
+        function getconfig(){
+          self.config = {
+            "backing": Math.floor(Math.random() * Object.keys(self.backing_tiles).length) + 1,
+            "beard": Math.floor(Math.random() * Object.keys(self.beard_tiles).length) + 1,
+            "bottom": Math.floor(Math.random() * Object.keys(self.bottom_tiles).length) + 0,
+            "face": Math.floor(Math.random() * Object.keys(self.face_tiles).length) + 0,
+            "glasses": Math.floor(Math.random() * Object.keys(self.glasses_tiles).length) + 1,
+            "head": Math.floor(Math.random() * Object.keys(self.head_tiles).length) + 0,
+            "lijf": Math.floor(Math.random() * Object.keys(self.body_tiles).length) + 1,
+            "shoes": Math.floor(Math.random() * Object.keys(self.shoe_tiles).length) + 1,
+            "snit": Math.floor(Math.random() * Object.keys(self.snit_tiles).length) + 1,
+            "top": Math.floor(Math.random() * Object.keys(self.top_tiles).length) + 1,
+          };
+
+          self.backing_tile = self.backing_tiles[(self.config ? self.config.backing : 1)].url;
+          self.beard_tile = self.beard_tiles[(self.config ? self.config.beard : 1)].url;
+          self.bottom_tile = self.bottom_tiles[(self.config ? self.config.bottom : 0)].url;
+          self.face_tile = self.face_tiles[(self.config ? self.config.face : 0)].url;
+          self.glasses_tile = self.glasses_tiles[(self.config ? self.config.glasses : 1)].url;
+          self.head_tile = self.head_tiles[(self.config ? self.config.head : 0)].url;
+
+          self.body_tile = self.body_tiles[(self.config ? self.config.lijf : 1)].url;
+          self.shoe_tile = self.shoe_tiles[(self.config ? self.config.shoes : 1)].url;
+          self.snit_tile = self.snit_tiles[(self.config ? self.config.snit : 0)].url;
+          self.top_tile = self.top_tiles[(self.config ? self.config.top : 0)].url;
+        }
+
+      },
+
+    });
+  })();
+  </script>
+</dom-module>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

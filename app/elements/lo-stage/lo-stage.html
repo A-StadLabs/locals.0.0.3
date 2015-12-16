@@ -425,6 +425,11 @@ See authors.md for a list of all members.
       lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);      
     },
 
+    mqttconnectedfire: function(e){
+      console.log('mqtt connected');
+    },
+
+
     msgreceived: function(e){
       var commandarray = e.detail.msg.split("|");
       var partner = commandarray[1];
@@ -533,7 +538,7 @@ See authors.md for a list of all members.
 
       switch(command){
         case "SYNC1":
-          //console.log("confirmation to ", command, " for ", partner);
+          console.log("confirmation to ", command, " for ", partner);
           this.localapi.peers.push(this.deviceid);
           this.localapi.peers.push(partner);
           this.$.localapielem.writeData();

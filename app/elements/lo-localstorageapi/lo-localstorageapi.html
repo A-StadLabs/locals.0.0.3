@@ -112,7 +112,9 @@
         //     this.$.loxmpp.sendMessage(peers[i], "SYNCUPDATE", null, null, this.encdata);
         //   };
         // };
+        console.log('start read data');
         this.readData();
+        console.log('end read data');
     },
 
     readData: function(){
@@ -126,12 +128,15 @@
           return v;       // return the unchanged property value.
         });
         this.data = data;
-        console.log(JSON.stringify(data));
+        console.log('readdata',JSON.stringify(data));
       };
     },
 
     _encdataChanged: function(){
+      console.log('_encdataChanged read data start');
       this.readData();
+      console.log('_encdataChanged read data end');
+
     },
 
     _dataChanged: function(){

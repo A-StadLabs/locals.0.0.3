@@ -77,7 +77,11 @@ See authors.md for a list of all members.
 <link rel="import" href="labs002-avatar-headpages.html">
 <link rel="import" href="labs002-avatar-toppages.html">
 <link rel="import" href="labs002-avatar-bottompages.html">
+<!--
 <link rel="import" href="labs002-avatar-shoespages.html">
+-->
+<link rel="import" href="labs002-avatar-preview.html">
+
 <link rel="import" href="labs002-avatar-bodypages.html">
 <link rel="import" href="labs002-avatar-backingpages.html">
 <link rel="import" href="labs002-skeletonpages.html">
@@ -349,88 +353,7 @@ See authors.md for a list of all members.
 <neon-animated-pages id="avatarmainpages" selected="{{selected}}" entry-animation="{{entryAnimation}}" exit-animation="{{exitAnimation}}">
 <!--   0 //   THUMB PERVIEW -->
   <neon-animatable>
-    <div class="canvas layout vertical center-center">
-      <div class="thumbcontainer">
-        <div class="absolutepos">
-          <labs002-avatar-backingpages 
-            selected="{{backingselected}}"
-            color="{{backingcolor}}"
-            nrofitems="{{nrofbacking}}">
-          </labs002-avatar-backingpages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-bodypages 
-            selected="{{lijfselected}}"
-            color="{{lijfcolor}}"
-            nrofitems="{{nrofbody}}">
-          </labs002-avatar-bodypages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-shoespages 
-            selected="{{shoesselected}}"
-            color="{{shoescolor}}"
-            nrofitems="{{nrofshoes}}">
-          </labs002-avatar-shoespages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-bottompages 
-            selected="{{bottomselected}}"
-            color="{{bottomcolor}}"
-            nrofitems="{{nrofbottom}}">
-          </labs002-avatar-bottompages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-toppages 
-            selected="{{topselected}}"
-            color="{{topcolor}}"
-            nrofitems="{{nroftop}}">
-          </labs002-avatar-toppages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-headpages 
-            selected="{{headselected}}"
-            color="{{lijfcolor}}"
-            nrofitems="{{nrofhead}}">
-          </labs002-avatar-headpages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-facepages 
-            selected="{{faceselected}}"
-            color="{{facecolor}}">
-          </labs002-avatar-facepages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-glassespages 
-            selected="{{glassesselected}}"
-            color="{{glassescolor}}"
-            nrofitems="{{nrofglasses}}">
-          </labs002-avatar-glassespages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-beardpages 
-            selected="{{beardselected}}"
-            color="{{beardcolor}}"
-            nrofitems="{{nrofbeard}}">
-          </labs002-avatar-beardpages>
-        </div>
-        <div class="absolutepos">
-          <labs002-avatar-snitpages
-            selected="{{snitselected}}"
-            color="{{snitcolor}}"
-          nrofitems="{{nrofglasses}}">
-          </labs002-avatar-snitpages>
-        </div>
-      </div>
-      <div class="objectvaluesbar">
-        <div class="objectfirstvalue">
-          <small>{{firstvalue}}</small>
-        </div>
-        <div class="valids">
-          <p>{{objectpeers.length}}</p>
-          <img src="../../images/accept-small.svg">
-        </div>
-      </div>
-    </div>
+    <labs002-avatar-preview selected="{{shoesselected}}"></labs002-avatar-preview>
   </neon-animatable>
 
   <!--   1 //   VALUES READ -->
