@@ -153,10 +153,10 @@ See authors.md for a list of all members.
   subs
   topic="{{publickey}}" id="lomqtt"></lo-mqtt>
 
-
+<!--
   <paper-drawer-panel force-narrow="true" id="drawer">
   <div drawer class="paperdrawer">dit is de drawer</div>
-
+-->
   <neon-animated-pages id="pages" selected="{{selected}}" class="color" main>
 
   <!-- Stage 0: Alle datasets renderen -->
@@ -240,382 +240,398 @@ See authors.md for a list of all members.
   </neon-animatable>
 
 </neon-animated-pages>
+<!--
 </paper-drawer-panel>
+-->
 
 </template>
 </dom-module>
 <script>
   (function() {
 
-  function importPage(url){
-    return new Promise(function(resolve, reject){
-      Polymer.Base.importHref(url, function(e){
-        resolve(e.target.import);
-      }, reject);
-    });
-  };
-
-  function hasher(hashobject){
-    var hash = JSON.stringify(hashobject);
-    var hash = CryptoJS.SHA256(hash);
-    return hash.toString(CryptoJS.enc.Hex); 
-  };
-
-  var lomqtt;
-  var partner;
-  var stage;
-  var object;
-  var app = document.getElementById("app");
-
-  var saveEncuserobject = function(e){
-    app.localenc = e;
-  };
-
-  var changeStage = function(e){
-    stage.selected = e;
-  };
-
-  Polymer({
-    is: 'lo-stage',
-
-    properties: {
-      selected: {
-        type: Number
-      },
-      domein: {
-        type: String,
-        value: "opantwerpen.be"
-      },
-      deviceid: {
-        type: String
-      },
-      publickey: {
-        type: String
-      },
-      mqttconnected: {
-        type: Boolean,
-        value: false
-      }
-    },
-
-    show1: function(){
-      this.show = 1;
-    },
-
-    attached: function(){
-      stage = document.querySelector("lo-stage");
-    },
-
-    ready: function(){
-      this.loggedin = false;
-      this.selected = 0;
-      // this.entryAnimation = 'slide-from-right-animation';
-      // this.exitAnimation = 'slide-left-animation';
-      var that = this;
- 
-      this.addEventListener('change-stage', function(e){
-        // that.entryAnimation = e.detail.entry;
-        // that.exitAnimation = e.detail.exit;
-        that.selected = e.detail.stage;
-        console.log("and we're back");
-      }); 
- 
-      this.addEventListener("object-selected", function(e){
-        console.log("Object selected: ", e.detail.object);
-        var target = document.getElementById(e.detail.object);        
-        console.log('target: ', target);
-        that.$.objectcoll.sharedElements = {
-          'hero': target
-        };
-
-        setTimeout(function(){that.selected = 1},100);
-        object = e.detail.object;
-        that.activename = object;
-        that.activedata = that.localapi.collection[object].data;
-        that.activeconfig = that.localapi.collection[object].config;
-        that.activecomponent = that.localapi.collection[object].component;
-        that.activepeers = that.localapi.collection[object].peers;
-        that.activehash = that.localapi.collection[object].hash;
-        that.activelocked = that.localapi.collection[object].locked;
-        that.$.activeobject._dataset();
-        that.entryAnimation = e.detail.entry;
-        that.exitAnimation = e.detail.exit;
+    function importPage(url) {
+      return new Promise(function(resolve, reject) {
+        Polymer.Base.importHref(url, function(e) {
+          resolve(e.target.import);
+        }, reject);
       });
-      
-      this.addEventListener('save-it', function(e){
-        lomqtt = that.$.lomqtt;
-        that.localapi.collection[e.detail.datasetkey].data = e.detail.dataset;
-        that.localapi.collection[e.detail.datasetkey].config = e.detail.config;
-        var hash = hasher(that.localapi.collection[e.detail.datasetkey].data);
-        lomqtt.send('userhash/'+that.publickey, "HASHUPDATE|"+e.detail.datasetkey+"|"+hash+"|"+that.publickey, 0);
-        that.$.localapielem.writeData();
-      });
+    };
 
-      this.addEventListener('message-received', function(e){
-        that.msgreceived(e.detail.msg);
-      });
-        
-      this.addEventListener('save', function(){
-        that.$.localapielem.writeData();
-      });
+    function hasher(hashobject) {
+      var hash = JSON.stringify(hashobject);
+      var hash = CryptoJS.SHA256(hash);
+      return hash.toString(CryptoJS.enc.Hex);
+    };
 
-      this.addEventListener('object-picker', function(){
-        importPage("elements/lo-objectpicker/lo-objectpicker.html").then(function(){
-          //that._addDataset();
-          // that.entryAnimation = 'slide-from-right-animation';
-          // that.exitAnimation = 'slide-left-animation';
-          that.selected = 5;
-        }, function(err){
-          console.log(err, "error");
-        });  
-      });
+    var lomqtt;
+    var partner;
+    var stage;
+    var object;
+    var app = document.getElementById("app");
 
-      this.addEventListener('qr-identity', function(e){
-        that._toQR();
-      });
+    var saveEncuserobject = function(e) {
+      app.localenc = e;
+    };
 
-      this.addEventListener('qr-reader', function(e){
-        that.scanQRcode(e);
-      });
+    var changeStage = function(e) {
+      stage.selected = e;
+    };
 
-      this.addEventListener('menu-toggle', function(e){
-        that.$.drawer.togglePanel();
-      });
+    Polymer({
+      is: 'lo-stage',
 
-      this.addEventListener('add-getuige', function(e){
-        //console.log("Peer listener activated in lo-objectscollection");
-        this.fire('qr-reader', { 
-          command: "VERIFY", 
-          objectname: e.detail.objectname, 
-          objectconfig: e.detail.objectconfig, 
-          objectdata: e.detail.objectdata,
-          publickey: e.detail.publickey,
-          hash: e.detail.hash
-        });
-      });
-    },
-
-    scanQRcode: function(e){
-      var self = this;
-      cordova.plugins.barcodeScanner.scan(
-        function (result) {
-          self.processQRCode(result.text, e);
-        }, 
-        function (error) {
-          alert("Scanning failed: " + error);
+      properties: {
+        selected: {
+          type: Number
+        },
+        domein: {
+          type: String,
+          value: "opantwerpen.be"
+        },
+        deviceid: {
+          type: String
+        },
+        publickey: {
+          type: String
+        },
+        mqttconnected: {
+          type: Boolean,
+          value: false
         }
-      );
-    },
+      },
 
-    // HArdcore stuff
+      show1: function() {
+        this.show = 1;
+      },
 
-    processQRCode: function(code, e){
-      console.log("Got code: ", code);
-      console.log("Got vars: ", e);
-      var lomqtt = this.$.lomqtt;
-      var partner = code;
-      var command = e.detail.command;
-      var objectname = e.detail.objectname;
-      var objectdata = e.detail.objectdata;
-      var objectconfig = e.detail.objectconfig;
-      var userid = e.detail.userid;
-      var hash = e.detail.hash;
-           
-      lomqtt.subscribe("validate/"+this.publickey, 2);
-      lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2);      
-    },
+      attached: function() {
+        stage = document.querySelector("lo-stage");
+      },
 
-    mqttconnectedfire: function(e){
-      console.log('mqtt connected');
-    },
+      ready: function() {
+        this.loggedin = false;
+        this.selected = 0;
+        // this.entryAnimation = 'slide-from-right-animation';
+        // this.exitAnimation = 'slide-left-animation';
+        var that = this;
+
+        this.addEventListener('change-stage', function(e) {
+          // that.entryAnimation = e.detail.entry;
+          // that.exitAnimation = e.detail.exit;
+          that.selected = e.detail.stage;
+          console.log("and we're back");
+        });
+
+        this.addEventListener("object-selected", function(e) {
+          console.log("Object selected: ", e.detail.object);
+          var target = document.getElementById(e.detail.object);
+          console.log('target: ', target);
+          that.$.objectcoll.sharedElements = {
+            'hero': target
+          };
+
+          setTimeout(function() {
+            that.selected = 1
+          }, 100);
+          object = e.detail.object;
+          that.activename = object;
+          that.activedata = that.localapi.collection[object].data;
+          that.activeconfig = that.localapi.collection[object].config;
+          that.activecomponent = that.localapi.collection[object].component;
+          that.activepeers = that.localapi.collection[object].peers;
+          that.activehash = that.localapi.collection[object].hash;
+          that.activelocked = that.localapi.collection[object].locked;
+          that.$.activeobject._dataset();
+          that.entryAnimation = e.detail.entry;
+          that.exitAnimation = e.detail.exit;
+        });
+
+        this.addEventListener('save-it', function(e) {
+          lomqtt = that.$.lomqtt;
+          that.localapi.collection[e.detail.datasetkey].data = e.detail.dataset;
+          that.localapi.collection[e.detail.datasetkey].config = e.detail.config;
+          var hash = hasher(that.localapi.collection[e.detail.datasetkey].data);
+          lomqtt.send('userhash/' + that.publickey, "HASHUPDATE|" + e.detail.datasetkey + "|" + hash + "|" + that.publickey, 0);
+          that.$.localapielem.writeData();
+        });
+
+        this.addEventListener('message-received', function(e) {
+          that.msgreceived(e.detail.msg);
+        });
+
+        this.addEventListener('save', function() {
+          that.$.localapielem.writeData();
+        });
+
+        this.addEventListener('object-picker', function() {
+          importPage("elements/lo-objectpicker/lo-objectpicker.html").then(function() {
+            //that._addDataset();
+            // that.entryAnimation = 'slide-from-right-animation';
+            // that.exitAnimation = 'slide-left-animation';
+            that.selected = 5;
+          }, function(err) {
+            console.log(err, "error");
+          });
+        });
+
+        this.addEventListener('qr-identity', function(e) {
+          that._toQR();
+        });
+
+        this.addEventListener('qr-reader', function(e) {
+          that.scanQRcode(e);
+        });
+
+        this.addEventListener('menu-toggle', function(e) {
+          that.$.drawer.togglePanel();
+        });
+
+        this.addEventListener('add-getuige', function(e) {
+          //console.log("Peer listener activated in lo-objectscollection");
+          this.fire('qr-reader', {
+            command: "VERIFY",
+            objectname: e.detail.objectname,
+            objectconfig: e.detail.objectconfig,
+            objectdata: e.detail.objectdata,
+            publickey: e.detail.publickey,
+            hash: e.detail.hash
+          });
+        });
+      },
+
+      scanQRcode: function(e) {
+        var self = this;
+        cordova.plugins.barcodeScanner.scan(
+          function(result) {
+            self.processQRCode(result.text, e);
+          },
+          function(error) {
+            alert("Scanning failed: " + error);
+          }
+        );
+      },
+
+      // HArdcore stuff
+
+      processQRCode: function(code, e) {
+        console.log("Got code: ", code);
+        console.log("Got vars: ", e);
+        var lomqtt = this.$.lomqtt;
+        var partner = code;
+        var command = e.detail.command;
+        var objectname = e.detail.objectname;
+        var objectdata = e.detail.objectdata;
+        var objectconfig = e.detail.objectconfig;
+        var userid = e.detail.userid;
+        var hash = e.detail.hash;
+
+        lomqtt.subscribe("validate/" + this.publickey, 2);
+        lomqtt.send("verify/" + partner, "VERIFY|" + this.publickey + "|" + objectname + "|" + objectconfig + "|" + objectdata + "|" + userid + "|" + hash, 2);
+      },
+
+      mqttconnectedfire: function(e) {
+        console.log('mqtt connected');
+      },
 
 
-    msgreceived: function(e){
-      var commandarray = e.detail.msg.split("|");
-      var partner = commandarray[1];
-      var command = commandarray[0];
-      var lomqtt = this.$.lomqtt;
-      var dialog = this.$.lodialog;
-      var peerd = this.$.peerval;
+      msgreceived: function(e) {
+        var commandarray = e.detail.msg.split("|");
+        var partner = commandarray[1];
+        var command = commandarray[0];
+        var lomqtt = this.$.lomqtt;
+        var dialog = this.$.lodialog;
+        var peerd = this.$.peerval;
 
-      if(command){
-        switch(command){
+        if (command) {
+          switch (command) {
+            case "SYNC1":
+              // Een ander toestel wil met dit toestel syncen.
+              //console.log("sync request");
+              dialog.title = "SYNC?";
+              dialog.body = "Een toestel wil synchroniseren met dit toestel.";
+              dialog.command = command;
+              dialog.partner = partner;
+              this.selected = 4;
+              break;
+
+            case "SYNCOK":
+              //console.log("Sync OK!");
+              this.$.localapielem.writeData();
+              this.selected = 0;
+              break;
+
+            case "VERIFY":
+              // Another user wants a dataset verified by this user
+              console.log("verify request", commandarray);
+              peerd.title = "VERIFY";
+              peerd.body = "Wil je getuige zijn van deze dataset?";
+              peerd.command = command;
+              peerd.partner = partner;
+              peerd.objectname = commandarray[2];
+              peerd.objectdata = commandarray[4];
+              peerd.userid = commandarray[5];
+              peerd.objectconfig = commandarray[3];
+              peerd.hash = commandarray[6];
+              this.selected = 7;
+              //app.openDialog("Wil je deze dataset van Kristien valideren?");
+              break;
+
+            case "VALIDATE":
+              var objectname = commandarray[2];
+              var userid = commandarray[5];
+              this.localapi.collection[objectname].peers.push({
+                peer: userid
+              });
+              this.localapi.collection[objectname].locked = true;
+              this.localapi.lastupdate = Date.now();
+              this.$.localapielem.writeData();
+              this.selected = 0;
+              break;
+
+            case "HASHUPDATE":
+              //console.log("Sync OK!");
+              //this.selected = 1;
+              //console.log("Oops, I should be checking this hash.", commandarray[2], " for user ", commandarray[3]);
+              this.$.godf.checkSum(commandarray[3], commandarray[1], commandarray[2], function() {
+                console.log("HashCheck done");
+              });
+              break;
+
+            case "USERUPDATE":
+              // I am a sync/peer for this user so I keep myself up to date.
+              // Overwrite the local userobject with the one received.
+              //if(e.detail.detail.partner!=this.openfire1+"@"+this.domein){
+              //console.log("normaal ga ik dus nu deze shit overschijven: ", e.detail.msg);
+              this.$.localapielem.encdata = partner;
+              this.localapi.lastupdate = Date.now();
+              // window.location = "/";
+              //};
+              break;
+
+            case "SYNCUPDATE":
+              //console.log("Something changed on another device");
+              //console.log("Ken ik stage? ", stage);
+              //this.selected = 1;
+              this.$.localapielem.encdata = e.detail.detail[4].objectdata;
+              break;
+
+            case "DATAUPDATE":
+              // The incoming dataset has been updated. This device should update the objectconfig and check whether the objectdata has been changed. When changed, the the verification should be cancelled.
+              //console.log("sync request");
+              dialog.title = "SYNC?";
+              dialog.body = "Een toestel wil synchroniseren met dit toestel.";
+              //app.localapi.collection[objectname].peers[partner] = objectconfig;
+              //console.log("Een van jouw mignons heeft een dataset veranderd.");
+              //if(app.localapi.collection[objectname].data === objectdata);
+              //app.localapi.lastupdate = Date.now();
+              break;
+          };
+        };
+      },
+
+      processCommand: function(e) {
+        // Dit verwerkt het commando dat door de dialog wordt gestuurd.
+        var command = e.detail.command;
+        var partner = e.detail.partner;
+        var objectname = e.detail.objectname;
+        var objectdata = e.detail.objectdata;
+        var objectconfig = e.detail.objectconfig;
+        var userid2 = e.detail.userid;
+        var hash = e.detail.hash;
+        var lomqtt = this.$.lomqtt;
+
+        console.log("Process command: ", command);
+
+        switch (command) {
           case "SYNC1":
-            // Een ander toestel wil met dit toestel syncen.
-            //console.log("sync request");
-            dialog.title = "SYNC?";
-            dialog.body = "Een toestel wil synchroniseren met dit toestel.";
-            dialog.command = command;
-            dialog.partner = partner;
-            this.selected = 4;
-          break;
-
-          case "SYNCOK":
-            //console.log("Sync OK!");
+            console.log("confirmation to ", command, " for ", partner);
+            this.localapi.peers.push(this.deviceid);
+            this.localapi.peers.push(partner);
             this.$.localapielem.writeData();
-            this.selected = 0;
-          break;
+            var data = this.$.localapielem.encdata;
+            var encruserid = this.encruserid;
+            this.$.localapielem.readData();
+            this.qrcode = this.publickey + '|' + this.privatekey;
+            this.selected = 3;
+            lomqtt.send("sync/" + partner, "SYNC2|" + this.deviceid, 2);
+            break;
 
           case "VERIFY":
-            // Another user wants a dataset verified by this user
-            console.log("verify request", commandarray);
-            peerd.title = "VERIFY";
-            peerd.body = "Wil je getuige zijn van deze dataset?";
-            peerd.command = command;
-            peerd.partner = partner;
-            peerd.objectname = commandarray[2];
-            peerd.objectdata = commandarray[4];
-            peerd.userid = commandarray[5];
-            peerd.objectconfig = commandarray[3];
-            peerd.hash = commandarray[6];
-            this.selected = 7;
-            //app.openDialog("Wil je deze dataset van Kristien valideren?");
-          break;
-
-          case "VALIDATE":
-            var objectname = commandarray[2];
-            var userid = commandarray[5];
-            this.localapi.collection[objectname].peers.push({ peer: userid });
-            this.localapi.collection[objectname].locked = true;
-            this.localapi.lastupdate = Date.now();
+            console.log("Ik word getuige van ", partner);
+            //(user1, user2, objectname, objecthash)
+            lomqtt.send("validate/" + partner, "VALIDATE" + "|" + this.publickey + "|" + objectname + "|" + null + "|" + null + "|" + this.publickey + "|" + hash, 2);
+            //loxmpp.sendgroupMessage(this.userid, userid2, objectname, hash);
+            //console.log("dus ik push naar godfather array: ", partner, objectname, hash);
+            this.localapi.godfather.push({
+              "child": partner,
+              "object": objectname,
+              "hash": hash,
+              "valid": true
+            });
             this.$.localapielem.writeData();
             this.selected = 0;
-          break;
-
-          case "HASHUPDATE":
-            //console.log("Sync OK!");
-            //this.selected = 1;
-            //console.log("Oops, I should be checking this hash.", commandarray[2], " for user ", commandarray[3]);
-            this.$.godf.checkSum(commandarray[3], commandarray[1], commandarray[2], function(){
-              console.log("HashCheck done");
-            });
-          break;
-
-          case "USERUPDATE":
-            // I am a sync/peer for this user so I keep myself up to date.
-            // Overwrite the local userobject with the one received.
-            //if(e.detail.detail.partner!=this.openfire1+"@"+this.domein){
-            //console.log("normaal ga ik dus nu deze shit overschijven: ", e.detail.msg);
-            this.$.localapielem.encdata = partner;
-            this.localapi.lastupdate = Date.now();
-            // window.location = "/";
-            //};
-          break;
-
-          case "SYNCUPDATE":
-            //console.log("Something changed on another device");
-            //console.log("Ken ik stage? ", stage);
-            //this.selected = 1;
-            this.$.localapielem.encdata = e.detail.detail[4].objectdata;
-          break;
-
-          case "DATAUPDATE":
-            // The incoming dataset has been updated. This device should update the objectconfig and check whether the objectdata has been changed. When changed, the the verification should be cancelled.
-            //console.log("sync request");
-            dialog.title = "SYNC?";
-            dialog.body = "Een toestel wil synchroniseren met dit toestel.";
-            //app.localapi.collection[objectname].peers[partner] = objectconfig;
-            //console.log("Een van jouw mignons heeft een dataset veranderd.");
-            //if(app.localapi.collection[objectname].data === objectdata);
-            //app.localapi.lastupdate = Date.now();
-          break;
+            break;
         };
-      };
-    },
+      },
 
-    processCommand: function(e){
-      // Dit verwerkt het commando dat door de dialog wordt gestuurd.
-      var command = e.detail.command;
-      var partner = e.detail.partner;
-      var objectname = e.detail.objectname;
-      var objectdata = e.detail.objectdata;
-      var objectconfig = e.detail.objectconfig;
-      var userid2 = e.detail.userid;
-      var hash = e.detail.hash;
-      var lomqtt = this.$.lomqtt;
-
-      console.log("Process command: ",command);
-
-      switch(command){
-        case "SYNC1":
-          console.log("confirmation to ", command, " for ", partner);
-          this.localapi.peers.push(this.deviceid);
-          this.localapi.peers.push(partner);
-          this.$.localapielem.writeData();
-          var data = this.$.localapielem.encdata;
-          var encruserid = this.encruserid;            
-          this.$.localapielem.readData();
-          this.qrcode = this.publickey+'|'+this.privatekey;
-          this.selected = 3;
-          lomqtt.send("sync/"+partner, "SYNC2|"+this.deviceid, 2);
-        break;
-
-        case "VERIFY":
-          console.log("Ik word getuige van ", partner);
-          //(user1, user2, objectname, objecthash)
-          lomqtt.send("validate/"+partner, "VALIDATE"+"|"+this.publickey+"|"+objectname+"|"+null+"|"+null+"|"+this.publickey+"|"+hash, 2);
-          //loxmpp.sendgroupMessage(this.userid, userid2, objectname, hash);
-          //console.log("dus ik push naar godfather array: ", partner, objectname, hash);
-          this.localapi.godfather.push({ "child": partner, "object": objectname, "hash": hash, "valid": true });
-          this.$.localapielem.writeData();
-          this.selected = 0;
-        break;
-      };
-    },
-
-    cancel: function(){
-      this.selected = 4;
-    },
-
-      // Navigational stuff
-    /** * This one shows the qr code associated with this device */
-    _toQR:function(){
-      this.entryAnimation = 'slide-from-right-animation';
-      this.exitAnimation = 'slide-left-animation';
-      this.selected = 3;
-      //console.log("To qr");
-      this.qrcode = this.deviceid;
-      //this.$.lomqtt.subscribe("sync/"+this.deviceid, 0);
-      this.$.lomqtt.subscribe("verify/"+this.deviceid, 2);
-      //this.$.lomqtt.send("sync/"+this.deviceid, "SYNC1", 0);
-    },
-
-    _toWhere:function(){
-      this.entryAnimation = 'slide-from-left-animation';
-      this.exitAnimation = 'slide-right-animation';
-      this.selected = 0;
-    },
-
-
-      cancel: function(){
+      cancel: function() {
         this.selected = 4;
       },
 
-    
-    _addDataset: function(){
-      //console.log("add dataset");
-      var config = {};
-      config["colors"] = ["blue", "red"];
-      var objectdata = {};
-      objectdata["username"] = "kingflurkel";
-      var object = {};
-      object["name"] = "SkeletonObject";
-      object["data"] = objectdata;
-      object["config"] = config;
-      object["peers"] = [];
-      object["component"] = "labs002-skeletonobject";
-      this.localapi.collection[object.name] = object;
-      this.$.localapielem.writeData();
-    },
+      // Navigational stuff
+      /** * This one shows the qr code associated with this device */
+      _toQR: function() {
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-left-animation';
+        this.selected = 3;
+        //console.log("To qr");
+        this.qrcode = this.deviceid;
+        //this.$.lomqtt.subscribe("sync/"+this.deviceid, 0);
+        this.$.lomqtt.subscribe("verify/" + this.deviceid, 2);
+        //this.$.lomqtt.send("sync/"+this.deviceid, "SYNC1", 0);
+      },
 
-    confirmGodfather: function(partner, objectname, hash){
-      var lomqtt = this.$.lomqtt;
-      lomqtt.send("validate/"+partner, "VALIDATE"+"|"+this.publickey+"|"+objectname+"|"+null+"|"+null+"|"+this.publickey+"|"+hash, 2);
-      this.localapi.godfather.push({ "child": partner, "object": objectname, "hash": hash, "valid": true });
-      this.$.localapielem.writeData();
-      this.selected = 0;
-    }
+      _toWhere: function() {
+        this.entryAnimation = 'slide-from-left-animation';
+        this.exitAnimation = 'slide-right-animation';
+        this.selected = 0;
+      },
 
-  });
-})();
+
+      cancel: function() {
+        this.selected = 4;
+      },
+
+
+      _addDataset: function() {
+        //console.log("add dataset");
+        var config = {};
+        config["colors"] = ["blue", "red"];
+        var objectdata = {};
+        objectdata["username"] = "kingflurkel";
+        var object = {};
+        object["name"] = "SkeletonObject";
+        object["data"] = objectdata;
+        object["config"] = config;
+        object["peers"] = [];
+        object["component"] = "labs002-skeletonobject";
+        this.localapi.collection[object.name] = object;
+        this.$.localapielem.writeData();
+      },
+
+      confirmGodfather: function(partner, objectname, hash) {
+        var lomqtt = this.$.lomqtt;
+        lomqtt.send("validate/" + partner, "VALIDATE" + "|" + this.publickey + "|" + objectname + "|" + null + "|" + null + "|" + this.publickey + "|" + hash, 2);
+        this.localapi.godfather.push({
+          "child": partner,
+          "object": objectname,
+          "hash": hash,
+          "valid": true
+        });
+        this.$.localapielem.writeData();
+        this.selected = 0;
+      }
+
+    });
+  })();
 </script>
