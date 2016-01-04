@@ -233,12 +233,14 @@
         var self = this;
 
         getconfig();
+        /*
         setInterval(function() {
           getconfig();
         }, 2000);
-
+*/
 
         function getconfig(){
+/*
           self.config = {
             "backing": Math.floor(Math.random() * Object.keys(self.backing_tiles).length) + 1,
             "beard": Math.floor(Math.random() * Object.keys(self.beard_tiles).length) + 1,
@@ -251,7 +253,7 @@
             "snit": Math.floor(Math.random() * Object.keys(self.snit_tiles).length) + 1,
             "top": Math.floor(Math.random() * Object.keys(self.top_tiles).length) + 1,
           };
-
+*/
           self.backing_tile = self.backing_tiles[(self.config ? self.config.backing : 1)].url;
           self.beard_tile = self.beard_tiles[(self.config ? self.config.beard : 1)].url;
           self.bottom_tile = self.bottom_tiles[(self.config ? self.config.bottom : 0)].url;
@@ -261,8 +263,8 @@
 
           self.body_tile = self.body_tiles[(self.config ? self.config.lijf : 1)].url;
           self.shoe_tile = self.shoe_tiles[(self.config ? self.config.shoes : 1)].url;
-          self.snit_tile = self.snit_tiles[(self.config ? self.config.snit : 0)].url;
-          self.top_tile = self.top_tiles[(self.config ? self.config.top : 0)].url;
+          self.snit_tile = self.snit_tiles[(self.config ? self.config.snit : 1)].url;
+          self.top_tile = self.top_tiles[(self.config ? self.config.top : 1)].url;
         }
 
       },
