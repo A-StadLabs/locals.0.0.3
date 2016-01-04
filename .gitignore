@@ -3,13 +3,16 @@
 .tmp
 
 # npm & bower
-node_modules
-bower_components
+/node_modules
+/bower_components
 
 # cordova
 /platforms/
 /plugins/
 /res/*/current/
+/resources/ios
+/resources/android
+
 
 # build folder
 /www/
