@@ -63,6 +63,7 @@
         var rendercanvas = this.$.rendercanvas;
         var that = this;
         if(this.objectcomponent){
+          console.log('lo-previewnext: loading a ' , this.objectcomponent);
         //this.importHref("../elements/labs002-components/"+this.objectcomponent+".html", function(e) {
           importPage("elements/labs002-components/"+this.objectcomponent+".html").then(function(){
             rendercanvas.innerHTML = '';
