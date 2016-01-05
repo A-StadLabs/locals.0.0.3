@@ -49,6 +49,28 @@
       @apply(--layout-center);
       }
 
+    .objectfirstvalue {
+      @apply(--layout-horizontal);
+      @apply(--layout-center);
+      width: 80%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+    }
+
+    .objectfirstvalue p {
+      width: 100%;
+      text-align: left;
+      margin: 0px;
+      padding: 0px;
+      font-family: Opensans;
+      font-size: var(--p-size);
+      color: #666666;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow:ellipsis;
+    }
+
 
   </style>
   <template>
@@ -105,8 +127,21 @@
             <img src="{{shoe_tile}}"/>
           </div>
         </div>
+
+
+      <div class="objectvaluesbar">
+        <div class="objectfirstvalue">
+          <small>{{firstvalue}}</small>
+        </div>
+        <div class="valids">
+          <p>{{objectpeers.length}}</p>
+          <img src="../../images/accept-small.svg">
+        </div>
+      </div>        
       </div>
+
     </div>
+
   </template>
   <script>
   (function() {
