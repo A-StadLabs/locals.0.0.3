@@ -351,7 +351,10 @@ See authors.md for a list of all members.
         width: 100%;
         height: 100%;
       }
+      .validated {
+      background-color: #66aa66;
 
+      }
 
   </style>
 <template>
@@ -492,7 +495,7 @@ See authors.md for a list of all members.
         </div>
       </div>
       -->
-      <div class="objectvaluesbar">
+      <div id="objectvaluesbar" class="objectvaluesbar">
         <div class="objectfirstvalue">
           <small>{{firstvalue}}</small>
         </div>
@@ -623,8 +626,7 @@ See authors.md for a list of all members.
             </iron-selector>
           </div>
         </iron-collapse>
-      </div>
-
+      </div>     
       <div class="valuesbox" on-tap="toggleValuesedit">
         <div class="values">
           <p><span>{{firstvalue}}</span></p>    
@@ -638,6 +640,7 @@ See authors.md for a list of all members.
           </iron-collapse>
         </div>
       </div>
+
       <lo-peers peers="{{objectpeers}}" peersneeded="{{objectpeersneeded}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
     </div>
   </neon-animatable>
@@ -707,6 +710,15 @@ See authors.md for a list of all members.
 
         objecthash: {
           type: String
+        },
+
+        objectpeers:{
+          type: String,
+          observer: "_peersChanged"
+        },
+        objectpeersneeded:{
+          type: String,
+          observer: "_peersChanged"
         },
 
         modus: {
@@ -940,7 +952,12 @@ See authors.md for a list of all members.
         //item.exitAnimation = "slide-left-animation";
       },
 
-
+      _peersChanged: function() {
+        var validated = false;
+        if (this.objectpeers && this.objectpeersneeded){
+          this.toggleClass("validated", this.objectpeers.length >= this.objectpeersneeded ,this.$.objectvaluesbar);      
+        }
+      },
 
       _configChanged: function() {
 
@@ -1001,6 +1018,7 @@ See authors.md for a list of all members.
         this.snit_tile = this.snit_tiles[(this.objectconfig ? this.objectconfig.snit[0] : 1)].url;
         this.top_tile = this.top_tiles[(this.objectconfig ? this.objectconfig.top[0] : 1)].url;
 
+     
 
         // this.$.head.color = this.objectconfig.lijf[1];
 
@@ -1013,6 +1031,7 @@ See authors.md for a list of all members.
         this.birthdate = this.objectdata.birthdate;
         this.birthplace = this.objectdata.birthplace;
         //this.locked = this..locked;
+  
       },
 
       unlock: function() {
