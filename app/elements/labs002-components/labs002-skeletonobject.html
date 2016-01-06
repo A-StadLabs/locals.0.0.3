@@ -7,6 +7,7 @@
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
 
+<link rel="import" href="../lo-smallpeers/lo-smallpeers.html">
 
 <dom-module id="labs002-skeletonobject">
   <style>
@@ -172,10 +173,8 @@
     <div class="objectfirstvalue">
       <small>{{firstvalue}}</small>
     </div>
-    <div class="valids">
-      <p>{{objectpeers.length}}</p>
-      <img src="../../images/accept-small.svg">
-    </div>
+              <lo-smallpeers peers="{{objectpeers.length}}" peersneeded="{{objectpeersneeded}}"></lo-smallpeers>
+
   </div>
 
 
