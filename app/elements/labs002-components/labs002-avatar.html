@@ -343,6 +343,15 @@ See authors.md for a list of all members.
       visibility: var(--btns-visibility);
     }
 
+  .svgcontainer {
+        width: 100%;
+        height: 100%;
+      }
+      .svgcontainer img {
+        width: 100%;
+        height: 100%;
+      }
+
 
   </style>
 <template>
@@ -351,7 +360,68 @@ See authors.md for a list of all members.
   <neon-animatable>
     <div class="canvas layout vertical center-center">
       <div class="thumbcontainer">
+
         <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{backing_tile}}"/>
+          </div>
+        </div>
+        
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{body_tile}}"/>
+          </div>
+        </div>
+
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{head_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{beard_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{bottom_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{face_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{glasses_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{snit_tile}}"/>
+          </div>
+        </div>
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{top_tile}}"/>
+          </div>
+        </div>
+
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{shoe_tile}}"/>
+          </div>
+        </div>
+
+      </div>
+
+
+    <!--
+      <div class="thumbcontainer">
+        <div class="absolutepos">
+          <img src="{{backing_tile}}"/>
           <labs002-avatar-backingpages 
             selected="{{backingselected}}"
             color="{{backingcolor}}"
@@ -421,6 +491,7 @@ See authors.md for a list of all members.
           </labs002-avatar-snitpages>
         </div>
       </div>
+      -->
       <div class="objectvaluesbar">
         <div class="objectfirstvalue">
           <small>{{firstvalue}}</small>
@@ -607,7 +678,7 @@ See authors.md for a list of all members.
       is: 'labs002-avatar',
 
       behaviors: [
-      Polymer.NeonAnimatableBehavior
+        Polymer.NeonAnimatableBehavior
       ],
 
       properties: {
@@ -638,25 +709,167 @@ See authors.md for a list of all members.
           type: String
         },
 
-        modus: {     
+        modus: {
           type: Number,
           value: 0,
           notify: true,
-          observer: "_modusChanged"        
+          observer: "_modusChanged"
         },
 
       },
 
-        // MODI //
-        // 0: THUMB PERVIEW
-        // 1: VALUES READ
-        // 2: VALUES WRITE
-        // 3: AVATAR CONFIG  
+      // MODI //
+      // 0: THUMB PERVIEW
+      // 1: VALUES READ
+      // 2: VALUES WRITE
+      // 3: AVATAR CONFIG  
 
-      ready: function(){
+      ready: function() {
         this.$.avatarmainpages.selected = this.modus;
         this.itemtocolor = 'lijf';
         this.nrof = [];
+
+
+        this.backing_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/empty.svg')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarbacking1-02.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarbacking1-02.png')
+          }
+        };
+
+        this.beard_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/empty.svg')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarbeard1-02.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarbeard2-02.png')
+          },
+          3: {
+            url: this.resolveUrl('../../images/avatar/avatarbeard3-02.png')
+          },
+          4: {
+            url: this.resolveUrl('../../images/avatar/avatarbeard4-02.png')
+          },
+          5: {
+            url: this.resolveUrl('../../images/avatar/avatarbeard5-02.png')
+          },
+          6: {
+            url: this.resolveUrl('../../images/avatar/avatarbeard6-02.png')
+          },
+          7: {
+            url: this.resolveUrl('../../images/avatar/avatarbeard7-02.png')
+          }
+        };
+
+        this.bottom_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/avatarbottom1-03.png')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarbottom2-03.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarbottom3-03.png')
+          },
+        };
+
+        this.face_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/avatarface-01.png')
+          }
+        }
+
+        this.glasses_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/empty.svg')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarglasses1-08.png')
+          }
+        };
+
+        this.head_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/avatarhead-01.png')
+          }
+        };
+
+
+        this.body_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/avatarlijf-01.png')
+          }
+        }
+
+        this.shoe_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/empty.svg')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarshoes1-04.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarshoes2-04.png')
+          },
+          3: {
+            url: this.resolveUrl('../../images/avatar/avatarshoes2-04.png')
+          }
+        };
+
+        this.snit_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/empty.svg')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarsnit1-08.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarsnit2-08.png')
+          },
+          3: {
+            url: this.resolveUrl('../../images/avatar/avatarsnit3-08.png')
+          },
+          4: {
+            url: this.resolveUrl('../../images/avatar/avatarsnit4-08.png')
+          },
+          5: {
+            url: this.resolveUrl('../../images/avatar/avatarsnit5-08.png')
+          },
+          6: {
+            url: this.resolveUrl('../../images/avatar/avatarsnit6-08.png')
+          },
+          7: {
+            url: this.resolveUrl('../../images/avatar/avatarsnit7-08.png')
+          },
+        };
+
+        this.top_tiles = {
+          0: {
+            url: this.resolveUrl('../../images/avatar/empty.svg')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatartop1-02.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatartop2-02.png')
+          },
+          3: {
+            url: this.resolveUrl('../../images/avatar/avatartop3-02.png')
+          },
+          4: {
+            url: this.resolveUrl('../../images/avatar/avatartop4-02.png')
+          },
+        };
+
+
       },
 
       attached: function() {
@@ -668,77 +881,76 @@ See authors.md for a list of all members.
       },
 
       detached: function() {
-        this.async(function() {
-        });
+        this.async(function() {});
       },
 
-      passItem:function(){
+      passItem: function() {
         // hier dus een nieuwe functie die gaat checken of de prev/next buttons actief zijn of niet.
         var selecteditem = this.$.itemselector.selected;
         this.kleurtje = this.objectconfig[selecteditem][1];
         this.setButtonstates(selecteditem);
       },
 
-      setButtonstates: function(selecteditem){
-        if(selecteditem){
+      setButtonstates: function(selecteditem) {
+        if (selecteditem) {
           var max = this.nrof[selecteditem];
           var cur = this.objectconfig[selecteditem][0];
 
-          if(cur>=0&&cur<=max){
+          if (cur >= 0 && cur <= max) {
             this.$.next.active = true;
             this.$.previous.active = true;
           };
 
-          if(cur==max){
+          if (cur == max) {
             this.$.next.active = false;
             this.$.previous.active = true;
           };
 
-          if(cur<=0){
+          if (cur <= 0) {
             this.$.previous.active = false;
           };
 
-        }; 
+        };
       },
 
-      previous: function(e){
+      previous: function(e) {
         var selecteditem = this.$.itemselector.selected;
         //var item = document.getElementById(this.selecteditem);
-        if(this.objectconfig[selecteditem][0]>=0&&this.$.previous.active){
+        if (this.objectconfig[selecteditem][0] >= 0 && this.$.previous.active) {
           this.objectconfig[selecteditem][0]--;
           this.setButtonstates(selecteditem);
         } else {
           this.setButtonstates(selecteditem);
         };
         this._configChanged();
-          //item.entryAnimation = "slide-to-left-animation";
-          //item.exitAnimation = "slide-right-animation";
-        },
+        //item.entryAnimation = "slide-to-left-animation";
+        //item.exitAnimation = "slide-right-animation";
+      },
 
-        next: function(e){
-          var selecteditem = this.$.itemselector.selected;
-          if(this.objectconfig[selecteditem][0]<=this.nrof[selecteditem]&&this.$.next.active){
-            this.objectconfig[selecteditem][0]++;
-            this.setButtonstates(selecteditem);
-          } else {
-            this.setButtonstates(selecteditem);
-          };
-          this._configChanged();
-          //item.entryAnimation = "slide-to-right-animation";
-          //item.exitAnimation = "slide-left-animation";
-        },
+      next: function(e) {
+        var selecteditem = this.$.itemselector.selected;
+        if (this.objectconfig[selecteditem][0] <= this.nrof[selecteditem] && this.$.next.active) {
+          this.objectconfig[selecteditem][0]++;
+          this.setButtonstates(selecteditem);
+        } else {
+          this.setButtonstates(selecteditem);
+        };
+        this._configChanged();
+        //item.entryAnimation = "slide-to-right-animation";
+        //item.exitAnimation = "slide-left-animation";
+      },
 
 
 
-      _configChanged: function(){
+      _configChanged: function() {
 
         this.setButtonstates(this.selecteditem);
 
         this.nrof = [];
 
-        this.nrof['body'] = this.nrofbody; 
-        this.nrof['backing'] = this.nrofbacking; 
-        this.nrof['top'] = this.nroftop;  
+        this.nrof['body'] = this.nrofbody;
+        this.nrof['backing'] = this.nrofbacking;
+        this.nrof['top'] = this.nroftop;
         this.nrof['snit'] = this.nrofsnit;
         this.nrof['beard'] = this.nrofbeard;
         this.nrof['glasses'] = this.nrofglasses;
@@ -775,11 +987,26 @@ See authors.md for a list of all members.
         this.backingselected = this.objectconfig.backing[0];
         this.backingcolor = this.objectconfig.backing[1];
 
+
+
+        this.backing_tile = this.backing_tiles[(this.config ? this.objectconfig.backing[0] : 0)].url;
+        this.beard_tile = this.beard_tiles[(this.config ? this.objectconfig.beard[0] : 1)].url;
+        this.bottom_tile = this.bottom_tiles[(this.config ? this.objectconfig.bottom[0] : 0)].url;
+        this.face_tile = this.face_tiles[(this.config ? this.objectconfig.face[0] : 0)].url;
+        this.glasses_tile = this.glasses_tiles[(this.config ? this.objectconfig.glasses[0] : 1)].url;
+        this.head_tile = this.head_tiles[(this.config ? this.objectconfig.head[0] : 0)].url;
+
+        this.body_tile = this.body_tiles[(this.config ? this.objectconfig.lijf[0] : 0)].url;
+        this.shoe_tile = this.shoe_tiles[(this.config ? this.objectconfig.shoes[0] : 1)].url;
+        this.snit_tile = this.snit_tiles[(this.config ? this.objectconfig.snit[0] : 1)].url;
+        this.top_tile = this.top_tiles[(this.config ? this.objectconfig.top[0] : 1)].url;
+
+
         // this.$.head.color = this.objectconfig.lijf[1];
 
       },
 
-      _dataChanged: function(){
+      _dataChanged: function() {
 
         this.firstname = this.objectdata.firstname;
         this.lastname = this.objectdata.lastname;
@@ -788,76 +1015,80 @@ See authors.md for a list of all members.
         //this.locked = this..locked;
       },
 
-      unlock: function(){
+      unlock: function() {
         this.locked = false;
       },
 
-      _editChanged: function(){
-      },
+      _editChanged: function() {},
 
 
-      editListener: function(){
-          if(this.opened){
+      editListener: function() {
+        if (this.opened) {
           this.selected = 1;
-          } else {
-            this.selected = 0;
-          }; 
+        } else {
+          this.selected = 0;
+        };
       },
 
-      _modusChanged: function(){
-        switch(this.modus){
+      _modusChanged: function() {
+        switch (this.modus) {
 
           case 0:
             this.$.avatarmainpages.selected = this.modus;
-          break;
+            break;
 
           case 1:
             this.$.avatarmainpages.selected = this.modus;
-          break;
+            break;
 
           case 2:
             this.$.avatarmainpages.selected = this.modus;
-          break;
+            break;
 
           case 3:
             this.$.avatarmainpages.selected = this.modus;
-          break;
+            break;
 
         };
       },
 
 
-      toEdit:function(){
+      toEdit: function() {
         this.modus = 2;
       },
 
 
-    toggleValuesedit:function(){
-      this.$.valuesedit.toggle();
-    },
+      toggleValuesedit: function() {
+        this.$.valuesedit.toggle();
+      },
 
 
-    toggleAvataredit:function(){
-      this.$.avataredit.toggle();
-      if (this.avataropen) { 
-        this.customStyle['--btns-visibility'] = 'show';
-        this.updateStyles(); 
-      } else {
-        this.customStyle['--btns-visibility'] = 'hidden';
-        this.updateStyles(); 
-        // this.save();
-      }
-    },
+      toggleAvataredit: function() {
+        this.$.avataredit.toggle();
+        if (this.avataropen) {
+          this.customStyle['--btns-visibility'] = 'show';
+          this.updateStyles();
+        } else {
+          this.customStyle['--btns-visibility'] = 'hidden';
+          this.updateStyles();
+          // this.save();
+        }
+      },
 
 
-      save:function(){
-        this.fire('save-it', { datasetkey: this.objectname, dataset: this.objectdata, hash: this.objecthash, config: this.objectconfig });
+      save: function() {
+        this.fire('save-it', {
+          datasetkey: this.objectname,
+          dataset: this.objectdata,
+          hash: this.objecthash,
+          config: this.objectconfig
+        });
         this.modus = 1;
       },
 
-      _selectedcolor: function(e){
+      _selectedcolor: function(e) {
         var selectedcolor = e.detail.color;
-        if(this.$.itemselector.selected&&selectedcolor){
+        if (this.$.itemselector.selected && selectedcolor) {
           var item = this.$.itemselector.selected;
           var color = selectedcolor;
           this.objectconfig[item][1] = color;
