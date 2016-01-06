@@ -16,8 +16,39 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       :host {
         display: block;
       }
+
+      .valids {
+      @apply(--layout-horizontal);
+      @apply(--layout-end-justified);
+      @apply(--layout-center);
+      width: 20%;
+      min-width: 40px;
+      height: 100%;
+    }
+
+    .valids img {
+      height: 15px;
+      width: 15px;
+    }
+
+    .valids p {
+      padding: 0px;
+      margin: 0px 5px 0px 0px;
+      font-size: var(--p-valids);
+      font-family: OpensansBold;
+      color: #333333;
+    }
     </style>
-    <div>Hello from <span>{{foo}}</span></div>
+    <div class="valids">
+      <p>
+        <span>{{peers}}</span>
+        /
+        <span>{{peersneeded}}</span>
+      </p>
+      <template is="dom-if" if="{{valid}}">
+        <img src="../../images/accept-green.svg">
+      </template>
+    </div>
   </template>
   <script>
   (function() {
@@ -27,11 +58,29 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'lo-smallpeers',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'lo-smallpeers',
-          notify: true
+        peers: {
+          type: Array,
+          notify: true,
+          observer: "_peers"
+        },
+
+        valid: {
+          type: Boolean,
+          value: false
         }
+      },
+
+      _peers: function(){
+        var peers = this.peers;
+        if(peers.length>=this.peersneeded){
+        console.log('Genoeg peers');
+        //this.valcolor = 'var(--primary-green)';
+        this.valid = true;
+      } else {
+        console.log('nie genoeg peers');
+        //this.valcolor = 'var(--primary-red)';
+        this.valid = false;
+      };
       }
     });
   })();
