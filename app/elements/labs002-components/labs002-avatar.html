@@ -567,7 +567,7 @@ See authors.md for a list of all members.
           </iron-collapse>
         </div>
       </div>
-      <lo-peers peers="{{objectpeers}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
+      <lo-peers peers="{{objectpeers}}" peersneeded="{{objectpeersneeded}}" on-go-back="_toBack" valcolor="var(--primary-green)"></lo-peers>
     </div>
   </neon-animatable>
 
@@ -593,7 +593,7 @@ See authors.md for a list of all members.
             <label>Geboorteplaats</label>
             <input type="text" is="iron-input" bind-value="{{objectdata.birthplace}}" >
           </paper-input-container>
-          <button on-tap="save">SAVE VALUES</button>
+          <button on-tap="save">Opslaan</button>
         </div>
       </div>
     </div>

@@ -71,8 +71,30 @@
         type: String,
         notify: true,
         observer: "_valcolorChanged"
+      },
+
+      peersneeded: {
+        type: Number,
+        value: 3,
+        observer: "_peersneeded"
       }
     },
+
+    attached: function(){
+      console.log(JSON.stringify(this.peers));
+    },
+
+    // attached: function(){
+    //   console.log()
+    //   // console.log('got peers needed', this.peersneeded);
+    //   // var peers = this.peers;
+    //   // console.log('Peers needed: ', this.peersneeded, ' peers available: ', peers.length);
+    //   // if(peers.length>=this.peersneeded){
+    //   //   console.log('Genoeg peers');
+    //   // } else {
+    //   //   console.log('nie genoeg peers');
+    //   // };
+    // },
 
     newpeer: function(){
       this.fire("new-peer");
@@ -80,7 +102,17 @@
     },
 
     _peersLog:function(){
-      //console.log(JSON.stringify(this.peers));
+      console.log(JSON.stringify(this.peers));
+      console.log('got peers needed', this.peersneeded);
+      var peers = this.peers;
+      console.log('Peers needed: ', this.peersneeded, ' peers available: ', peers.length);
+      if(peers.length>=this.peersneeded){
+        console.log('Genoeg peers');
+        this.valcolor = 'var(--primary-green)';
+      } else {
+        console.log('nie genoeg peers');
+        this.valcolor = 'var(--primary-red)';
+      };
     },
 
     back: function(){
