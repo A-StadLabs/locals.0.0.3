@@ -46,7 +46,7 @@
 
       <div class="peersnr" on-tap="newpeer">
         <div class="nr">
-          <h1><span>{{peers.length}}</span></h1>
+          <h1><span>{{peers.length}}</span>/<span>{{peersneeded}}</span></h1>
           <img src="../../images/accept-small.svg">
         </div>
 
@@ -118,7 +118,6 @@
     back: function(){
       //console.log('Nou!');
       this.fire('go-back');
-
     },
 
     _valcolorChanged:function(){
