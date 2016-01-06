@@ -9,12 +9,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 body {
 	background-color: #333333;
-/*  background-image: url("../images/bg-blue3.png");
-  background-size: auto 100vh;*/
-/*  background-repeat: no-repeat;
-*/  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #333;
-  margin: 0px;
-  padding: 0px;
-  box-sizing:border-box;
+  	color: #333;
+  	margin: 0px;
+  	padding: 0px;
+  	box-sizing:border-box;
+}
+
+@font-face {
+    font-family: OpensansLight;
+    src: url(../fonts/OpenSans-Light.ttf);
+}
+
+@font-face {
+    font-family: Opensans;
+    src: url(../fonts/OpenSans-Regular.ttf);
+}
+
+@font-face {
+    font-family: OpensansBold;
+    src: url(../fonts/OpenSans-Bold.ttf);
+}
+
+@font-face {
+    font-family: OpensansSemibold;
+    src: url(../fonts/OpenSans-Semibold.ttf);
 }

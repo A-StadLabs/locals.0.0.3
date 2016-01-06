@@ -57,39 +57,49 @@
     </style>
 
 
-      <div id="toolbar"> 
-        <button class="backbtn" on-tap="back">
-          <img src="../../images/back-white.svg">
-        </button>
-      </div>
+    <div id="toolbar">
+      <button class="backbtn" on-tap="back">
+        <img src="../../images/back-white.svg">
+      </button>
+    </div>
 
+    <lo-qrrender qrcode="{{qrcode}}"></lo-qrrender>
 
-      <lo-qrrender qrcode="{{qrcode}}"></lo-qrrender>
-
-
-    <h1>Godfather of: </h1>
+    <p><b>Reeds gevalideerd:</b></p>
     <template is="dom-repeat" items="{{children}}">
-      <div>USERID Child: <span>{{item.child}}</span>
-      Object: <span>{{item.object}}</span>
-      Hash: <span>{{item.hash}}</span></div>
-      <div>{{item.valid}}</div>
+      <ul>
+        <li>
+          Child:
+          <span>{{item.child}}</span>
+          <br>    
+          Object:
+          <span>{{item.object}}</span>
+          <br>    
+          Hash:
+          <span>{{item.hash}}</span>
+          <br>    
+          Valid:
+          <span>{{item.valid}}</span>
+        </li>
+      </ul>
     </template>
   </template>
   <script>
   (function() {
     'use strict';
 
-    var clog = function(){
+    var clog = function() {
       //console.log("IETS KOMT BINNEN");
     };
 
 
     var lomqtt;
-     var stage;
+    var stage;
 
     Polymer({
       is: 'lo-godfather',
-    behaviors: [Polymer.NeonAnimatableBehavior],
+
+      behaviors: [Polymer.NeonAnimatableBehavior],
 
       properties: {
         children: {
@@ -99,24 +109,22 @@
         }
       },
 
-      attached: function(){
-        
+      attached: function() {
         stage = document.querySelector("lo-stage");
       },
 
+      back: function() {
+        this.fire('change-stage', {
+          stage: 0
+        });
+      },
 
-    back: function(){
-      this.fire('change-stage', { stage: 0 });
-    },
+      ready: function() {
+        this.entryAnimation = 'slide-from-right-animation';
+        this.exitAnimation = 'slide-right-animation';
+      },
 
-    ready: function(){
-      this.entryAnimation = 'slide-from-right-animation';
-      this.exitAnimation = 'slide-right-animation';
-    },
-
-
-      
-      _children: function(){
+      _children: function() {
         lomqtt = document.querySelector("lo-mqtt");
         //console.log("HEY! NIE OP MIJN GEZICHT!!!", this.children);
         //this.checkSum();
@@ -124,20 +132,21 @@
 
         for (var i = children.length - 1; i >= 0; i--) {
           //console.log("LOMQTT SUBSCRIBE TO: ", "userhash/"+this.children[i].child);
-          var topic = "userhash/"+this.children[i].child;
+          var topic = "userhash/" + this.children[i].child;
           //console.log("GODFATHER: ", topic);
-          lomqtt.push("children", {topic: topic, qos: 0});
+          lomqtt.push("children", {
+            topic: topic,
+            qos: 0
+          });
         };
-
-    
       },
 
-      checkSum: function(user, object, hash, fn){
+      checkSum: function(user, object, hash, fn) {
         //console.log("My child ",user," has edited info for: ", object, " new hash: ", hash);
         for (var i = this.children.length - 1; i >= 0; i--) {
-          if(this.children[i].child==user&&this.children[i].object==object){
+          if (this.children[i].child == user && this.children[i].object == object) {
             //console.log("found one of my children");
-            if(this.children[i].hash != hash){
+            if (this.children[i].hash != hash) {
               //console.log("hash changed: child's hash: ", hash, " my hash: ", this.children[i].hash);
               this.children[i].valid = false;
               this.fire('save');
