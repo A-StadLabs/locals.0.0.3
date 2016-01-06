@@ -83,6 +83,7 @@ See authors.md for a list of all members.
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
 <link rel="import" href="../lo-peers/lo-peers.html">
+<link rel="import" href="../lo-smallpeers/lo-smallpeers.html">
 <link rel="import" href="lo-colorpicker.html">
 <link rel="import" href="../lo-configbtns/lo-configbtns.html">
 
@@ -499,10 +500,10 @@ See authors.md for a list of all members.
         <div class="objectfirstvalue">
           <small>{{firstvalue}}</small>
         </div>
-        <div class="valids">
-          <p>{{objectpeers.length}}<span>/</span><span>{{objectpeersneeded}}</span></p>
-          <img src="../../images/accept-small.svg">
-        </div>
+   
+          <lo-smallpeers peers="{{objectpeers.length}}" peersneeded="{{objectpeersneeded}}"></lo-smallpeers>
+
+   
       </div>
     </div>
   </neon-animatable>
