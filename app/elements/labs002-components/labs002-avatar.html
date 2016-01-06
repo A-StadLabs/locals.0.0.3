@@ -989,17 +989,17 @@ See authors.md for a list of all members.
 
 
 
-        this.backing_tile = this.backing_tiles[(this.config ? this.objectconfig.backing[0] : 0)].url;
-        this.beard_tile = this.beard_tiles[(this.config ? this.objectconfig.beard[0] : 1)].url;
-        this.bottom_tile = this.bottom_tiles[(this.config ? this.objectconfig.bottom[0] : 0)].url;
-        this.face_tile = this.face_tiles[(this.config ? this.objectconfig.face[0] : 0)].url;
-        this.glasses_tile = this.glasses_tiles[(this.config ? this.objectconfig.glasses[0] : 1)].url;
-        this.head_tile = this.head_tiles[(this.config ? this.objectconfig.head[0] : 0)].url;
+        this.backing_tile = this.backing_tiles[(this.objectconfig ? this.objectconfig.backing[0] : 0)].url;
+        this.beard_tile = this.beard_tiles[(this.objectconfig ? this.objectconfig.beard[0] : 1)].url;
+        this.bottom_tile = this.bottom_tiles[(this.objectconfig ? this.objectconfig.bottom[0] : 0)].url;
+        this.face_tile = this.face_tiles[(this.objectconfig ? this.objectconfig.face[0] : 0)].url;
+        this.glasses_tile = this.glasses_tiles[(this.objectconfig ? this.objectconfig.glasses[0] : 1)].url;
+        this.head_tile = this.head_tiles[(this.objectconfig ? this.objectconfig.head[0] : 0)].url;
 
-        this.body_tile = this.body_tiles[(this.config ? this.objectconfig.lijf[0] : 0)].url;
-        this.shoe_tile = this.shoe_tiles[(this.config ? this.objectconfig.shoes[0] : 1)].url;
-        this.snit_tile = this.snit_tiles[(this.config ? this.objectconfig.snit[0] : 1)].url;
-        this.top_tile = this.top_tiles[(this.config ? this.objectconfig.top[0] : 1)].url;
+        this.body_tile = this.body_tiles[(this.objectconfig ? this.objectconfig.lijf[0] : 0)].url;
+        this.shoe_tile = this.shoe_tiles[(this.objectconfig ? this.objectconfig.shoes[0] : 1)].url;
+        this.snit_tile = this.snit_tiles[(this.objectconfig ? this.objectconfig.snit[0] : 1)].url;
+        this.top_tile = this.top_tiles[(this.objectconfig ? this.objectconfig.top[0] : 1)].url;
 
 
         // this.$.head.color = this.objectconfig.lijf[1];
