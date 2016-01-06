@@ -164,9 +164,6 @@
         </button>
       </div>
         <div class="objectstotal">
-
-
-
           <template is="dom-repeat" items="{{objecten}}">
             <lo-pickitem enabled="{{item.enabled}}" object="{{item}}" id="{{item.name}}" index="{{index}}" objectnaam="{{item.name}}" icon="{{item.icon}}"></lo-pickitem>
           </template>
@@ -186,6 +183,7 @@
           <img src="{{previewicon}}">
           <h1><span>{{previewname}}</span></h1>
           <p>{{previewdescription}}</p>
+          <p>Geldig met <span>{{previewpeervalidations}}</span> bevestigingen.</p>
 
           <div class="confirmbtns">
 
@@ -371,6 +369,7 @@
       this.previewname = e.target.id;
       this.previewicon = this.objects.collection[e.target.index].icon;
       this.previewdescription = this.objects.collection[e.target.index].description;
+      this.previewpeervalidations = this.objects.collection[e.target.index].peersneededtovalidate;
       this.previewindex = e.target.index;
       this.conditions = this.objects.collection[e.target.index].conditions;
       this.$.pages.selected = 1;
