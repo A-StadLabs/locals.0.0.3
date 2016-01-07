@@ -70,7 +70,7 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
 
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
-<!--
+
 <link rel="import" href="labs002-avatar-snitpages.html">
 <link rel="import" href="labs002-avatar-glassespages.html">
 <link rel="import" href="labs002-avatar-beardpages.html">
@@ -83,7 +83,7 @@ See authors.md for a list of all members.
 <link rel="import" href="labs002-avatar-backingpages.html">
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
--->
+
 <link rel="import" href="../lo-peers/lo-peers.html">
 <link rel="import" href="../lo-smallpeers/lo-smallpeers.html">
 <link rel="import" href="lo-colorpicker.html">
@@ -740,6 +740,9 @@ See authors.md for a list of all members.
       // 3: AVATAR CONFIG  
 
       ready: function() {
+
+        //this._loadTheRest();
+
         this.$.avatarmainpages.selected = this.modus;
         this.itemtocolor = 'lijf';
         this.nrof = [];
@@ -893,7 +896,6 @@ See authors.md for a list of all members.
           this._dataChanged();
         });
 
-        this._loadTheRest();
         /*
         <link rel="import" href="labs002-avatar-snitpages.html">
         <link rel="import" href="labs002-avatar-glassespages.html">
@@ -926,8 +928,8 @@ See authors.md for a list of all members.
           this.resolveUrl('./labs002-avatar-shoespages.html'),
           this.resolveUrl('./labs002-avatar-bodypages.html'),
           this.resolveUrl('./labs002-avatar-backingpages.html'),
-          this.resolveUrl('./labs002-skeletonpages.html'),
-          this.resolveUrl('./labs002-skeletonheadbandpages.html')
+//          this.resolveUrl('./labs002-skeletonpages.html'),
+//          this.resolveUrl('./labs002-skeletonheadbandpages.html')
         ];
 
         //        var self = this;
