@@ -70,6 +70,7 @@ See authors.md for a list of all members.
 <link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
 
 <link rel="import" href="../../bower_components/iron-selector/iron-selector.html">
+<!--
 <link rel="import" href="labs002-avatar-snitpages.html">
 <link rel="import" href="labs002-avatar-glassespages.html">
 <link rel="import" href="labs002-avatar-beardpages.html">
@@ -82,6 +83,7 @@ See authors.md for a list of all members.
 <link rel="import" href="labs002-avatar-backingpages.html">
 <link rel="import" href="labs002-skeletonpages.html">
 <link rel="import" href="labs002-skeletonheadbandpages.html">
+-->
 <link rel="import" href="../lo-peers/lo-peers.html">
 <link rel="import" href="../lo-smallpeers/lo-smallpeers.html">
 <link rel="import" href="lo-colorpicker.html">
@@ -713,11 +715,11 @@ See authors.md for a list of all members.
           type: String
         },
 
-        objectpeers:{
+        objectpeers: {
           type: String,
           observer: "_peersChanged"
         },
-        objectpeersneeded:{
+        objectpeersneeded: {
           type: String,
           observer: "_peersChanged"
         },
@@ -891,6 +893,76 @@ See authors.md for a list of all members.
           this._dataChanged();
         });
 
+        this._loadTheRest();
+        /*
+        <link rel="import" href="labs002-avatar-snitpages.html">
+        <link rel="import" href="labs002-avatar-glassespages.html">
+        <link rel="import" href="labs002-avatar-beardpages.html">
+        <link rel="import" href="labs002-avatar-facepages.html">
+        <link rel="import" href="labs002-avatar-headpages.html">
+        <link rel="import" href="labs002-avatar-toppages.html">
+        <link rel="import" href="labs002-avatar-bottompages.html">
+        <link rel="import" href="labs002-avatar-shoespages.html">
+        <link rel="import" href="labs002-avatar-bodypages.html">
+        <link rel="import" href="labs002-avatar-backingpages.html">
+        <link rel="import" href="labs002-skeletonpages.html">
+        <link rel="import" href="labs002-skeletonheadbandpages.html">
+        */
+
+
+      },
+
+      _loadTheRest: function() {
+
+
+        var extraElements = [
+          this.resolveUrl('./labs002-avatar-snitpages.html'),
+          this.resolveUrl('./labs002-avatar-glassespages.html'),
+          this.resolveUrl('./labs002-avatar-beardpages.html'),
+          this.resolveUrl('./labs002-avatar-facepages.html'),
+          this.resolveUrl('./labs002-avatar-headpages.html'),
+          this.resolveUrl('./labs002-avatar-toppages.html'),
+          this.resolveUrl('./labs002-avatar-bottompages.html'),
+          this.resolveUrl('./labs002-avatar-shoespages.html'),
+          this.resolveUrl('./labs002-avatar-bodypages.html'),
+          this.resolveUrl('./labs002-avatar-backingpages.html'),
+          this.resolveUrl('./labs002-skeletonpages.html'),
+          this.resolveUrl('./labs002-skeletonheadbandpages.html')
+        ];
+
+        //        var self = this;
+
+        extraElements.forEach(function(el, index) {
+
+          if (!this.loadedElements) {
+            this.loadedElements = [];
+          }
+
+          if (!this.loadedElements[el]) {
+            this.loadedElements[el] = true;
+
+            setTimeout(function() {
+
+              Polymer.Base.importHref([el], function() {
+                // called when our import is fully loaded
+                // including any assets like CSS.
+                console.log('element loaded: ', index, el);
+              }, function(e) {
+                // called when our import is fully loaded
+                // including any assets like CSS.
+                console.log('element loading error', el, e);
+              }, true);
+
+            }, index * 100);
+          } else {
+            console.log(el, ' already loaded..');
+          }
+
+
+        });
+
+
+
       },
 
       detached: function() {
@@ -955,8 +1027,8 @@ See authors.md for a list of all members.
 
       _peersChanged: function() {
         var validated = false;
-        if (this.objectpeers && this.objectpeersneeded){
-          this.toggleClass("validated", this.objectpeers.length >= this.objectpeersneeded ,this.$.objectvaluesbar);      
+        if (this.objectpeers && this.objectpeersneeded) {
+          this.toggleClass("validated", this.objectpeers.length >= this.objectpeersneeded, this.$.objectvaluesbar);
         }
       },
 
@@ -1019,7 +1091,7 @@ See authors.md for a list of all members.
         this.snit_tile = this.snit_tiles[(this.objectconfig ? this.objectconfig.snit[0] : 1)].url;
         this.top_tile = this.top_tiles[(this.objectconfig ? this.objectconfig.top[0] : 1)].url;
 
-     
+
 
         // this.$.head.color = this.objectconfig.lijf[1];
 
@@ -1032,7 +1104,7 @@ See authors.md for a list of all members.
         this.birthdate = this.objectdata.birthdate;
         this.birthplace = this.objectdata.birthplace;
         //this.locked = this..locked;
-  
+
       },
 
       unlock: function() {
