@@ -19,7 +19,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <iron-localstorage 
       name="ethereum" 
       value="{{localvalue}}"
-      on-iron-localstorage-load="processAccount"></iron-localstorage>
+      on-iron-localstorage-load="processAccount"
+      on-iron-localstorage-load-empty="newAccount"></iron-localstorage>
   </template>
   <script>
   (function() {
@@ -39,11 +40,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       is: 'alabs-web3js',
 
       properties: {
-        foo: {
-          type: String,
-          value: 'alabs-web3js',
-          notify: true
-        },
         balance: {
           type: Number,
           notify: true,
@@ -69,6 +65,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           type: Boolean,
           value: false,
           notify: true
+        },
+        backup: {
+          type: Object,
+          value: {
+            provider: '',
+            token: ''
+          },
         }
       },
 
@@ -82,15 +85,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         });
       },
 
-      _balance: function(){
-        //console.log(this.balance);
-      },
-
-      _account: function(){
-        //console.log(this.account);
-      },
-
       newAccount: function(){
+        console.log("New account activated");
         var accounts = new Accounts({minPassphraseLength: 6});
         var accountObject = accounts.new('testing');
         this.localvalue = accountObject;
@@ -105,6 +101,26 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       unlockAccount: function(){
         console.log("Unlock account activated");
+      },
+
+      importAccount: function(){
+        console.log("Import account activated");
+      },
+
+      exportAccount: function(){
+        console.log("Export account activated");
+      },
+
+      backupAccount: function(){
+        console.log("Backup account activated");
+      },
+
+      _balance: function(){
+        //console.log(this.balance);
+      },
+
+      _account: function(){
+        //console.log(this.account);
       }
 
     });
