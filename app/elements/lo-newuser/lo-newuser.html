@@ -120,6 +120,9 @@
       <mqtt-publish id="pub" on-mqtt-publication-published="_published"></mqtt-publish>
     </mqtt-connection>
 
+    <alabs-web3js id="web3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
+
+
     <lo-localstorageapi 
     id="localapielem" 
     publickey="{{publickey}}" 
@@ -235,6 +238,7 @@
       },
 
       createUser: function(){
+        this.$.web3.newAccount();
         var localapi = this.$.localapielem;
         var publickey = uuid.v4();
         this.publickey = publickey;

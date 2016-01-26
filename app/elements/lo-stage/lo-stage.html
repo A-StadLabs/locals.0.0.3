@@ -153,9 +153,11 @@ See authors.md for a list of all members.
   subs
   topic="{{publickey}}" id="lomqtt"></lo-mqtt>
 
+  <alabs-web3js web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
+
 
   <paper-drawer-panel force-narrow="true" id="drawer">
-  <div drawer class="paperdrawer">dit is de drawer</div>
+  <div drawer class="paperdrawer">dit is de drawer en de balance <p>{{balance}}</p>en dit is de account <span>{{account}}</span></div>
 
   <neon-animated-pages id="pages" selected="{{selected}}" class="color" main>
 
@@ -239,6 +241,15 @@ See authors.md for a list of all members.
     </div>
   </neon-animatable>
 
+  <!-- Stage 8: Invoeren van de pincode van de partner zodat we een verbinding kunnen leggen tss de twee devices.  -->
+  <neon-animatable>
+    <div class="canvas">
+      <paper-button on-tap="_toWhere">BACK</paper-button>
+      <paper-input label="Partner pincode" value="{{enteredPin}}"></paper-input>
+      <paper-button on-tap="pinEnter">Verder</paper-button>
+    </div>
+  </neon-animatable>
+
 </neon-animated-pages>
 </paper-drawer-panel>
 
@@ -246,6 +257,8 @@ See authors.md for a list of all members.
 </dom-module>
 <script>
   (function() {
+
+  
 
   function importPage(url){
     return new Promise(function(resolve, reject){
@@ -410,18 +423,25 @@ See authors.md for a list of all members.
     },
 
     scanQRcode: function(e){
-      var self = this;
-      cordova.plugins.barcodeScanner.scan(
-        function (result) {
-          self.processQRCode(result.text, e);
-        }, 
-        function (error) {
-          alert("Scanning failed: " + error);
-        }
-      );
+      // var self = this;
+      // cordova.plugins.barcodeScanner.scan(
+      //   function (result) {
+      //     self.processQRCode(result.text, e);
+      //   }, 
+      //   function (error) {
+      //     alert("Scanning failed: " + error);
+      //   }
+      // );
+      // Ga naar een schermke waar je de pincode kan invoeren.
+      changeStage(8);
     },
 
     // HArdcore stuff
+    pinEnter: function(){
+      console.log(this.enteredPin);
+      //this.processQRcode(this.enteredPin);
+      lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2); 
+    },
 
     processQRCode: function(code, e){
       console.log("Got code: ", code);
@@ -583,9 +603,10 @@ See authors.md for a list of all members.
       this.exitAnimation = 'slide-left-animation';
       this.selected = 3;
       //console.log("To qr");
-      this.qrcode = this.deviceid;
+      //this.qrcode = this.deviceid;
+      this.qrcode = Math.floor(Math.random()*90000) + 10000;
       //this.$.lomqtt.subscribe("sync/"+this.deviceid, 0);
-      this.$.lomqtt.subscribe("verify/"+this.deviceid, 2);
+      this.$.lomqtt.subscribe("verify/"+this.qrcode, 2);
       //this.$.lomqtt.send("sync/"+this.deviceid, "SYNC1", 0);
     },
 

@@ -1,0 +1,113 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
+
+<script src="../../bower_components/web3/dist/web3.js"></script>
+<script src="../../scripts/ethereumjs-accounts.js"></script>
+
+<dom-module id="alabs-web3js">
+  <template>
+    <iron-localstorage 
+      name="ethereum" 
+      value="{{localvalue}}"
+      on-iron-localstorage-load="processAccount"></iron-localstorage>
+  </template>
+  <script>
+  (function() {
+
+    // Web 3 ethereum stuff
+    function web3connect(provider, fn){
+      if(typeof web3 !== 'undefined')
+        var web3 = new Web3(web3.currentProvider);
+      else
+        // set the provider you want from Web3.providers
+        var web3 = new Web3(new Web3.providers.HttpProvider(provider));
+        //console.log(web3);
+        fn(web3);
+    };
+
+    Polymer({
+      is: 'alabs-web3js',
+
+      properties: {
+        foo: {
+          type: String,
+          value: 'alabs-web3js',
+          notify: true
+        },
+        balance: {
+          type: Number,
+          notify: true,
+          observer: "_balance"
+        },
+        account: {
+          type: String,
+          notify: true,
+          observer: "_account"
+        },
+        accounts: {
+          type: Array,
+          notify: true
+        },
+        provider: {
+          type: String,
+          notify: true
+        },
+        web3: {
+          type: Object
+        },
+        connected: {
+          type: Boolean,
+          value: false,
+          notify: true
+        }
+      },
+
+      web3connect: function(){
+        //this.newAccount();
+        var that = this;
+        web3connect(this.provider, function(web3){
+          that.balance = web3.fromWei(web3.eth.getBalance(that.account).toNumber(), 'ether');
+          that.web3 = web3;
+          that.connected = true;
+        });
+      },
+
+      _balance: function(){
+        //console.log(this.balance);
+      },
+
+      _account: function(){
+        //console.log(this.account);
+      },
+
+      newAccount: function(){
+        var accounts = new Accounts({minPassphraseLength: 6});
+        var accountObject = accounts.new('testing');
+        this.localvalue = accountObject;
+      },
+
+      processAccount: function(){
+        console.log("👌 Found an account: ", this.localvalue);
+        this.account = this.localvalue.address;
+        this.web3connect();
+        this.unlockAccount();
+      },
+
+      unlockAccount: function(){
+        console.log("Unlock account activated");
+      }
+
+    });
+  })();
+  </script>
+</dom-module>
