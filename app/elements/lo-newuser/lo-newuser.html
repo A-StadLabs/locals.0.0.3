@@ -120,7 +120,7 @@
       <mqtt-publish id="pub" on-mqtt-publication-published="_published"></mqtt-publish>
     </mqtt-connection>
 
-    <alabs-web3js id="web3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
+    <alabs-web3js on-web3-ready="_web3_ready" id="web3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" contract="{{contract}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
 
 
     <lo-localstorageapi 
@@ -190,11 +190,51 @@
         
       },
 
-      ready: function(){
+      _web3_ready: function(){
+
+  var contract = {
+          abi: [{
+            "constant": true,
+            "inputs": [],
+            "name": "getValidations",
+            "outputs": [{
+              "name": "validations",
+              "type": "bytes32[]"
+            }],
+            "type": "function"
+          }, {
+            "constant": true,
+            "inputs": [],
+            "name": "countValidations",
+            "outputs": [{
+              "name": "count",
+              "type": "uint256"
+            }],
+            "type": "function"
+          }, {
+            "constant": false,
+            "inputs": [{
+              "name": "validatorhash",
+              "type": "bytes32"
+            }],
+            "name": "addValidation",
+            "outputs": [],
+            "type": "function"
+          }],
+          data: '6060604052610197806100126000396000f360606040526000357c01000000000000000000000000000000000000000000000000000000009004806312fd67ba1461004f57806333ac2009146100a6578063b38b2261146100c95761004d565b005b61005c60048050506100e1565b60405180806020018281038252838181518152602001915080519060200190602002808383829060006004602084601f0104600f02600301f1509050019250505060405180910390f35b6100b36004805050610185565b6040518082815260200191505060405180910390f35b6100df6004808035906020019091905050610100565b005b60206040519081016040528060008152602001508090506100fd565b90565b60006000508054806001018281815481835581811511610152578183600052602060002091820191016101519190610133565b8082111561014d5760008181506000905550600101610133565b5090565b5b5050509190906000526020600020900160005b839091909150555060016000818150548092919060010191905055505b50565b60006001600050549050610194565b9056',
+          gas: 3000000
+        };
+
+        this.$.web3.maakContract(contract.data);
+
+      },
+      ready: function() {
         var that = this;
-        this.addEventListener('back', function(){
+        this.addEventListener('back', function() {
           that.back();
         });
+      
+
       },
 
       _connected: function(){

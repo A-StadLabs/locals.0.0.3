@@ -379,11 +379,19 @@ See authors.md for a list of all members.
             <img src="{{body_tile}}"/>
           </div>
         </div>
+
+        <div class="absolutepos">
+          <div class="svgcontainer">
+            <img src="{{bottom_tile}}"/>
+          </div>
+        </div>
+
         <div class="absolutepos">
           <div class="svgcontainer">
             <img src="{{top_tile}}"/>
           </div>
         </div>
+
         <div class="absolutepos">
           <div class="svgcontainer">
             <img src="{{head_tile}}"/>
@@ -392,11 +400,6 @@ See authors.md for a list of all members.
         <div class="absolutepos">
           <div class="svgcontainer">
             <img src="{{beard_tile}}"/>
-          </div>
-        </div>
-        <div class="absolutepos">
-          <div class="svgcontainer">
-            <img src="{{bottom_tile}}"/>
           </div>
         </div>
         <div class="absolutepos">
@@ -414,7 +417,6 @@ See authors.md for a list of all members.
             <img src="{{snit_tile}}"/>
           </div>
         </div>
-
 
         <div class="absolutepos">
           <div class="svgcontainer">
@@ -751,13 +753,13 @@ See authors.md for a list of all members.
 
         this.backing_tiles = {
           0: {
-            url: this.resolveUrl('../../images/avatar/avatarbacking1-02.png')
+            url: this.resolveUrl('../../images/avatar/empty.svg')
           },
           1: {
-            url: this.resolveUrl('../../images/avatar/avatarbacking2-02.png')
+            url: this.resolveUrl('../../images/avatar/avatarbacking1-02.png')
           },
           2: {
-            url: this.resolveUrl('../../images/avatar/avatarbacking3-02.png')
+            url: this.resolveUrl('../../images/avatar/avatarbacking1-02.png')
           }
         };
 
@@ -790,19 +792,25 @@ See authors.md for a list of all members.
 
         this.bottom_tiles = {
           0: {
-            url: this.resolveUrl('../../images/avatar/avatarbottom1-03.png')
+            url: this.resolveUrl('../../images/avatar/avatarbottom1-02.png')
           },
           1: {
-            url: this.resolveUrl('../../images/avatar/avatarbottom2-03.png')
+            url: this.resolveUrl('../../images/avatar/avatarbottom2-05.png')
           },
           2: {
             url: this.resolveUrl('../../images/avatar/avatarbottom3-03.png')
           },
+          3: {
+            url: this.resolveUrl('../../images/avatar/avatarbottom1-01.png')
+          }
         };
 
         this.face_tiles = {
           0: {
             url: this.resolveUrl('../../images/avatar/avatarface-01.png')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/jenny_face.png')
           }
         }
 
@@ -812,12 +820,24 @@ See authors.md for a list of all members.
           },
           1: {
             url: this.resolveUrl('../../images/avatar/avatarglasses1-08.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarglasses1-07.png')
           }
         };
 
         this.head_tiles = {
           0: {
             url: this.resolveUrl('../../images/avatar/avatarhead-01.png')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarhead-03.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarhead-04.png')
+          },
+          3: {
+            url: this.resolveUrl('../../images/avatar/jenny_head.png')
           }
         };
 
@@ -825,6 +845,15 @@ See authors.md for a list of all members.
         this.body_tiles = {
           0: {
             url: this.resolveUrl('../../images/avatar/avatarlijf-01.png')
+          },
+          1: {
+            url: this.resolveUrl('../../images/avatar/avatarlijf-03.png')
+          },
+          2: {
+            url: this.resolveUrl('../../images/avatar/avatarlijf-04.png')
+          },
+          3: {
+            url: this.resolveUrl('../../images/avatar/jenny-lijf.png')
           }
         }
 
@@ -836,10 +865,13 @@ See authors.md for a list of all members.
             url: this.resolveUrl('../../images/avatar/avatarshoes1-04.png')
           },
           2: {
-            url: this.resolveUrl('../../images/avatar/avatarshoes2-04.png')
+            url: this.resolveUrl('../../images/avatar/avatarshoes3-02.png')
           },
           3: {
-            url: this.resolveUrl('../../images/avatar/avatarshoes2-04.png')
+            url: this.resolveUrl('../../images/avatar/avatarshoes1-07.png')
+          },
+          4: {
+            url: this.resolveUrl('../../images/avatar/jenny_shoes.png')
           }
         };
 
@@ -851,7 +883,7 @@ See authors.md for a list of all members.
             url: this.resolveUrl('../../images/avatar/avatarsnit1-08.png')
           },
           2: {
-            url: this.resolveUrl('../../images/avatar/avatarsnit2-08.png')
+            url: this.resolveUrl('../../images/avatar/avatarsnit3-04.png')
           },
           3: {
             url: this.resolveUrl('../../images/avatar/avatarsnit3-08.png')
@@ -868,6 +900,9 @@ See authors.md for a list of all members.
           7: {
             url: this.resolveUrl('../../images/avatar/avatarsnit7-08.png')
           },
+          8: {
+            url: this.resolveUrl('../../images/avatar/jenny_snit.png')
+          }
         };
 
         this.top_tiles = {
@@ -875,17 +910,20 @@ See authors.md for a list of all members.
             url: this.resolveUrl('../../images/avatar/empty.svg')
           },
           1: {
-            url: this.resolveUrl('../../images/avatar/avatartop1-02.png')
+            url: this.resolveUrl('../../images/avatar/avatartop1-08.png')
           },
           2: {
-            url: this.resolveUrl('../../images/avatar/avatartop2-02.png')
+            url: this.resolveUrl('../../images/avatar/avatartop4-05.png')
           },
           3: {
-            url: this.resolveUrl('../../images/avatar/avatartop3-02.png')
+            url: this.resolveUrl('../../images/avatar/avatartop2-01.png')
           },
           4: {
             url: this.resolveUrl('../../images/avatar/avatartop4-02.png')
           },
+          5: {
+            url: this.resolveUrl('../../images/avatar/jenny_top.png')
+          }
         };
 
 

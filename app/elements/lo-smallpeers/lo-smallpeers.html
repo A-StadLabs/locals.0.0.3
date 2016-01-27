@@ -39,7 +39,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       color: #333333;
     }
     </style>
-    <div class="valids">
+    <div id="valids" class="valids">
       <p>
         <span>{{peers}}</span>
         /
@@ -76,11 +76,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         //console.log('Genoeg peers');
         //this.valcolor = 'var(--primary-green)';
         this.valid = true;
+
       } else {
         //console.log('nie genoeg peers');
         //this.valcolor = 'var(--primary-red)';
         this.valid = false;
       };
+
+//      this.toggleClass("validated", this.valid, this.$.objectvaluesbar);
+
       }
     });
   })();

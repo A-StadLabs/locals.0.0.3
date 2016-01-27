@@ -12,17 +12,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../../bower_components/iron-localstorage/iron-localstorage.html">
 
 <script src="../../bower_components/web3/dist/web3.js"></script>
-<script src="../../scripts/ethereumjs-accounts.js"></script>
+<script src="../../scripts/hooked.js"></script>
+<script src="../../scripts/lightwallet.min.js"></script>
 
 <dom-module id="alabs-web3js">
   <template>
+
     <iron-localstorage 
-      name="ethereum" 
-      value="{{localvalue}}"
-      on-iron-localstorage-load="processAccount"
-      on-iron-localstorage-load-empty="newAccount"></iron-localstorage>
+      id="localstorage" 
+      name="myWallet" value="{{walletdata}}" 
+      on-iron-localstorage-load-empty="initWallet" on-iron-localstorage-load="loadWallet"></iron-localstorage>
   </template>
   <script>
+
+
   (function() {
 //
     // Web 3 ethereum stuff
@@ -75,33 +78,79 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         }
       },
 
-      web3connect: function(){
-        //this.newAccount();
-        var that = this;
-        web3connect(this.provider, function(web3){
-          that.balance = web3.fromWei(web3.eth.getBalance(that.account).toNumber(), 'ether');
-          that.web3 = web3;
-          that.connected = true;
-        });
+      ready: function(){
+        console.log('a-labs-web3 is ready');
       },
 
-      newAccount: function(){
-        console.log("New account activated");
-        var accounts = new Accounts({minPassphraseLength: 6});
-        var accountObject = accounts.new('testing');
-        this.localvalue = accountObject;
-      },
+      initWallet: function(){
+        console.log('init new wallet');
+        var randomSeed = lightwallet.keystore.generateRandomSeed("blah");
+        this.global_keystore = new lightwallet.keystore(
+          randomSeed,
+          "testing");
+        this.global_keystore.generateNewAddress("testing", 1);
+        this.set('walletdata',this.global_keystore.serialize());
+        this.account = this.global_keystore.getAddresses()[0];
 
-      processAccount: function(){
-        console.log("👌 Found an account: ", this.localvalue);
-        this.account = this.localvalue.address;
         this.web3connect();
-        this.unlockAccount();
+        this.fire('web3-ready');
+
+      },      
+
+      loadWallet: function(){
+        console.log('👌 load the wallet',this.walletdata);
+        this.global_keystore = new lightwallet.keystore().deserialize(this.walletdata);
+        console.log('loaded keystore. Addressess',this.global_keystore.getAddresses());
+        this.account = this.global_keystore.getAddresses()[0];
+        this.web3connect();      
+        this.fire('web3-ready');
       },
 
-      unlockAccount: function(){
-        console.log("Unlock account activated");
+      maakContract: function(code){
+
+        var self = this;
+
+        this.web3.eth.getGasPrice(function(err, result) {
+
+          var gasPrice = result;
+          var txOptions = {
+            gasPrice: gasPrice.toNumber(10),
+            gasLimit: 3000000,
+            value: 20000000,
+            nonce: 4,
+            data: code
+          };
+
+          var contractData = lightwallet.txutils.createContractTx( self.account, txOptions);
+          var signedTx = self.global_keystore.signTx(contractData.tx, 'testing', self.account);
+
+
+          self.lastcontractaddress = contractData.addr;
+
+          console.log('Signed Contract creation TX: ' + signedTx)
+          console.log('')
+          console.log('Contract Address: ' + contractData.addr)
+          console.log('')
+
+        });
+
       },
+
+
+      web3connect: function(){
+      
+        var web3Provider = new HookedWeb3Provider({
+          host: this.provider,
+          transaction_signer: this.global_keystore
+        });
+
+        this.web3 = new Web3();
+        this.web3.setProvider(web3Provider);
+
+        this.balance = this.web3.fromWei(this.web3.eth.getBalance(this.account).toNumber(), 'ether');
+
+      },
+
 
       importAccount: function(){
         console.log("Import account activated");

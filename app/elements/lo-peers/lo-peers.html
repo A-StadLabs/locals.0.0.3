@@ -46,7 +46,7 @@
 
       <div class="peersnr" on-tap="newpeer">
         <div class="nr">
-          <h1><span>{{peerslength}}</span>/<span>{{peersneeded}}</span></h1>
+          <h1><span>{{peers.length}}</span>/<span>{{peersneeded}}</span></h1>
           <img src="../../images/accept-small.svg">
         </div>
 
@@ -117,7 +117,7 @@
         console.log('nie genoeg peers');
         this.valcolor = 'var(--primary-red)';
       };
-      this.peerslength = this.peers.length;
+      this.notifyPath('peers', this.peers);
     },
 
     back: function(){

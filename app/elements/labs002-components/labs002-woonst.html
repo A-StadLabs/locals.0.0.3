@@ -295,6 +295,10 @@ See authors.md for a list of all members.
       visibility: var(--btns-visibility);
     }
 
+    .validated {
+      background-color: #66aa66;
+    }
+
 
 
   </style>
@@ -325,7 +329,7 @@ See authors.md for a list of all members.
           </labs002-avatar-woonstpages>
         </div>
       </div>
-      <div class="objectvaluesbar">
+      <div id="objectvaluesbar" class="objectvaluesbar">
         <div class="objectfirstvalue">
           <small>{{firstvalue}}</small>
         </div>
@@ -475,6 +479,16 @@ See authors.md for a list of all members.
           value: 0,
           notify: true,
           observer: "_modusChanged"        
+        },
+
+        objectpeers: {
+          type: Array,
+          observer: "_peersChanged"
+        },
+
+        objectpeersneeded: {
+          type: Number,
+          observer: "_peersChanged"
         },
 
 
@@ -702,6 +716,16 @@ _configChanged: function(){
 
 
 
+      _peersChanged: function() {
+        var validated = false;
+        var p =this.objectpeers;
+        console.log('woonst: objectpeers',p);
+        console.log('woonst: objectpeersneeded',this.objectpeersneeded);
+        
+        if (p && this.objectpeersneeded) {
+          this.toggleClass("validated", p.length >= this.objectpeersneeded, this.$.objectvaluesbar);
+        }
+      },
 
 
 
