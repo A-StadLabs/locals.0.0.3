@@ -136,6 +136,8 @@ See authors.md for a list of all members.
     value="{{deviceid}}">
   </iron-localstorage>
 
+  <alabs-web3js id="web3comp" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
+
   <lo-localstorageapi 
     id="localapielem" 
     publickey="{{publickey}}" 
@@ -152,9 +154,6 @@ See authors.md for a list of all members.
   publickey="{{publickey}}"
   subs
   topic="{{publickey}}" id="lomqtt"></lo-mqtt>
-
-  <alabs-web3js web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
-
 
   <paper-drawer-panel force-narrow="true" id="drawer">
   <div drawer class="paperdrawer">dit is de drawer en de balance <p>{{balance}}</p>en dit is de account <span>{{account}}</span></div>
@@ -376,6 +375,36 @@ See authors.md for a list of all members.
         that.localapi.collection[e.detail.datasetkey].hash = hash;
         lomqtt.send('userhash/'+that.publickey, "HASHUPDATE|"+e.detail.datasetkey+"|"+hash+"|"+that.publickey, 0);
         that.$.localapielem.writeData();
+
+        // Create contract object
+        var myAbi = that.localapi.collection[e.detail.datasetkey].contractabi;
+
+        var myContract = that.$.web3comp.web3.eth.contract(myAbi);
+
+        that.$.web3comp.eth.contract(abi).new({data: code}, function (err, contract) {
+            if(err) {
+                console.error(err);
+                return;
+            // callback fires twice, we only want the second call when the contract is deployed
+            } else if(contract.address){
+                myContract = contract;
+                console.log('address: ' + myContract.address);
+                document.getElementById('status').innerText = 'Mined!';
+                document.getElementById('call').style.visibility = 'visible';
+            }
+        });
+
+        var mycontractAddress = that.localapi.collection[e.detail.datasetkey].contractaddr;
+        
+        var contractinstanceAddr = myContract.at(mycontractAddress);
+
+        console.log("Contract creation: ", contractinstanceAddr);
+
+        var mycontractinstance = contractinstanceAddr.(hash);
+        console.log(mycontractinstance);
+
+        //var mycontractInstance = myContract.at(mycontractAddress); 
+        //mycontractInstance.
       });
 
       this.addEventListener('message-received', function(e){

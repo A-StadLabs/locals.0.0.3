@@ -252,6 +252,10 @@
         {
           "Avatar":
             {
+              "soliditycontract": "localsAvatar.sol",
+              "contractaddr": "",
+              "contractabi": [{"constant":false,"inputs":[],"name":"checkValidity","outputs":[{"name":"isValid","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"nieuwegetuigeHash","type":"bytes32"}],"name":"addGetuige","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"contractState","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"userHash","outputs":[{"name":"","type":"bytes32"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"getuigen","outputs":[{"name":"hash","type":"bytes32"}],"type":"function"},{"constant":true,"inputs":[],"name":"getuigenCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"inputs":[{"name":"senderHash","type":"bytes32"}],"type":"constructor"}],
+
               "component":"labs002-avatar",
               "conditions":[{"objectname":""}],
               "config":
@@ -283,18 +287,17 @@
               "locked":false,
               "name":"Avatar",
               "version":"0.0.1",
-              "width":100,
-              "peers":[],
-              "peersneededtovalidate": 3,
-              "validated": false
+              "width":100
               }
             },
             "peers":[],
             "godfather":[],
-            "lastupdate":Date.now()
+            "lastupdate":Date.now(),
+            "contracts": [{ address: '', hashes: [{ hash: '', ipfsaddr: '' }]}]
         };
 
         localapi.data = data;
+
         this.fire('init-data');
         localapi.writeData();
         location.reload();
