@@ -120,7 +120,7 @@
       <mqtt-publish id="pub" on-mqtt-publication-published="_published"></mqtt-publish>
     </mqtt-connection>
 
-    <alabs-web3js id="web3" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
+    <alabs-web3js id="web3comp" web3="{{web3}}" accounts="{{accounts}}" account="{{account}}" balance="{{balance}}" connected="{{web3connected}}" provider="http://node0.ma.cx:8545"></alabs-web3js>
 
 
     <lo-localstorageapi 
@@ -238,7 +238,8 @@
       },
 
       createUser: function(){
-        this.$.web3.newAccount();
+        this.$.web3comp.newAccount();
+        this.$.web3comp.unlockAccount();
         var localapi = this.$.localapielem;
         var publickey = uuid.v4();
         this.publickey = publickey;
@@ -247,13 +248,26 @@
         console.log('--- Created UUID ---');
         console.log('--- publickey: ', this.publickey, ' - privatekey: ', this.privatekey, ' - deviceid: ', this.deviceid, ' ---');
 
-        var data = {
+        var web3 = this.$.web3comp.web3;
+
+        var self = this;
+
+        var contractwithvalidationsContract = web3.eth.contract([{"constant":true,"inputs":[],"name":"getValidations","outputs":[{"name":"validations","type":"bytes32[]"}],"type":"function"},{"constant":false,"inputs":[{"name":"validatorhash","type":"bytes32"}],"name":"addvalidation","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"getvalidations","outputs":[{"name":"count","type":"uint256"}],"type":"function"}]);
+        var contractwithvalidations = contractwithvalidationsContract.new(
+           {
+             from: web3.eth.accounts[0], 
+             data: '6060604052610197806100126000396000f360606040526000357c01000000000000000000000000000000000000000000000000000000009004806312fd67ba1461004f578063557e502a146100a6578063b5825534146100be5761004d565b005b61005c6004805050610178565b60405180806020018281038252838181518152602001915080519060200190602002808383829060006004602084601f0104600f02600301f1509050019250505060405180910390f35b6100bc60048080359060200190919050506100e1565b005b6100cb6004805050610166565b6040518082815260200191505060405180910390f35b60006000508054806001018281815481835581811511610133578183600052602060002091820191016101329190610114565b8082111561012e5760008181506000905550600101610114565b5090565b5b5050509190906000526020600020900160005b839091909150555060016000818150548092919060010191905055505b50565b60006001600050549050610175565b90565b6020604051908101604052806000815260200150809050610194565b9056', 
+             gas: 3000000
+           }, function(e, contract){
+            console.log(e, contract);
+            if (typeof contract.address != 'undefined') {
+                 console.log('Contract mined! address: ' + contract.address + ' transactionHash: ' + contract.transactionHash);
+                 self.data = {
         "collection":
         {
           "Avatar":
             {
-              "soliditycontract": "localsAvatar.sol",
-              "contractaddr": "",
+              "contractaddr": contract.address,
               "contractabi": [{"constant":false,"inputs":[],"name":"checkValidity","outputs":[{"name":"isValid","type":"bool"}],"type":"function"},{"constant":false,"inputs":[{"name":"nieuwegetuigeHash","type":"bytes32"}],"name":"addGetuige","outputs":[],"type":"function"},{"constant":true,"inputs":[],"name":"contractState","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"constant":true,"inputs":[],"name":"userHash","outputs":[{"name":"","type":"bytes32"}],"type":"function"},{"constant":true,"inputs":[{"name":"","type":"address"}],"name":"getuigen","outputs":[{"name":"hash","type":"bytes32"}],"type":"function"},{"constant":true,"inputs":[],"name":"getuigenCount","outputs":[{"name":"","type":"uint256"}],"type":"function"},{"inputs":[{"name":"senderHash","type":"bytes32"}],"type":"constructor"}],
 
               "component":"labs002-avatar",
@@ -292,11 +306,14 @@
             },
             "peers":[],
             "godfather":[],
-            "lastupdate":Date.now(),
-            "contracts": [{ address: '', hashes: [{ hash: '', ipfsaddr: '' }]}]
+            "lastupdate":Date.now()
         };
+            }
+         });
 
-        localapi.data = data;
+
+
+        localapi.data = this.data;
 
         this.fire('init-data');
         localapi.writeData();
