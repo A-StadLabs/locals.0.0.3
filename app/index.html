@@ -66,8 +66,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <lo-mqtt id="mqtt" connected="{{connected}}" on-message-received=""></lo-mqtt>
 
     <iron-localstorage 
-      name="lo-public" 
-      value="{{louser}}"
+      name="myWallet" 
       on-iron-localstorage-load="_localuserFound"
       on-iron-localstorage-load-empty="_nolocaluserFound">
      </iron-localstorage>

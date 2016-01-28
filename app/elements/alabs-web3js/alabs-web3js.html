@@ -91,10 +91,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         this.global_keystore.generateNewAddress("testing", 1);
         this.set('walletdata',this.global_keystore.serialize());
         this.account = this.global_keystore.getAddresses()[0];
-
         this.web3connect();
         this.fire('web3-ready');
-
       },      
 
       loadWallet: function(){
