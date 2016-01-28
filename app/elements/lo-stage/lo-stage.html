@@ -279,6 +279,8 @@ See authors.md for a list of all members.
   var object;
   var app = document.getElementById("app");
 
+  var promise;
+
   var saveEncuserobject = function(e){
     app.localenc = e;
   };
@@ -439,7 +441,7 @@ See authors.md for a list of all members.
       });
 
       this.addEventListener('add-getuige', function(e){
-        //console.log("Peer listener activated in lo-objectscollection");
+        console.log("Peer listener activated in lo-objectscollection", e);
         this.fire('qr-reader', { 
           command: "VERIFY", 
           objectname: e.detail.objectname, 
@@ -462,14 +464,15 @@ See authors.md for a list of all members.
       //   }
       // );
       // Ga naar een schermke waar je de pincode kan invoeren.
-      changeStage(8);
+      //changeStage(8);
+      stage.selected = 8;
+      promise = e;
     },
 
     // HArdcore stuff
     pinEnter: function(){
-      console.log(this.enteredPin);
-      //this.processQRcode(this.enteredPin);
-      lomqtt.send("verify/"+partner, "VERIFY|"+this.publickey+"|"+objectname+"|"+objectconfig+"|"+objectdata+"|"+userid+"|"+hash, 2); 
+       var code = this.enteredPin;
+       this.processQRCode(code, promise);
     },
 
     processQRCode: function(code, e){
